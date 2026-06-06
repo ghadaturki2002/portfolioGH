@@ -69,10 +69,18 @@ export default function TiltCard({ children, className }: TiltCardProps) {
   const springY = useSpring(py, SPRING)
   const rotateY = useTransform(springX, [-0.5, 0.5], [-MAX_TILT, MAX_TILT])
   const rotateX = useTransform(springY, [-0.5, 0.5], [MAX_TILT, -MAX_TILT])
+  // Spotlight gradient — MUST be declared here (not in JSX) so the hook count
+  // never changes between renders (canHover flips false→true after mount).
+  const spotlight = useTransform(
+    [sx, sy],
+    ([x, y]: number[]) =>
+      `radial-gradient(220px circle at ${x}px ${y}px, rgb(var(--accent) / 0.15), transparent 70%)`
+  )
 
   const enabled = !reduce && canHover
 
   // Static fallback: no listeners, no transforms, no decorative layer.
+  // (All hooks above run unconditionally, so this early return is safe.)
   if (!enabled) {
     return <div className={className}>{children}</div>
   }
@@ -117,13 +125,7 @@ export default function TiltCard({ children, className }: TiltCardProps) {
       <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 rounded-[inherit]"
-        style={{
-          background: useTransform(
-            [sx, sy],
-            ([x, y]: number[]) =>
-              `radial-gradient(220px circle at ${x}px ${y}px, rgb(var(--accent) / 0.15), transparent 70%)`
-          ),
-        }}
+        style={{ background: spotlight }}
       />
       {/* Content layer kept above the spotlight and fully interactive. */}
       <div className="relative z-10">{children}</div>

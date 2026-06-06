@@ -6,7 +6,7 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class', // .dark = deep charcoal ; :root = warm ivory
+  darkMode: 'class', // .dark = graphite (default) ; :root = cool light
   theme: {
     extend: {
       colors: {
@@ -20,7 +20,7 @@ module.exports = {
         'accent-strong': 'rgb(var(--accent-strong) / <alpha-value>)',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
@@ -37,10 +37,24 @@ module.exports = {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        'pulse-glow': {
+          '0%, 100%': { opacity: '0.55' },
+          '50%': { opacity: '1' },
+        },
+        'spin-slow': {
+          to: { transform: 'rotate(360deg)' },
+        },
+        blink: {
+          '0%, 49%': { opacity: '1' },
+          '50%, 100%': { opacity: '0' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
-        marquee: 'marquee 32s linear infinite',
+        marquee: 'marquee 38s linear infinite',
+        'pulse-glow': 'pulse-glow 2.4s ease-in-out infinite',
+        'spin-slow': 'spin-slow 30s linear infinite',
+        blink: 'blink 1.1s step-end infinite',
       },
     },
   },

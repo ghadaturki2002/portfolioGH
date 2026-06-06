@@ -3,33 +3,33 @@
 @tailwind utilities;
 
 /* ============================================================
-   EDITORIAL DESIGN SYSTEM
-   :root  = Warm ivory (light)
-   .dark  = Deep warm charcoal (dark)
-   One accent: emerald. Tokens are RGB channel triplets used as
-   rgb(var(--token) / <alpha-value>) by Tailwind.
+   "SIGNAL" DESIGN SYSTEM — electronics / engineering theme
+   .dark  = graphite (default)
+   :root  = cool light
+   One accent: electric cyan (signal/PCB current). Tokens are RGB
+   channel triplets used as rgb(var(--token) / <alpha-value>).
    ============================================================ */
 @layer base {
   :root {
-    --bg: 250 248 243;          /* warm ivory   #FAF8F3 */
-    --surface: 255 255 255;     /* #FFFFFF */
-    --surface-2: 243 239 230;   /* #F3EFE6 */
-    --ink: 27 26 23;            /* near-black warm #1B1A17 */
-    --ink-soft: 90 85 76;       /* #5A554C */
-    --hairline: 228 222 207;    /* #E4DECF */
-    --accent: 14 122 90;        /* emerald #0E7A5A */
-    --accent-strong: 10 94 69;  /* deeper emerald #0A5E45 */
+    --bg: 243 246 248;          /* cool near-white #F3F6F8 */
+    --surface: 255 255 255;
+    --surface-2: 234 239 243;   /* #EAEFF3 */
+    --ink: 14 21 25;            /* graphite ink #0E1519 */
+    --ink-soft: 81 98 110;      /* #51626E */
+    --hairline: 220 227 233;    /* #DCE3E9 */
+    --accent: 14 116 144;       /* cyan-700 #0E7490 (AA on white) */
+    --accent-strong: 21 94 117; /* cyan-800 #155E75 */
   }
 
   .dark {
-    --bg: 19 18 15;             /* warm black #13120F */
-    --surface: 28 27 22;        /* #1C1B16 */
-    --surface-2: 35 33 25;      /* #232119 */
-    --ink: 242 238 228;         /* warm off-white #F2EEE4 */
-    --ink-soft: 167 161 149;    /* #A7A195 */
-    --hairline: 44 42 33;       /* #2C2A21 */
-    --accent: 52 211 153;       /* emerald-400 #34D399 */
-    --accent-strong: 110 231 183; /* #6EE7B7 */
+    --bg: 11 14 17;             /* graphite near-black #0B0E11 */
+    --surface: 17 22 27;        /* #11161B */
+    --surface-2: 22 29 35;      /* #161D23 */
+    --ink: 231 238 243;         /* #E7EEF3 */
+    --ink-soft: 147 164 177;    /* #93A4B1 */
+    --hairline: 35 44 52;       /* #232C34 */
+    --accent: 34 211 238;       /* electric cyan-400 #22D3EE */
+    --accent-strong: 103 232 249; /* cyan-300 #67E8F9 */
   }
 
   * {
@@ -55,11 +55,10 @@
     color: rgb(var(--bg));
   }
 
-  /* Accessible focus ring */
   :focus-visible {
     outline: 2px solid rgb(var(--accent));
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 3px;
   }
 }
 
@@ -67,34 +66,28 @@
   .container-px {
     @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-12;
   }
-
   .section {
     @apply scroll-mt-24 py-20 md:py-28 lg:py-32;
   }
-
-  /* small uppercase eyebrow with a leading rule */
+  /* mono eyebrow with a leading rule + node */
   .kicker {
-    @apply inline-flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-[0.2em] text-accent;
+    @apply inline-flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-[0.22em] text-accent;
   }
   .kicker::before {
     content: '';
     @apply inline-block h-px w-8 bg-accent;
   }
-
   .display {
-    @apply font-display font-semibold leading-[1.04] tracking-[-0.01em];
+    @apply font-display font-semibold leading-[1.05] tracking-[-0.015em];
   }
-
   .chip {
-    @apply inline-flex items-center rounded-full border border-hairline bg-surface px-3 py-1 font-mono text-[12px] text-ink-soft transition-colors;
+    @apply inline-flex items-center rounded-md border border-hairline bg-surface px-2.5 py-1 font-mono text-[12px] text-ink-soft transition-colors;
   }
-
   .card {
     @apply rounded-2xl border border-hairline bg-surface transition-all duration-300;
   }
-
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium transition-all duration-200;
   }
   .btn-primary {
     @apply btn bg-accent text-bg hover:bg-accent-strong hover:-translate-y-0.5;
@@ -102,7 +95,6 @@
   .btn-outline {
     @apply btn border border-ink/25 text-ink hover:border-accent hover:text-accent;
   }
-
   .link-underline {
     @apply relative inline-block;
   }
@@ -122,9 +114,22 @@
   .text-pretty {
     text-wrap: pretty;
   }
-  /* fine grain texture-free subtle dotted backdrop for hero */
+  /* cyan glow for accent elements (dark theme reads as "powered on") */
+  .glow {
+    box-shadow: 0 0 0 1px rgb(var(--accent) / 0.25), 0 0 28px -6px rgb(var(--accent) / 0.5);
+  }
+  .text-glow {
+    text-shadow: 0 0 18px rgb(var(--accent) / 0.45);
+  }
+  /* faint engineering grid backdrop */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgb(var(--ink) / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--ink) / 0.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
   .dot-grid {
-    background-image: radial-gradient(rgb(var(--ink) / 0.06) 1px, transparent 1px);
+    background-image: radial-gradient(rgb(var(--ink) / 0.07) 1px, transparent 1px);
     background-size: 22px 22px;
   }
 }
@@ -145,7 +150,7 @@
   background: rgb(var(--accent));
 }
 
-/* Reduced motion: collapse animations & smooth scroll */
+/* Reduced motion: collapse animations + smooth scroll */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

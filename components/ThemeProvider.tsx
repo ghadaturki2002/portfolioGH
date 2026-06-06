@@ -18,8 +18,8 @@ export function useTheme() {
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Light (warm ivory) leads; dark and system preference still respected.
-  const [theme, setTheme] = useState<Theme>('light')
+  // Dark (graphite) leads the electronics theme; light + system still respected.
+  const [theme, setTheme] = useState<Theme>('dark')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -27,8 +27,8 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     const saved = localStorage.getItem('theme') as Theme | null
     if (saved === 'light' || saved === 'dark') {
       setTheme(saved)
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      setTheme('light')
     }
   }, [])
 

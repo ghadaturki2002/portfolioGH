@@ -1,8 +1,12 @@
 /**
- * SINGLE SOURCE OF CONTENT — every entry here is grounded strictly in Ghada
- * Turki's CV (public/CV_Ghada_Turki.pdf / resume GhadaTurki.pdf). No invented
- * claims. Localized fields carry { fr, en }; non-localized fields (dates, tools,
- * file paths, links) are shared. Components read `field[language]`.
+ * SINGLE SOURCE OF CONTENT.
+ * FACTS are grounded in Ghada Turki's CV; wording is rewritten to be more
+ * professional and impactful (still 100% true). Where a fact is unknown it is a
+ * visible placeholder "[À COMPLÉTER : …]" / "[TO COMPLETE: …]" (see TODO.md).
+ * Localized fields carry { fr, en }; components read field[language].
+ *
+ * Target: an ELECTROMECHANICAL / MECHATRONICS ENGINEER seeking a full position
+ * (not an internship), available after her engineering final-year project (PFE).
  */
 
 export type Lang = 'fr' | 'en'
@@ -15,17 +19,16 @@ export type LList = { fr: string[]; en: string[] }
 export const identity = {
   name: 'Ghada Turki',
   role: {
-    fr: 'Ingénieure en Électromécanique · Mécatronique',
+    fr: 'Ingénieure en Électromécanique & Mécatronique',
     en: 'Electromechanical & Mechatronics Engineer',
   } as L,
-  // From the CV profile, rewritten for a recruiter audience.
   tagline: {
-    fr: 'Je conçois et réalise des systèmes mécatroniques — de la conception mécanique à l’automatisation, du code embarqué à l’intelligence artificielle.',
-    en: 'I design and build mechatronic systems — from mechanical design and automation to embedded code and applied artificial intelligence.',
+    fr: 'Je conçois des systèmes mécatroniques de bout en bout — conception mécanique, automatisation, électronique embarquée et intelligence artificielle — pour transformer une idée en machine qui fonctionne.',
+    en: 'I engineer mechatronic systems end to end — mechanical design, automation, embedded electronics and machine learning — turning an idea into a machine that works.',
   } as L,
   availability: {
-    fr: 'Disponible pour un stage de fin d’études',
-    en: 'Available for an end-of-studies internship',
+    fr: 'Disponible à partir de septembre 2026',
+    en: 'Available from September 2026',
   } as L,
   email: 'ghada.turkiditgaraali@esprit.tn',
   phone: '216-26-016-352',
@@ -39,28 +42,29 @@ export const identity = {
 /* ABOUT                                                              */
 /* ------------------------------------------------------------------ */
 export const about = {
-  // CV profile, faithfully rephrased.
   paragraphs: {
     fr: [
-      'Titulaire d’un Master professionnel en Mécatronique et ingénieure en Génie Électromécanique, je réunis trois compétences clés : la conception mécanique, l’automatisation et le développement logiciel.',
-      'Passionnée par l’innovation et les systèmes automatisés, j’aime mener un projet de bout en bout — de la conception 3D et de la partie électrique jusqu’aux applications qui pilotent ou supervisent la machine. Je cherche aujourd’hui à mettre ces compétences au service d’une équipe dynamique dans le cadre d’un stage de fin d’études.',
+      'Ingénieure en Électromécanique et titulaire d’un Master professionnel en Mécatronique, je travaille à l’intersection de trois mondes : la mécanique, l’électronique et le logiciel.',
+      'De la conception 3D à la carte électronique, du code embarqué jusqu’à l’intelligence artificielle, j’aime porter un projet industriel du concept au prototype fonctionnel. Je termine actuellement mon projet de fin d’études — un jumeau numérique de machine industrielle piloté par machine learning — et je serai disponible dès septembre 2026 pour rejoindre une équipe d’ingénierie ambitieuse.',
     ],
     en: [
-      'Holder of a Professional Master’s in Mechatronics and an Electromechanical Engineer, I bring together three core skills: mechanical design, automation, and software development.',
-      'Driven by innovation and automated systems, I enjoy carrying a project end to end — from 3D design and the electrical build to the applications that drive or supervise the machine. I am now looking to apply these skills within a dynamic team through an end-of-studies internship.',
+      'An Electromechanical Engineer with a Professional Master’s in Mechatronics, I work where three worlds meet: mechanics, electronics and software.',
+      'From 3D design to the circuit board, from embedded code to machine learning, I love taking an industrial project from concept to working prototype. I am currently completing my engineering final-year project — a machine-learning-driven digital twin of an industrial machine — and will be available from September 2026 to join an ambitious engineering team.',
     ],
   } as LList,
-  // Honest, CV-derived highlight figures.
   stats: [
-    { value: '5', label: { fr: 'Expériences en entreprise', en: 'Industry experiences' } as L },
-    { value: '4+', label: { fr: 'Projets d’ingénierie', en: 'Engineering projects' } as L },
+    { value: '6', label: { fr: 'Expériences en entreprise', en: 'Industry experiences' } as L },
+    { value: '8', label: { fr: 'Projets d’ingénierie', en: 'Engineering projects' } as L },
     { value: '6', label: { fr: 'Certifications', en: 'Certifications' } as L },
     { value: '3', label: { fr: 'Diplômes', en: 'Degrees' } as L },
   ],
 }
 
 /* ------------------------------------------------------------------ */
-/* EXPERIENCE (5 — exactly as in the CV)                              */
+/* EXPERIENCE                                                         */
+/*  - PFE digital-twin = current + flagship (top). Company/dates/      */
+/*    specifics are placeholders (NOT in the CV) → see TODO.md.        */
+/*  - The 5 CV experiences follow, reworded for impact (facts intact). */
 /* ------------------------------------------------------------------ */
 export interface Experience {
   company: string
@@ -70,28 +74,55 @@ export interface Experience {
   summary: L
   bullets: LList
   tech: string[]
+  current?: boolean
+  featured?: boolean
 }
 
 export const experiences: Experience[] = [
   {
-    company: 'MATECH',
-    location: { fr: 'Megrine, Tunisie', en: 'Megrine, Tunisia' },
-    period: '03/2025 – 09/2025',
-    role: { fr: 'Mémoire de fin d’études', en: 'Final-year project' },
+    company: '[À COMPLÉTER : entreprise du PFE]',
+    location: { fr: 'Tunisie', en: 'Tunisia' },
+    period: '03/2026 – 09/2026',
+    current: true,
+    featured: true,
+    role: { fr: 'Projet de fin d’études — Ingénieur (PFE)', en: 'Engineering final-year project (PFE)' },
     summary: {
-      fr: 'Conception et réalisation d’un émulateur de groupe électrogène et de son application mobile en réalité augmentée.',
-      en: 'Design and build of a generator emulator and its augmented-reality mobile application.',
+      fr: 'Jumeau numérique d’une machine industrielle piloté par machine learning (Random Forest & LSTM).',
+      en: 'Machine-learning-driven digital twin of an industrial machine (Random Forest & LSTM).',
     },
     bullets: {
       fr: [
-        'Développement d’une application mobile en réalité augmentée (Vuforia, Unity, C#) permettant aux techniciens d’explorer virtuellement les composants d’un groupe électrogène, avec un quiz intégré pour évaluer les connaissances.',
-        'Conception des composants du groupe électrogène sous SolidWorks et Blender.',
-        'Réalisation de l’émulateur à base d’Arduino et de composants électriques.',
+        'Conception d’un jumeau numérique modélisant le comportement d’une machine industrielle [À COMPLÉTER : type de machine] à partir de ses données capteurs.',
+        'Développement de modèles de machine learning combinant Random Forest et réseau de neurones récurrent LSTM pour prédire [À COMPLÉTER : grandeur prédite / objectif].',
+        'Objectif : aide à la décision et maintenance prédictive — [À COMPLÉTER : résultats obtenus, ex. précision du modèle, gain].',
       ],
       en: [
-        'Built an augmented-reality mobile app (Vuforia, Unity, C#) letting technicians virtually explore a generator’s components, with an integrated quiz to assess their knowledge.',
-        'Designed the generator components in SolidWorks and Blender.',
-        'Built the emulator using Arduino and electrical components.',
+        'Building a digital twin that models the behaviour of an industrial machine [TO COMPLETE: machine type] from its sensor data.',
+        'Developing machine-learning models combining Random Forest and an LSTM recurrent neural network to predict [TO COMPLETE: predicted variable / objective].',
+        'Goal: decision support and predictive maintenance — [TO COMPLETE: results achieved, e.g. model accuracy, gains].',
+      ],
+    },
+    tech: ['Python', 'Machine Learning', 'Random Forest', 'LSTM', 'Jumeau numérique'],
+  },
+  {
+    company: 'MATECH',
+    location: { fr: 'Megrine, Tunisie', en: 'Megrine, Tunisia' },
+    period: '03/2025 – 09/2025',
+    role: { fr: 'Mémoire de fin d’études — Master', en: 'Master’s final-year project' },
+    summary: {
+      fr: 'Émulateur physique d’un groupe électrogène doublé d’une application mobile en réalité augmentée pour la formation des techniciens.',
+      en: 'A physical generator emulator paired with an augmented-reality mobile app for training technicians.',
+    },
+    bullets: {
+      fr: [
+        'Conception et développement d’une application mobile en réalité augmentée (Vuforia, Unity, C#) permettant d’explorer virtuellement les composants d’un groupe électrogène, avec un quiz d’évaluation intégré.',
+        'Modélisation des composants sous SolidWorks et Blender.',
+        'Réalisation de l’émulateur physique à base d’Arduino et de composants électriques.',
+      ],
+      en: [
+        'Designed and built an augmented-reality mobile app (Vuforia, Unity, C#) to virtually explore a generator’s components, with a built-in assessment quiz.',
+        'Modelled the components in SolidWorks and Blender.',
+        'Built the physical emulator with Arduino and electrical components.',
       ],
     },
     tech: ['Unity', 'Vuforia', 'C#', 'SolidWorks', 'Blender', 'Arduino'],
@@ -102,17 +133,17 @@ export const experiences: Experience[] = [
     period: '07/2025 – 08/2025',
     role: { fr: 'Stage d’ingénieur', en: 'Engineering internship' },
     summary: {
-      fr: 'Développement d’une solution innovante de supervision de la production.',
-      en: 'Development of an innovative production-supervision solution.',
+      fr: 'Solution complète de supervision de production : du capteur sur la ligne au tableau de bord.',
+      en: 'End-to-end production-supervision solution: from the sensor on the line to the dashboard.',
     },
     bullets: {
       fr: [
-        'Développement d’une application desktop en Python enregistrant le nombre de câbles produits par chaque ouvrier, avec un tableau de bord de supervision.',
-        'Conception d’un poste de comptage des câbles sous SolidWorks et réalisation de la partie électrique (capteur de proximité E3F-DS30C4, carte Arduino), avec enregistrement des données dans l’application.',
+        'Développement d’une application desktop Python comptabilisant la production de câbles par ouvrier, avec tableau de bord de supervision.',
+        'Conception d’un poste de comptage sous SolidWorks et réalisation de la partie électrique (capteur de proximité E3F-DS30C4, carte Arduino) avec remontée des données vers l’application.',
       ],
       en: [
-        'Built a Python desktop application recording the number of cables produced by each worker, with a supervisory dashboard.',
-        'Designed a cable-counting station in SolidWorks and built the electrical part (E3F-DS30C4 proximity sensor, Arduino board), with data logging into the application.',
+        'Built a Python desktop application tracking each worker’s cable output, with a supervisory dashboard.',
+        'Designed a counting station in SolidWorks and built the electrical part (E3F-DS30C4 proximity sensor, Arduino board), streaming data into the application.',
       ],
     },
     tech: ['Python', 'SolidWorks', 'Arduino', 'E3F-DS30C4'],
@@ -123,19 +154,19 @@ export const experiences: Experience[] = [
     period: '02/2023 – 06/2023',
     role: { fr: 'Stage de fin d’études', en: 'Final-year internship' },
     summary: {
-      fr: 'Conception et réalisation d’un simulateur de pannes d’un groupe électrogène.',
-      en: 'Design and build of a fault simulator for a generator.',
+      fr: 'Simulateur de pannes de groupe électrogène et application mobile d’aide au diagnostic.',
+      en: 'A generator fault simulator and a mobile app that supports diagnosis.',
     },
     bullets: {
       fr: [
-        'Développement d’une application mobile (Java) permettant de saisir un code de panne et d’en afficher la description.',
+        'Application mobile (Java) traduisant un code de panne en description claire pour le technicien.',
         'Réalisation d’un simulateur de pannes à base d’un contrôleur Guardrevolution et de composants électriques.',
-        'Élaboration du dossier de fabrication, définition des besoins et création de travaux pratiques.',
+        'Rédaction du dossier de fabrication, définition des besoins et création de travaux pratiques pédagogiques.',
       ],
       en: [
-        'Developed a Java mobile application to enter a fault code and display its description.',
-        'Built a fault simulator using a Guardrevolution controller and electrical components.',
-        'Produced the manufacturing documentation, defined the requirements, and created practical exercises.',
+        'Java mobile app translating a fault code into a clear description for the technician.',
+        'Built a fault simulator around a Guardrevolution controller and electrical components.',
+        'Wrote the manufacturing dossier, defined requirements and created hands-on training exercises.',
       ],
     },
     tech: ['Java', 'Guardrevolution', 'Électronique'],
@@ -146,15 +177,15 @@ export const experiences: Experience[] = [
     period: '01/2022 – 02/2022',
     role: { fr: 'Stage de technicien', en: 'Technician internship' },
     summary: {
-      fr: 'Amélioration de la machine Trepko Seau.',
-      en: 'Improvement of the Trepko bucket machine.',
+      fr: 'Amélioration de la machine Trepko Seau par la conception d’un poste d’alimentation automatisé.',
+      en: 'Improved the Trepko bucket machine by designing an automated feeding station.',
     },
     bullets: {
       fr: [
-        'Conception d’une machine de mise en place des récipients sur le tapis (SolidWorks, Arduino), réalisée en prototype.',
+        'Conception et prototypage d’une machine de mise en place des récipients sur le tapis (SolidWorks, Arduino).',
       ],
       en: [
-        'Designed a machine to place containers onto the conveyor (SolidWorks, Arduino), built as a prototype.',
+        'Designed and prototyped a machine to place containers onto the conveyor (SolidWorks, Arduino).',
       ],
     },
     tech: ['SolidWorks', 'Arduino'],
@@ -165,17 +196,17 @@ export const experiences: Experience[] = [
     period: '07/2021',
     role: { fr: 'Stage d’initiation', en: 'Introductory internship' },
     summary: {
-      fr: 'Découverte du milieu industriel et de la fabrication des câbles.',
-      en: 'Introduction to the industrial environment and cable manufacturing.',
+      fr: 'Première immersion en milieu industriel : fabrication de câbles et démarche Lean.',
+      en: 'First industrial immersion: cable manufacturing and Lean methodology.',
     },
     bullets: {
       fr: [
-        'Découverte des activités de l’entreprise et de la procédure de fabrication des câbles.',
-        'Participation à l’application des principes du Lean en aidant à organiser les espaces de travail.',
+        'Découverte du processus de fabrication des câbles et des activités de l’entreprise.',
+        'Participation à la mise en œuvre des principes du Lean (organisation des espaces de travail).',
       ],
       en: [
-        'Discovered the company’s activities and the cable-manufacturing process.',
-        'Helped apply Lean principles by organizing the workspaces.',
+        'Learned the cable-manufacturing process and the company’s operations.',
+        'Took part in applying Lean principles (workspace organization).',
       ],
     },
     tech: ['Lean Manufacturing'],
@@ -184,10 +215,6 @@ export const experiences: Experience[] = [
 
 /* ------------------------------------------------------------------ */
 /* PROJECTS                                                           */
-/*  - New digital-twin project (in progress)                          */
-/*  - CV "Projets" + the concrete deliverables of the CV experiences  */
-/*  - Invented items (WinDev/MTTR, biometric/QR, VGG16/ImageNet, etc.)*/
-/*    have been removed.                                              */
 /* ------------------------------------------------------------------ */
 export interface Project {
   id: string
@@ -205,7 +232,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'digital-twin',
-    category: { fr: 'Machine Learning', en: 'Machine Learning' },
+    category: { fr: 'Machine Learning · PFE', en: 'Machine Learning · Capstone' },
     status: { fr: 'En cours', en: 'In progress' },
     featured: true,
     title: {
@@ -213,41 +240,40 @@ export const projects: Project[] = [
       en: 'Digital twin of an industrial machine',
     },
     summary: {
-      fr: 'Modélisation d’une machine industrielle par jumeau numérique, à l’aide de modèles de machine learning (Random Forest et LSTM).',
-      en: 'Digital-twin modelling of an industrial machine using machine-learning models (Random Forest and LSTM).',
+      fr: 'Mon projet de fin d’études : modéliser et prédire le comportement d’une machine industrielle par machine learning (Random Forest & LSTM).',
+      en: 'My engineering capstone: modelling and predicting an industrial machine’s behaviour with machine learning (Random Forest & LSTM).',
     },
     description: {
       fr: [
-        'Projet en cours visant à construire le jumeau numérique d’une machine industrielle à partir de ses données capteurs.',
-        'L’approche combine un modèle Random Forest et un réseau de neurones récurrent LSTM afin de modéliser et prédire le comportement de la machine, dans une logique d’aide à la décision et de maintenance prédictive.',
+        'Projet de fin d’études (PFE) chez [À COMPLÉTER : entreprise], visant à construire le jumeau numérique d’une machine industrielle [À COMPLÉTER : type de machine] à partir de ses données capteurs.',
+        'L’approche combine un modèle Random Forest et un réseau de neurones récurrent LSTM pour modéliser et prédire [À COMPLÉTER : grandeur prédite], au service de la maintenance prédictive et de l’aide à la décision.',
+        'Résultats : [À COMPLÉTER : précision du modèle, indicateurs, gains obtenus].',
       ],
       en: [
-        'Ongoing project building the digital twin of an industrial machine from its sensor data.',
-        'The approach combines a Random Forest model and an LSTM recurrent neural network to model and predict the machine’s behaviour, supporting decision-making and predictive maintenance.',
+        'Final-year project (PFE) at [TO COMPLETE: company], building the digital twin of an industrial machine [TO COMPLETE: machine type] from its sensor data.',
+        'The approach combines a Random Forest model and an LSTM recurrent neural network to model and predict [TO COMPLETE: predicted variable], supporting predictive maintenance and decision-making.',
+        'Results: [TO COMPLETE: model accuracy, KPIs, gains achieved].',
       ],
     },
     tech: ['Python', 'Machine Learning', 'Random Forest', 'LSTM', 'Jumeau numérique'],
-    // TODO: ajouter une capture/visuel du projet jumeau numérique quand disponible
+    // ➤ Ajouter votre image ici (capture du dashboard / schéma du pipeline ML / modèle). Taille recommandée : 1200×750 px (ratio 16:10).
   },
   {
     id: 'generator-ar',
     category: { fr: 'Réalité augmentée', en: 'Augmented reality' },
-    title: {
-      fr: 'Émulateur de groupe électrogène + application AR',
-      en: 'Generator emulator + AR application',
-    },
+    title: { fr: 'Émulateur de groupe électrogène + AR', en: 'Generator emulator + AR app' },
     summary: {
-      fr: 'Émulateur physique d’un groupe électrogène et application mobile en réalité augmentée pour la formation des techniciens.',
-      en: 'Physical generator emulator and an augmented-reality mobile app for training technicians.',
+      fr: 'Un émulateur physique et une application AR immersive pour former les techniciens sans immobiliser une vraie machine.',
+      en: 'A physical emulator and an immersive AR app to train technicians without tying up a real machine.',
     },
     description: {
       fr: [
-        'Application mobile en réalité augmentée (Vuforia, Unity, C#) permettant d’explorer virtuellement les composants d’un groupe électrogène, avec un quiz intégré.',
-        'Composants conçus sous SolidWorks et Blender ; émulateur réalisé avec Arduino et des composants électriques.',
+        'Application mobile en réalité augmentée (Vuforia, Unity, C#) pour explorer virtuellement chaque composant d’un groupe électrogène, avec quiz intégré.',
+        'Composants modélisés sous SolidWorks et Blender ; émulateur physique réalisé avec Arduino et composants électriques.',
       ],
       en: [
-        'Augmented-reality mobile app (Vuforia, Unity, C#) to virtually explore a generator’s components, with an integrated quiz.',
-        'Components designed in SolidWorks and Blender; emulator built with Arduino and electrical components.',
+        'Augmented-reality mobile app (Vuforia, Unity, C#) to virtually explore each component of a generator, with a built-in quiz.',
+        'Components modelled in SolidWorks and Blender; physical emulator built with Arduino and electrical components.',
       ],
     },
     tech: ['Unity', 'Vuforia', 'C#', 'SolidWorks', 'Blender', 'Arduino'],
@@ -256,20 +282,17 @@ export const projects: Project[] = [
   {
     id: 'crack-robot',
     category: { fr: 'Robotique · IA', en: 'Robotics · AI' },
-    title: {
-      fr: 'Robot autonome de détection de fissures',
-      en: 'Autonomous crack-detection robot',
-    },
+    title: { fr: 'Robot autonome de détection de fissures', en: 'Autonomous crack-detection robot' },
     summary: {
-      fr: 'Robot autonome détectant les fissures dans les structures grâce à l’intelligence artificielle.',
-      en: 'Autonomous robot detecting cracks in structures using artificial intelligence.',
+      fr: 'Un robot mobile qui inspecte les structures et repère les fissures par intelligence artificielle.',
+      en: 'A mobile robot that inspects structures and spots cracks using artificial intelligence.',
     },
     description: {
       fr: [
-        'Conception et réalisation d’un robot autonome de détection de fissures, combinant la conception mécanique (SolidWorks), l’intelligence artificielle et une carte ESP32 pour le pilotage et le traitement.',
+        'Conception et réalisation d’un robot autonome de détection de fissures : conception mécanique sous SolidWorks, traitement par intelligence artificielle et pilotage par carte ESP32.',
       ],
       en: [
-        'Design and build of an autonomous crack-detection robot, combining mechanical design (SolidWorks), artificial intelligence, and an ESP32 board for control and processing.',
+        'Design and build of an autonomous crack-detection robot: mechanical design in SolidWorks, AI-based processing, and control via an ESP32 board.',
       ],
     },
     tech: ['SolidWorks', 'Intelligence artificielle', 'ESP32'],
@@ -279,22 +302,19 @@ export const projects: Project[] = [
   {
     id: 'production-supervision',
     category: { fr: 'Automatisation · IoT', en: 'Automation · IoT' },
-    title: {
-      fr: 'Solution de supervision de la production',
-      en: 'Production-supervision solution',
-    },
+    title: { fr: 'Supervision de production temps réel', en: 'Real-time production supervision' },
     summary: {
-      fr: 'Application desktop et poste de comptage automatisé pour suivre la production de câbles en temps réel.',
-      en: 'Desktop application and automated counting station to track cable production in real time.',
+      fr: 'Du capteur sur la ligne au tableau de bord : une chaîne complète pour suivre la production de câbles en direct.',
+      en: 'From the sensor on the line to the dashboard: a full chain to track cable production live.',
     },
     description: {
       fr: [
-        'Application desktop développée en Python enregistrant le nombre de câbles produits par chaque ouvrier, avec un tableau de bord de supervision.',
-        'Poste de comptage conçu sous SolidWorks, avec une partie électrique intégrant un capteur de proximité E3F-DS30C4 et une carte Arduino, les données étant enregistrées dans l’application.',
+        'Application desktop Python comptabilisant la production par ouvrier, avec tableau de bord de supervision.',
+        'Poste de comptage conçu sous SolidWorks, partie électrique intégrant un capteur de proximité E3F-DS30C4 et une carte Arduino, données enregistrées dans l’application.',
       ],
       en: [
-        'Python desktop application recording the number of cables produced by each worker, with a supervisory dashboard.',
-        'Counting station designed in SolidWorks, with an electrical part integrating an E3F-DS30C4 proximity sensor and an Arduino board, logging data into the application.',
+        'Python desktop application tracking output per worker, with a supervisory dashboard.',
+        'Counting station designed in SolidWorks; electrical part integrating an E3F-DS30C4 proximity sensor and an Arduino board, with data logged into the app.',
       ],
     },
     tech: ['Python', 'SolidWorks', 'Arduino', 'E3F-DS30C4'],
@@ -303,24 +323,21 @@ export const projects: Project[] = [
   {
     id: 'fault-simulator',
     category: { fr: 'Automatisation', en: 'Automation' },
-    title: {
-      fr: 'Simulateur de pannes + application mobile',
-      en: 'Fault simulator + mobile application',
-    },
+    title: { fr: 'Simulateur de pannes + app de diagnostic', en: 'Fault simulator + diagnosis app' },
     summary: {
-      fr: 'Simulateur de pannes de groupe électrogène et application mobile d’interprétation des codes de panne, pour la formation des techniciens.',
-      en: 'Generator fault simulator and a mobile app to interpret fault codes, for training technicians.',
+      fr: 'Un banc de simulation de pannes et une application mobile qui rend chaque code défaut compréhensible.',
+      en: 'A fault-simulation bench and a mobile app that makes every fault code understandable.',
     },
     description: {
       fr: [
-        'Application mobile (Java) permettant de saisir un code de panne et d’en afficher la description.',
-        'Simulateur de pannes réalisé à base d’un contrôleur Guardrevolution et de composants électriques.',
-        'Élaboration du dossier de fabrication, définition des besoins et création de travaux pratiques.',
+        'Application mobile (Java) traduisant un code de panne en description claire.',
+        'Simulateur de pannes à base d’un contrôleur Guardrevolution et de composants électriques.',
+        'Dossier de fabrication, définition des besoins et travaux pratiques pédagogiques.',
       ],
       en: [
-        'Java mobile application to enter a fault code and display its description.',
+        'Java mobile app translating a fault code into a clear description.',
         'Fault simulator built around a Guardrevolution controller and electrical components.',
-        'Manufacturing documentation, requirements definition, and creation of practical exercises.',
+        'Manufacturing dossier, requirements definition and hands-on training material.',
       ],
     },
     tech: ['Java', 'Guardrevolution', 'Électronique'],
@@ -330,20 +347,17 @@ export const projects: Project[] = [
   {
     id: 'robotic-arm',
     category: { fr: 'Robotique', en: 'Robotics' },
-    title: {
-      fr: 'Bras robotique — motifs sur bois',
-      en: 'Robotic arm — patterns on wood',
-    },
+    title: { fr: 'Bras robotique — gravure sur bois', en: 'Robotic arm — engraving on wood' },
     summary: {
-      fr: 'Programmation d’un bras robotique pour réaliser des motifs sur le bois.',
-      en: 'Programming a robotic arm to create patterns on wood.',
+      fr: 'Programmation d’un bras robotique industriel pour reproduire des motifs précis sur le bois.',
+      en: 'Programming an industrial robotic arm to reproduce precise patterns on wood.',
     },
     description: {
       fr: [
-        'Commande d’un bras robotique réalisant des motifs sur le bois, programmé via RT Tool Box, les pièces étant conçues sous CATIA V5.',
+        'Commande d’un bras robotique réalisant des motifs sur le bois, programmé sous RT Tool Box, avec des pièces conçues sous CATIA V5.',
       ],
       en: [
-        'Control of a robotic arm creating patterns on wood, programmed with RT Tool Box, with parts designed in CATIA V5.',
+        'Control of a robotic arm creating patterns on wood, programmed in RT Tool Box, with parts designed in CATIA V5.',
       ],
     },
     tech: ['RT Tool Box', 'CATIA V5', 'Robotique'],
@@ -352,51 +366,45 @@ export const projects: Project[] = [
   {
     id: 'line-follower',
     category: { fr: 'Robotique', en: 'Robotics' },
-    title: {
-      fr: 'Suiveur de ligne, détecteur d’obstacles & parking',
-      en: 'Line follower, obstacle detector & parking',
-    },
+    title: { fr: 'Suiveur de ligne, anti-obstacles & parking', en: 'Line follower, obstacle avoidance & parking' },
     summary: {
-      fr: 'Robot mobile combinant suivi de ligne, détection d’obstacles et système de parking.',
-      en: 'Mobile robot combining line following, obstacle detection, and a parking system.',
+      fr: 'Un robot mobile autonome combinant suivi de ligne, évitement d’obstacles et stationnement automatique.',
+      en: 'An autonomous mobile robot combining line following, obstacle avoidance and automatic parking.',
     },
     description: {
       fr: [
-        'Conception et réalisation d’un robot suiveur de ligne, doté d’un détecteur d’obstacles et d’un système de parking, à base d’Arduino, avec une structure conçue sous SolidWorks.',
+        'Conception et réalisation d’un robot suiveur de ligne doté d’un détecteur d’obstacles et d’un système de parking, à base d’Arduino, avec structure conçue sous SolidWorks.',
       ],
       en: [
         'Design and build of a line-following robot with obstacle detection and a parking system, based on Arduino, with a structure designed in SolidWorks.',
       ],
     },
     tech: ['Arduino', 'SolidWorks'],
-    // TODO: ajouter un visuel pour ce projet si disponible
+    // ➤ Ajouter votre image ici (photo du robot). Taille recommandée : 1200×750 px.
   },
   {
     id: 'smart-reservoir',
     category: { fr: 'IoT', en: 'IoT' },
-    title: {
-      fr: 'Réservoir intelligent — dashboard Node-RED',
-      en: 'Smart reservoir — Node-RED dashboard',
-    },
+    title: { fr: 'Réservoir intelligent — dashboard IoT', en: 'Smart reservoir — IoT dashboard' },
     summary: {
-      fr: 'Supervision en temps réel d’un réservoir via un tableau de bord Node-RED et un ESP32.',
-      en: 'Real-time monitoring of a reservoir via a Node-RED dashboard and an ESP32.',
+      fr: 'Supervision en temps réel d’un réservoir via un tableau de bord Node-RED connecté en MQTT.',
+      en: 'Real-time monitoring of a reservoir via a Node-RED dashboard connected over MQTT.',
     },
     description: {
       fr: [
-        'Développement d’un tableau de bord en Node-RED et MQTT, relié à un ESP32, pour la supervision en temps réel d’un réservoir intelligent.',
+        'Développement d’un tableau de bord Node-RED relié à un ESP32 via MQTT, pour la supervision en temps réel d’un réservoir intelligent.',
       ],
       en: [
-        'Development of a Node-RED and MQTT dashboard connected to an ESP32, for real-time monitoring of a smart reservoir.',
+        'Built a Node-RED dashboard linked to an ESP32 over MQTT, for real-time monitoring of a smart reservoir.',
       ],
     },
     tech: ['Node-RED', 'MQTT', 'ESP32'],
-    // TODO: ajouter un visuel pour ce projet si disponible
+    // ➤ Ajouter votre image ici (capture du dashboard Node-RED). Taille recommandée : 1200×750 px.
   },
 ]
 
 /* ------------------------------------------------------------------ */
-/* SKILLS (derived strictly from CV tools & experiences)              */
+/* SKILLS                                                             */
 /* ------------------------------------------------------------------ */
 export interface SkillGroup {
   title: L
@@ -417,18 +425,24 @@ export const skillGroups: SkillGroup[] = [
     items: ['Python', 'C#', 'Java', 'Applications desktop', 'Applications mobiles'],
   },
   {
-    title: { fr: 'IA, ML & réalité augmentée', en: 'AI, ML & augmented reality' },
+    title: { fr: 'IA, Machine Learning & AR', en: 'AI, Machine Learning & AR' },
     items: ['Machine Learning', 'Random Forest', 'LSTM', 'Maintenance prédictive', 'Unity', 'Vuforia'],
   },
 ]
 
+/** Tools marquee (real tools from the CV/skills only) */
+export const tools: string[] = [
+  'SolidWorks', 'CATIA V5', 'Blender', 'Python', 'C#', 'Java',
+  'Arduino', 'ESP32', 'Unity', 'Vuforia', 'Node-RED', 'MQTT', 'RT Tool Box', 'Machine Learning',
+]
+
 /* ------------------------------------------------------------------ */
-/* CERTIFICATIONS (CV — SOLIDWORKS x4, NVIDIA; file = downloadable)    */
+/* CERTIFICATIONS (CV)                                                */
 /* ------------------------------------------------------------------ */
 export interface Certification {
   name: string
   issuer: 'SOLIDWORKS' | 'NVIDIA'
-  file?: string // public path; absent = listed without download
+  file?: string
 }
 
 export const certifications: Certification[] = [
@@ -441,7 +455,8 @@ export const certifications: Certification[] = [
 ]
 
 /* ------------------------------------------------------------------ */
-/* EDUCATION (3 — CV)                                                 */
+/* EDUCATION (exact diploma titles provided by the owner; schools &    */
+/* dates taken from the CV — see TODO.md re: the technician diploma).   */
 /* ------------------------------------------------------------------ */
 export interface Education {
   degree: L
@@ -452,18 +467,18 @@ export interface Education {
 
 export const education: Education[] = [
   {
-    degree: { fr: 'Cycle d’ingénieur en Électromécanique — Spécialité Mécatronique', en: 'Engineering degree in Electromechanics — Mechatronics specialty' },
+    degree: { fr: 'Diplôme d’Ingénieur en Électromécanique', en: 'Engineering Degree in Electromechanics' },
     school: { fr: 'ESPRIT — École Supérieure Privée d’Ingénierie et de Technologies', en: 'ESPRIT — Private Higher School of Engineering and Technologies' },
     period: '2024',
     current: true,
   },
   {
-    degree: { fr: 'Mastère Professionnel co-construit en Mécatronique', en: 'Co-constructed Professional Master’s in Mechatronics' },
+    degree: { fr: 'Master Professionnel en Mécatronique', en: 'Professional Master’s in Mechatronics' },
     school: { fr: 'ISTIC — Institut Supérieur des Technologies de l’Information et des Communications', en: 'ISTIC — Higher Institute of Information and Communication Technologies' },
     period: '2023 – 2025',
   },
   {
-    degree: { fr: 'Licence appliquée en génie mécanique', en: 'Applied Bachelor’s in Mechanical Engineering' },
+    degree: { fr: 'Diplôme de Technicien en Génie Mécanique — Maintenance Industrielle', en: 'Technician Diploma in Mechanical Engineering — Industrial Maintenance' },
     school: { fr: 'ISETN — Institut Supérieur des Études Technologiques de Nabeul', en: 'ISETN — Higher Institute of Technological Studies of Nabeul' },
     period: '2020 – 2023',
   },
@@ -491,8 +506,8 @@ export const associations: Association[] = [
     title: { fr: 'AIESEC — Stage volontaire en Turquie (Izmit)', en: 'AIESEC — Volunteer internship in Turkey (Izmit)' },
     period: '06/2023 – 08/2023',
     description: {
-      fr: 'Collaboration internationale pour organiser des événements communautaires, animation de sessions « Talk to Practice » en anglais et encadrement d’activités éducatives pour enfants et adultes.',
-      en: 'International collaboration organizing community events, facilitating “Talk to Practice” sessions in English, and leading educational activities for children and adults.',
+      fr: 'Collaboration internationale : organisation d’événements communautaires, animation de sessions « Talk to Practice » en anglais et encadrement d’activités éducatives.',
+      en: 'International collaboration: organizing community events, facilitating “Talk to Practice” sessions in English, and leading educational activities.',
     },
     file: '/Certification.pdf',
   },

@@ -3,6 +3,7 @@
 import { useLanguage } from './LanguageProvider'
 import Reveal from './ui/Reveal'
 import SectionHeading from './ui/SectionHeading'
+import CountUp from './fx/CountUp'
 import { about, skillGroups, identity } from '@/lib/content'
 
 export default function About() {
@@ -47,9 +48,10 @@ export default function About() {
               {about.stats.map((stat, i) => (
                 <Reveal key={stat.label.en} as="li" delay={i * 0.08}>
                   <div className="card flex h-full flex-col justify-between p-5 hover:border-accent/40 sm:p-6">
-                    <span className="font-display text-4xl font-semibold text-accent sm:text-5xl">
-                      {stat.value}
-                    </span>
+                    <CountUp
+                      value={stat.value}
+                      className="font-display text-4xl font-semibold text-accent sm:text-5xl"
+                    />
                     <span className="mt-3 block font-mono text-xs uppercase leading-snug tracking-[0.12em] text-ink-soft">
                       {stat.label[language]}
                     </span>

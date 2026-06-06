@@ -8,10 +8,14 @@ import Certifications from '@/components/Certifications'
 import Education from '@/components/Education'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
+import BootLoader from '@/components/fx/BootLoader'
+import ReadingProgress from '@/components/fx/ReadingProgress'
 
 export default function Home() {
   return (
     <>
+      <BootLoader />
+      <ReadingProgress />
       <Header />
       <main id="main">
         <Hero />

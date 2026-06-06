@@ -1,6 +1,7 @@
 'use client'
 
 import Reveal from './Reveal'
+import WordReveal from '../fx/WordReveal'
 
 interface SectionHeadingProps {
   kicker: string
@@ -17,9 +18,12 @@ export default function SectionHeading({ kicker, title, lead, align = 'left' }: 
       <Reveal>
         <span className="kicker">{kicker}</span>
       </Reveal>
-      <Reveal delay={0.05}>
-        <h2 className="display mt-5 text-4xl text-ink sm:text-5xl lg:text-[3.25rem]">{title}</h2>
-      </Reveal>
+      <WordReveal
+        text={title}
+        as="h2"
+        delay={0.05}
+        className="display mt-5 text-4xl text-ink sm:text-5xl lg:text-[3.25rem]"
+      />
       {lead && (
         <Reveal delay={0.1}>
           <p className="mt-5 text-lg leading-relaxed text-ink-soft text-pretty">{lead}</p>

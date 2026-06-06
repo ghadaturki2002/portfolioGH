@@ -1,28 +1,25 @@
 import type { Metadata } from 'next'
-import { Fraunces, Inter, JetBrains_Mono } from 'next/font/google'
+import { Sora, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import ThemeProvider from '@/components/ThemeProvider'
 import { LanguageProvider } from '@/components/LanguageProvider'
 import { ReactNode } from 'react'
 
-// Editorial display serif
-const display = Fraunces({
+// Modern geometric display — techy yet professional
+const display = Sora({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
+  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-display',
   display: 'swap',
 })
-// Body
 const sans = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
 })
-// Small technical labels / chips
 const mono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['400', '500', '600'],
   variable: '--font-mono',
   display: 'swap',
 })
@@ -31,24 +28,16 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://portfoliogh.vercel.app'),
   title: 'Ghada Turki — Ingénieure Électromécanique & Mécatronique',
   description:
-    'Portfolio de Ghada Turki, ingénieure en électromécanique et mécatronique : conception mécanique (SolidWorks, CATIA V5), automatisation, systèmes embarqués (Arduino, ESP32), développement logiciel (Python, C#, Java) et intelligence artificielle.',
+    'Portfolio de Ghada Turki, ingénieure en électromécanique et mécatronique. Conception mécanique (SolidWorks, CATIA V5), automatisation et systèmes embarqués (Arduino, ESP32), développement logiciel (Python, C#, Java) et machine learning (jumeau numérique, Random Forest, LSTM). Disponible à partir de septembre 2026.',
   keywords: [
-    'Ghada Turki',
-    'ingénieure mécatronique',
-    'électromécanique',
-    'SolidWorks',
-    'CATIA V5',
-    'Arduino',
-    'ESP32',
-    'automatisation',
-    'machine learning',
-    'jumeau numérique',
+    'Ghada Turki', 'ingénieure électromécanique', 'mécatronique', 'SolidWorks', 'CATIA V5',
+    'Arduino', 'ESP32', 'automatisation', 'machine learning', 'jumeau numérique', 'LSTM', 'Random Forest',
   ],
   authors: [{ name: 'Ghada Turki' }],
   openGraph: {
     title: 'Ghada Turki — Ingénieure Électromécanique & Mécatronique',
     description:
-      'Conception mécanique, automatisation, systèmes embarqués, développement logiciel et IA appliquée.',
+      'Conception mécanique, automatisation, systèmes embarqués, développement logiciel et machine learning.',
     type: 'website',
     locale: 'fr_FR',
   },

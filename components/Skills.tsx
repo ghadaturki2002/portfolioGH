@@ -2,6 +2,7 @@
 
 import SectionHeading from './ui/SectionHeading'
 import Reveal from './ui/Reveal'
+import PCBTraces from './fx/PCBTraces'
 import { useLanguage } from './LanguageProvider'
 import { skillGroups } from '@/lib/content'
 
@@ -9,7 +10,8 @@ export default function Skills() {
   const { language, t } = useLanguage()
 
   return (
-    <section id="skills" className="section">
+    <section id="skills" className="section relative overflow-hidden">
+      <PCBTraces className="absolute inset-0 -z-10 h-full w-full opacity-50" />
       <div className="container-px">
         <SectionHeading kicker={t('skills.kicker')} title={t('skills.title')} />
 

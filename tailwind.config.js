@@ -4,43 +4,43 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class', // .dark = Blueprint (cyanotype). :root = Paper (drafting white).
+  darkMode: 'class', // .dark = deep charcoal ; :root = warm ivory
   theme: {
     extend: {
       colors: {
-        // Themeable drafting palette — channels set in globals.css per theme.
-        paper:      'rgb(var(--paper) / <alpha-value>)',
-        'paper-2':  'rgb(var(--paper-2) / <alpha-value>)',
-        ink:        'rgb(var(--ink) / <alpha-value>)',
+        bg: 'rgb(var(--bg) / <alpha-value>)',
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        'surface-2': 'rgb(var(--surface-2) / <alpha-value>)',
+        ink: 'rgb(var(--ink) / <alpha-value>)',
         'ink-soft': 'rgb(var(--ink-soft) / <alpha-value>)',
-        hairline:   'rgb(var(--hairline) / <alpha-value>)',
-        'hairline-2':'rgb(var(--hairline-2) / <alpha-value>)',
-        accent:     'rgb(var(--accent) / <alpha-value>)',
-        'accent-2': 'rgb(var(--accent-2) / <alpha-value>)',
+        hairline: 'rgb(var(--hairline) / <alpha-value>)',
+        accent: 'rgb(var(--accent) / <alpha-value>)',
+        'accent-strong': 'rgb(var(--accent-strong) / <alpha-value>)',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
-        sans:    ['var(--font-body)', 'system-ui', 'sans-serif'],
-        mono:    ['var(--font-mono)', 'ui-monospace', 'monospace'],
-      },
-      letterSpacing: {
-        label: '0.18em',
+        display: ['var(--font-display)', 'Georgia', 'serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       maxWidth: {
-        sheet: '1180px',
+        content: '1200px',
+        prose: '68ch',
       },
       keyframes: {
-        'trace-flow': {
-          to: { strokeDashoffset: '-1000' },
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(16px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        'gear-spin': {
-          to: { transform: 'rotate(360deg)' },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
       },
       animation: {
-        'trace-flow': 'trace-flow 6s linear infinite',
-        'gear-spin': 'gear-spin 24s linear infinite',
+        'fade-up': 'fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
+        marquee: 'marquee 32s linear infinite',
       },
     },
   },

@@ -3,162 +3,149 @@
 @tailwind utilities;
 
 /* ============================================================
-   LIVING ENGINEERING DRAWING — design system
-   :root  = Paper (warm drafting white)
-   .dark  = Blueprint (cyanotype negative)
-   Colour tokens are RGB channel triplets consumed by Tailwind
-   as rgb(var(--token) / <alpha-value>).
+   EDITORIAL DESIGN SYSTEM
+   :root  = Warm ivory (light)
+   .dark  = Deep warm charcoal (dark)
+   One accent: emerald. Tokens are RGB channel triplets used as
+   rgb(var(--token) / <alpha-value>) by Tailwind.
    ============================================================ */
 @layer base {
   :root {
-    /* PAPER — warm drafting sheet */
-    --paper: 245 242 234;
-    --paper-2: 238 234 221;
-    --ink: 20 24 29;
-    --ink-soft: 60 67 76;
-    --hairline: 201 196 181;
-    --hairline-2: 219 214 199;
-    /* Signal accent — safety orange (darkened so small text passes WCAG AA on paper) */
-    --accent: 194 65 12;
-    --accent-2: 232 85 30;
-    /* drafting grid line alphas */
-    --grid-fine: rgba(20, 24, 29, 0.045);
-    --grid-bold: rgba(20, 24, 29, 0.085);
+    --bg: 250 248 243;          /* warm ivory   #FAF8F3 */
+    --surface: 255 255 255;     /* #FFFFFF */
+    --surface-2: 243 239 230;   /* #F3EFE6 */
+    --ink: 27 26 23;            /* near-black warm #1B1A17 */
+    --ink-soft: 90 85 76;       /* #5A554C */
+    --hairline: 228 222 207;    /* #E4DECF */
+    --accent: 14 122 90;        /* emerald #0E7A5A */
+    --accent-strong: 10 94 69;  /* deeper emerald #0A5E45 */
   }
 
   .dark {
-    /* BLUEPRINT — cyanotype ground, light linework */
-    --paper: 12 42 67;
-    --paper-2: 10 36 56;
-    --ink: 228 238 246;
-    --ink-soft: 159 189 212;
-    --hairline: 46 88 118;
-    --hairline-2: 35 72 100;
-    /* Safety orange, brightened for the dark ground */
-    --accent: 255 122 69;
-    --accent-2: 255 150 105;
-    --grid-fine: rgba(220, 235, 245, 0.05);
-    --grid-bold: rgba(220, 235, 245, 0.1);
+    --bg: 19 18 15;             /* warm black #13120F */
+    --surface: 28 27 22;        /* #1C1B16 */
+    --surface-2: 35 33 25;      /* #232119 */
+    --ink: 242 238 228;         /* warm off-white #F2EEE4 */
+    --ink-soft: 167 161 149;    /* #A7A195 */
+    --hairline: 44 42 33;       /* #2C2A21 */
+    --accent: 52 211 153;       /* emerald-400 #34D399 */
+    --accent-strong: 110 231 183; /* #6EE7B7 */
   }
 
   * {
-    @apply border-hairline;
+    border-color: rgb(var(--hairline));
   }
 
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-paper text-ink font-sans;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    background-color: rgb(var(--bg));
+    color: rgb(var(--ink));
+    font-family: var(--font-sans), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    /* precision drafting grid substrate: fine 8px + coarse 80px */
-    background-image:
-      linear-gradient(var(--grid-fine) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-fine) 1px, transparent 1px),
-      linear-gradient(var(--grid-bold) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-bold) 1px, transparent 1px);
-    background-size: 8px 8px, 8px 8px, 80px 80px, 80px 80px;
-    background-attachment: scroll;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
-  /* parallax grid only on larger screens — `fixed` janks on mobile browsers */
-  @media (min-width: 768px) {
-    body {
-      background-attachment: fixed;
-    }
+  ::selection {
+    background: rgb(var(--accent));
+    color: rgb(var(--bg));
+  }
+
+  /* Accessible focus ring */
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
 @layer components {
-  .sheet {
-    @apply max-w-sheet mx-auto px-6 sm:px-8 lg:px-12;
+  .container-px {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-12;
   }
 
-  .section-pad {
-    @apply py-24 md:py-32;
+  .section {
+    @apply scroll-mt-24 py-20 md:py-28 lg:py-32;
   }
 
-  /* mono spec / annotation label */
-  .label {
-    @apply font-mono text-[11px] uppercase tracking-label text-ink-soft;
+  /* small uppercase eyebrow with a leading rule */
+  .kicker {
+    @apply inline-flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-[0.2em] text-accent;
+  }
+  .kicker::before {
+    content: '';
+    @apply inline-block h-px w-8 bg-accent;
   }
 
-  /* hairline-bordered drafting surface */
-  .draft-surface {
-    @apply border border-hairline bg-paper-2/40;
+  .display {
+    @apply font-display font-semibold leading-[1.04] tracking-[-0.01em];
   }
 
-  /* mono "chip" used for tech tags */
-  .spec-chip {
-    @apply font-mono text-[11px] tracking-wide px-2.5 py-1 border border-hairline text-ink;
+  .chip {
+    @apply inline-flex items-center rounded-full border border-hairline bg-surface px-3 py-1 font-mono text-[12px] text-ink-soft transition-colors;
   }
 
+  .card {
+    @apply rounded-2xl border border-hairline bg-surface transition-all duration-300;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200;
+  }
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 font-mono text-xs uppercase tracking-label
-           bg-ink text-paper border border-ink transition-colors duration-200
-           hover:bg-accent hover:border-accent hover:text-paper
-           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper;
+    @apply btn bg-accent text-bg hover:bg-accent-strong hover:-translate-y-0.5;
+  }
+  .btn-outline {
+    @apply btn border border-ink/25 text-ink hover:border-accent hover:text-accent;
   }
 
-  .btn-ghost {
-    @apply inline-flex items-center gap-2 px-6 py-3 font-mono text-xs uppercase tracking-label
-           bg-transparent text-ink border border-ink transition-colors duration-200
-           hover:bg-ink hover:text-paper
-           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper;
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-accent transition-all duration-300;
+  }
+  .link-underline:hover::after {
+    @apply w-full;
   }
 }
 
 @layer utilities {
-  /* corner registration tick (drawing crop mark) */
-  .corner-ticks {
-    position: relative;
+  .text-balance {
+    text-wrap: balance;
   }
-  .corner-ticks::before,
-  .corner-ticks::after {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-color: rgb(var(--accent));
-    pointer-events: none;
+  .text-pretty {
+    text-wrap: pretty;
   }
-  .corner-ticks::before {
-    top: -1px;
-    left: -1px;
-    border-top: 1.5px solid;
-    border-left: 1.5px solid;
-  }
-  .corner-ticks::after {
-    bottom: -1px;
-    right: -1px;
-    border-bottom: 1.5px solid;
-    border-right: 1.5px solid;
+  /* fine grain texture-free subtle dotted backdrop for hero */
+  .dot-grid {
+    background-image: radial-gradient(rgb(var(--ink) / 0.06) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 }
 
 /* themed scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 11px;
 }
 ::-webkit-scrollbar-track {
-  background: rgb(var(--paper-2));
+  background: rgb(var(--bg));
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--accent));
+  background: rgb(var(--hairline));
+  border-radius: 9999px;
+  border: 3px solid rgb(var(--bg));
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--accent-2));
-}
-
-::selection {
   background: rgb(var(--accent));
-  color: rgb(var(--paper));
 }
 
-/* Respect reduced motion globally: collapse transitions/animations. */
+/* Reduced motion: collapse animations & smooth scroll */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

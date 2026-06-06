@@ -1,72 +1,103 @@
 'use client'
 
-import { Linkedin, Mail } from 'lucide-react'
+import { Linkedin, Mail, ArrowUp } from 'lucide-react'
 import { useLanguage } from './LanguageProvider'
-import SchematicTrace from './draft/SchematicTrace'
+import Reveal from './ui/Reveal'
+import { identity } from '@/lib/content'
 
 export default function Footer() {
   const { t } = useLanguage()
   const year = new Date().getFullYear()
 
-  const links = [
-    { label: t('footer.about'), href: '#about' },
-    { label: t('footer.projects'), href: '#projects' },
-    { label: t('footer.contact'), href: '#contact' },
+  const nav = [
+    { href: '#about', label: t('nav.about') },
+    { href: '#projects', label: t('nav.projects') },
+    { href: '#experience', label: t('nav.experience') },
+    { href: '#skills', label: t('nav.skills') },
+    { href: '#contact', label: t('nav.contact') },
   ]
 
+  const go = (href: string) => {
+    const el = document.querySelector(href)
+    if (!el) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: reduce ? 'auto' : 'smooth' })
+  }
+
   return (
-    <footer className="relative border-t-[1.5px] border-ink bg-paper-2/40">
-      {/* schematic trace divider */}
-      <SchematicTrace className="absolute -top-px left-0 h-10 w-64 opacity-60" />
-
-      <div className="sheet py-16">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-          <div>
-            <h3 className="font-display text-2xl font-bold tracking-tight text-ink">Ghada Turki</h3>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-soft">{t('footer.tagline')}</p>
-          </div>
-
-          <div>
-            <h4 className="label mb-4">{t('footer.quickLinks')}</h4>
-            <ul className="space-y-2.5">
-              {links.map((l) => (
-                <li key={l.href}>
-                  <a href={l.href} className="font-mono text-sm text-ink-soft transition-colors hover:text-accent">
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="label mb-4">{t('footer.social')}</h4>
-            <div className="flex gap-3">
-              <a
-                href="https://www.linkedin.com/in/ghada-turki-20319b217"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center border border-ink text-ink transition-colors hover:bg-accent hover:border-accent hover:text-paper"
-                aria-label="LinkedIn"
+    <footer className="border-t border-hairline">
+      <div className="container-px py-12 md:py-16">
+        <Reveal>
+          <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
+            {/* wordmark + built line */}
+            <div className="max-w-sm">
+              <button
+                onClick={() => go('#hero')}
+                className="font-display text-2xl font-semibold tracking-tight text-ink"
+                aria-label={t('footer.top')}
               >
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a
-                href="mailto:ghada.turkiditgaraali@esprit.tn"
-                className="flex h-10 w-10 items-center justify-center border border-ink text-ink transition-colors hover:bg-accent hover:border-accent hover:text-paper"
-                aria-label="Email"
-              >
-                <Mail className="h-5 w-5" />
-              </a>
+                Ghada<span className="text-accent">.</span>
+              </button>
+              <p className="mt-4 text-sm leading-relaxed text-ink-soft text-pretty">
+                {t('footer.built')}
+              </p>
+            </div>
+
+            {/* nav + socials */}
+            <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
+              <nav aria-label="Footer">
+                <ul className="flex flex-col gap-3">
+                  {nav.map((item) => (
+                    <li key={item.href}>
+                      <a
+                        href={item.href}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          go(item.href)
+                        }}
+                        className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              <div className="flex items-start gap-3">
+                <a
+                  href={identity.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`LinkedIn — ${identity.name}`}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-soft transition-colors hover:border-accent hover:text-accent"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href={`mailto:${identity.email}`}
+                  aria-label={`Email — ${identity.email}`}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-soft transition-colors hover:border-accent hover:text-accent"
+                >
+                  <Mail className="h-4 w-4" />
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="mt-12 border-t border-hairline pt-6 text-center">
-          <p className="mb-2 font-mono text-xs italic text-ink-soft">{t('footer.quote')}</p>
-          <p className="label">
-            © {year} Ghada Turki. {t('footer.rights')}.
+        {/* bottom row */}
+        <div className="mt-12 flex flex-col gap-4 border-t border-hairline pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-mono text-xs text-ink-soft">
+            © {year} {identity.name}. {t('footer.rights')}
           </p>
+          <button
+            onClick={() => go('#hero')}
+            className="group inline-flex items-center gap-2 self-start font-mono text-xs uppercase tracking-[0.2em] text-ink-soft transition-colors hover:text-accent sm:self-auto"
+          >
+            {t('footer.top')}
+            <ArrowUp className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5" />
+          </button>
         </div>
       </div>
     </footer>

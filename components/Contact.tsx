@@ -1,27 +1,25 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
-import { Mail, Phone, MapPin, Linkedin, Send, CheckCircle } from 'lucide-react'
+import { Mail, Phone, MapPin, Linkedin, Send, CheckCircle, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from './LanguageProvider'
-import SectionHeader from './draft/SectionHeader'
+import Reveal from './ui/Reveal'
+import SectionHeading from './ui/SectionHeading'
+import { identity } from '@/lib/content'
 
 export default function Contact() {
-  const { t } = useLanguage()
-  const reduce = useReducedMotion()
+  const { language, t } = useLanguage()
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  })
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Here you would typically send the form data to a backend
-    console.log('Form submitted:', formData)
+    // No backend: open the visitor's mail client with the message pre-filled,
+    // so it actually reaches Ghada instead of being lost.
+    const subject = encodeURIComponent(formData.subject || `Contact — ${formData.name}`)
+    const body = encodeURIComponent(`${formData.message}\n\n— ${formData.name} (${formData.email})`)
+    window.location.href = `mailto:${identity.email}?subject=${subject}&body=${body}`
     setIsSubmitted(true)
     setTimeout(() => {
       setIsSubmitted(false)
@@ -32,227 +30,202 @@ export default function Contact() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  // Shared input styling — drafting sheet inputs: paper-2 fill, hairline border,
-  // square corners, mono, accent focus ring.
-  const fieldClasses =
-    'w-full border border-hairline bg-paper-2 px-4 py-3 font-sans text-ink placeholder:text-ink-soft/70 transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent'
-
-  // Spec-row contact records (right-aligned reference tags, drawing-style)
-  const records = [
+  const details = [
     {
-      ref: 'C—01',
       icon: Mail,
-      label: t('contact.email'),
-      value: 'ghada.turkiditgaraali@esprit.tn',
-      href: 'mailto:ghada.turkiditgaraali@esprit.tn',
+      label: t('contact.emailLabel'),
+      value: identity.email,
+      href: `mailto:${identity.email}`,
+      external: false,
     },
     {
-      ref: 'C—02',
       icon: Phone,
-      label: t('contact.phone'),
-      value: '216-26-016-352',
-      href: 'tel:216-26-016-352',
+      label: t('contact.phoneLabel'),
+      value: identity.phone,
+      href: `tel:${identity.phone.replace(/\s+/g, '')}`,
+      external: false,
     },
     {
-      ref: 'C—03',
       icon: MapPin,
-      label: t('contact.location'),
-      value: 'Hammamet, Nabeul, Tunisia',
+      label: t('contact.locationLabel'),
+      value: identity.location[language],
       href: null,
+      external: false,
+    },
+    {
+      icon: Linkedin,
+      label: 'LinkedIn',
+      value: 'linkedin.com/in/ghada-turki',
+      href: identity.linkedin,
+      external: true,
     },
   ]
 
+  const fieldClass =
+    'w-full rounded-xl border border-hairline bg-surface px-4 py-3 text-ink placeholder:text-ink-soft/60 transition-colors focus:border-accent focus:outline-none'
+
   return (
-    <section id="contact" className="section-pad">
-      <div className="sheet">
-        <SectionHeader number="06" marker="F—F" title={t('contact.title')} />
+    <section id="contact" className="section">
+      <div className="container-px">
+        <SectionHeading
+          kicker={t('contact.kicker')}
+          title={t('contact.title')}
+          lead={t('contact.intro')}
+        />
 
-        <motion.p
-          initial={{ opacity: 0, y: reduce ? 0 : 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: reduce ? 0 : 0.5 }}
-          className="max-w-2xl border-l-2 border-accent pl-4 text-base text-ink-soft md:text-lg"
-        >
-          {t('contact.subtitle')}
-        </motion.p>
-
-        <div className="mt-14 grid grid-cols-1 gap-x-12 gap-y-14 lg:grid-cols-2">
-          {/* ---------- LEFT: CONTACT INFO ---------- */}
-          <motion.div
-            initial={{ opacity: 0, x: reduce ? 0 : -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: reduce ? 0 : 0.5 }}
-          >
-            <div className="label mb-3">CONTACT — INFO</div>
-            <h3 className="font-display text-2xl font-bold leading-tight text-ink md:text-3xl">
-              {t('contact.info')}
-            </h3>
-            <p className="mt-4 max-w-md text-ink-soft">{t('contact.infoDesc')}</p>
-
-            {/* spec-row records */}
-            <div className="mt-8 border-t border-hairline">
-              {records.map((rec) => {
-                const Icon = rec.icon
+        <div className="mt-12 grid gap-10 lg:mt-16 lg:grid-cols-2 lg:gap-12">
+          {/* LEFT — contact details */}
+          <div>
+            <ul className="space-y-4">
+              {details.map((item, i) => {
+                const Icon = item.icon
                 const inner = (
-                  <>
-                    <span className="flex h-11 w-11 flex-none items-center justify-center border border-hairline bg-paper-2 transition-colors group-hover:border-accent">
-                      <Icon className="h-5 w-5 text-accent" aria-hidden="true" />
+                  <span className="flex items-start gap-4">
+                    <span
+                      className="flex h-11 w-11 flex-none items-center justify-center rounded-xl border border-accent/20 bg-accent/10 text-accent"
+                      aria-hidden="true"
+                    >
+                      <Icon className="h-5 w-5" />
                     </span>
-                    <span className="min-w-0">
-                      <span className="label block">{rec.label}</span>
-                      <span className="mt-1 block break-words font-mono text-sm text-ink transition-colors group-hover:text-accent">
-                        {rec.value}
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-mono text-xs uppercase tracking-[0.18em] text-ink-soft">
+                        {item.label}
+                      </span>
+                      <span className="mt-1 flex items-center gap-1.5 break-words text-base text-ink">
+                        {item.value}
+                        {item.external && (
+                          <ArrowUpRight className="h-4 w-4 flex-none text-ink-soft transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                        )}
                       </span>
                     </span>
-                    <span className="ml-auto hidden self-start font-mono text-[11px] tracking-label text-ink-soft sm:block">
-                      {rec.ref}
-                    </span>
-                  </>
+                  </span>
                 )
 
-                if (rec.href) {
-                  return (
-                    <a
-                      key={rec.ref}
-                      href={rec.href}
-                      className="group flex items-center gap-4 border-b border-hairline py-4 transition-colors hover:bg-paper-2/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                    >
-                      {inner}
-                    </a>
-                  )
-                }
                 return (
-                  <div
-                    key={rec.ref}
-                    className="group flex items-center gap-4 border-b border-hairline py-4"
-                  >
-                    {inner}
-                  </div>
+                  <Reveal as="li" key={item.label} delay={i * 0.06}>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        {...(item.external
+                          ? { target: '_blank', rel: 'noopener noreferrer' }
+                          : {})}
+                        className="card group block p-4 hover:border-accent/40"
+                      >
+                        {inner}
+                      </a>
+                    ) : (
+                      <div className="card group p-4">{inner}</div>
+                    )}
+                  </Reveal>
                 )
               })}
-            </div>
+            </ul>
+          </div>
 
-            {/* social */}
-            <div className="mt-8">
-              <div className="label mb-3">{t('contact.social')}</div>
-              <a
-                href="https://www.linkedin.com/in/ghada-turki-20319b217"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="inline-flex h-11 w-11 items-center justify-center border border-hairline bg-paper-2 transition-colors hover:border-accent hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent group/li"
-              >
-                <Linkedin className="h-5 w-5 text-accent transition-colors group-hover/li:text-paper" aria-hidden="true" />
-              </a>
-            </div>
-          </motion.div>
-
-          {/* ---------- RIGHT: CONTACT FORM ---------- */}
-          <motion.div
-            initial={{ opacity: 0, x: reduce ? 0 : 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: reduce ? 0 : 0.5 }}
-          >
-            <div className="corner-ticks draft-surface bg-paper-2/30 p-6 md:p-8">
-              <div className="mb-6 flex items-center justify-between border-b border-hairline pb-4">
-                <span className="label">CONTACT — FORM</span>
-                <span className="font-mono text-[11px] tracking-label text-ink-soft">REV. A</span>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
+          {/* RIGHT — contact form */}
+          <Reveal delay={0.1}>
+            <form onSubmit={handleSubmit} className="card p-6 sm:p-8">
+              <div className="grid gap-5">
                 <div>
-                  <label htmlFor="name" className="label mb-2 block">
-                    {t('contact.fullName')}
+                  <label
+                    htmlFor="contact-name"
+                    className="mb-2 block font-mono text-xs uppercase tracking-[0.18em] text-ink-soft"
+                  >
+                    {t('contact.name')}
                   </label>
                   <input
-                    type="text"
-                    id="name"
+                    id="contact-name"
                     name="name"
+                    type="text"
+                    required
                     value={formData.name}
                     onChange={handleChange}
-                    required
-                    className={fieldClasses}
                     placeholder={t('contact.namePlaceholder')}
+                    className={fieldClass}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="label mb-2 block">
+                  <label
+                    htmlFor="contact-email"
+                    className="mb-2 block font-mono text-xs uppercase tracking-[0.18em] text-ink-soft"
+                  >
                     {t('contact.email')}
                   </label>
                   <input
-                    type="email"
-                    id="email"
+                    id="contact-email"
                     name="email"
+                    type="email"
+                    required
                     value={formData.email}
                     onChange={handleChange}
-                    required
-                    className={fieldClasses}
                     placeholder={t('contact.emailPlaceholder')}
+                    className={fieldClass}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="label mb-2 block">
+                  <label
+                    htmlFor="contact-subject"
+                    className="mb-2 block font-mono text-xs uppercase tracking-[0.18em] text-ink-soft"
+                  >
                     {t('contact.subject')}
                   </label>
                   <input
-                    type="text"
-                    id="subject"
+                    id="contact-subject"
                     name="subject"
+                    type="text"
+                    required
                     value={formData.subject}
                     onChange={handleChange}
-                    required
-                    className={fieldClasses}
                     placeholder={t('contact.subjectPlaceholder')}
+                    className={fieldClass}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="label mb-2 block">
+                  <label
+                    htmlFor="contact-message"
+                    className="mb-2 block font-mono text-xs uppercase tracking-[0.18em] text-ink-soft"
+                  >
                     {t('contact.message')}
                   </label>
                   <textarea
-                    id="message"
+                    id="contact-message"
                     name="message"
+                    required
+                    rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    required
-                    rows={6}
-                    className={`${fieldClasses} resize-none`}
                     placeholder={t('contact.messagePlaceholder')}
+                    className={`${fieldClass} resize-y`}
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitted}
-                  className="btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-50"
+                  className="btn-primary group mt-1 w-full disabled:cursor-not-allowed disabled:opacity-90"
                 >
                   {isSubmitted ? (
                     <>
-                      <CheckCircle className="h-4 w-4" />
                       {t('contact.sent')}
+                      <CheckCircle className="h-4 w-4" />
                     </>
                   ) : (
                     <>
-                      <Send className="h-4 w-4" />
                       {t('contact.send')}
+                      <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </>
                   )}
                 </button>
-              </form>
-            </div>
-          </motion.div>
+              </div>
+            </form>
+          </Reveal>
         </div>
       </div>
     </section>

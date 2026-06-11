@@ -17,6 +17,7 @@ Cherche ces marqueurs dans **`lib/content.ts`** : **`[À COMPLÉTER : …]`** / 
 
 ### Autres projets
 - **Robot de détection de fissures** → ✅ contenu détaillé intégré (équipe de 6, VGG16 + ESP32-CAM, **96 %** de précision). Le terme « autonome » a été remplacé par « piloté à distance » (seule la détection est automatique). Médias existants `crac.jpg` + `video.mp4` conservés — tu peux les remplacer par une meilleure photo/vidéo (même nom de fichier dans `public/`).
+- **GenARino (réalité augmentée)** → ✅ contenu détaillé intégré (PFE Master, ISTIC × MATECH, **2025**, 6 mois ; AR Unity/Vuforia + 3D SolidWorks/Blender). Visuels `app.jpg` + `8.jpg` conservés. ⚠️ Le paragraphe « Ce que j'ai appris » est à **valider** (dis-moi ta vraie difficulté principale si tu veux le changer). La **maquette Arduino a été retirée** de ce projet → ce sera un **projet séparé** (même thème) à rédiger.
 - **GMAO** → la **technologie** de l'application est inconnue : `tech: ['[À COMPLÉTER : techno]', …]` (WinDev ? Java ? autre ?).
 - **Liens « Voir le projet »** : chaque projet a `link: '[À COMPLÉTER : lien]'`. Tant que c'est un placeholder, **aucun bouton « Voir le projet » ne s'affiche** (volontaire). Ajoute une vraie URL (démo / dépôt GitHub / vidéo) pour faire apparaître le lien sur la carte et dans la modale.
 

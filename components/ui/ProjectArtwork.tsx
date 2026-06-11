@@ -10,11 +10,11 @@ export default function ProjectArtwork({ id, label }: { id: string; label: strin
   return (
     <div className="dot-grid relative flex h-full w-full items-center justify-center overflow-hidden">
       <div className="w-full max-w-[280px] px-6 text-accent/70">
-        {id === 'digital-twin' ? (
+        {id === 'jumeau-numerique' ? (
           <DigitalTwin />
-        ) : id === 'line-follower' ? (
+        ) : id === 'suiveur-ligne' ? (
           <LineFollower />
-        ) : id === 'smart-reservoir' ? (
+        ) : id === 'reservoir-iot' ? (
           <Reservoir />
         ) : (
           <Generic />

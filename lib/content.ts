@@ -54,7 +54,7 @@ export const about = {
   } as LList,
   stats: [
     { value: '6', label: { fr: 'Expériences en entreprise', en: 'Industry experiences' } as L },
-    { value: '8', label: { fr: 'Projets d’ingénierie', en: 'Engineering projects' } as L },
+    { value: '13', label: { fr: 'Projets d’ingénierie', en: 'Engineering projects' } as L },
     { value: '6', label: { fr: 'Certifications', en: 'Certifications' } as L },
     { value: '3', label: { fr: 'Diplômes', en: 'Degrees' } as L },
   ],
@@ -214,192 +214,345 @@ export const experiences: Experience[] = [
 ]
 
 /* ------------------------------------------------------------------ */
-/* PROJECTS                                                           */
+/* PROJECT CATEGORIES (filter pills). `short` is used as the card      */
+/* eyebrow (e.g. "Robotique · IA"); `label` is the full pill label.    */
+/* ------------------------------------------------------------------ */
+export interface ProjectCategory {
+  id: string
+  label: L
+  short: L
+}
+
+export const projectCategories: ProjectCategory[] = [
+  { id: 'all', label: { fr: 'Tout', en: 'All' }, short: { fr: 'Tout', en: 'All' } },
+  { id: 'mecanique', label: { fr: 'Conception mécanique & CAO', en: 'Mechanical Design & CAD' }, short: { fr: 'CAO', en: 'CAD' } },
+  { id: 'robotique', label: { fr: 'Robotique', en: 'Robotics' }, short: { fr: 'Robotique', en: 'Robotics' } },
+  { id: 'automatisme', label: { fr: 'Automatisme & Supervision', en: 'Automation & Control' }, short: { fr: 'Automatisme', en: 'Automation' } },
+  { id: 'iot', label: { fr: 'IoT & Systèmes embarqués', en: 'IoT & Embedded' }, short: { fr: 'IoT', en: 'IoT' } },
+  { id: 'ia', label: { fr: 'IA, Vision & Données', en: 'AI, Vision & Data' }, short: { fr: 'IA', en: 'AI' } },
+  { id: 'ar', label: { fr: 'Réalité augmentée', en: 'Augmented Reality' }, short: { fr: 'AR', en: 'AR' } },
+  { id: 'energie', label: { fr: 'Énergie & Électrotechnique', en: 'Energy & Power' }, short: { fr: 'Énergie', en: 'Energy' } },
+  { id: 'gestion', label: { fr: 'Gestion industrielle', en: 'Industrial Management' }, short: { fr: 'Gestion', en: 'Management' } },
+]
+
+/* ------------------------------------------------------------------ */
+/* PROJECTS — rich model (filterable). All copy is owner-authoritative. */
+/* `link` is a placeholder until real URLs are provided (no "view" link */
+/* renders while it starts with "["). Images/videos added where assets  */
+/* exist in /public.                                                    */
 /* ------------------------------------------------------------------ */
 export interface Project {
   id: string
-  category: L
-  title: L
-  summary: L
-  description: LList
+  type: L
+  status?: L | null
+  categories: string[]
   tech: string[]
+  title: L
+  description: L
+  role: L
+  learned: L
+  result?: L | null
+  link?: string | null
   images?: string[]
   videos?: string[]
-  status?: L
   featured?: boolean
 }
 
 export const projects: Project[] = [
   {
-    id: 'digital-twin',
-    category: { fr: 'Machine Learning · PFE', en: 'Machine Learning · Capstone' },
+    id: 'jumeau-numerique',
+    type: { fr: 'PFE — Entreprise', en: 'Final-year project — Company' },
     status: { fr: 'En cours', en: 'In progress' },
-    featured: true,
-    title: {
-      fr: 'Jumeau numérique d’une machine industrielle',
-      en: 'Digital twin of an industrial machine',
-    },
-    summary: {
-      fr: 'Mon projet de fin d’études : modéliser et prédire le comportement d’une machine industrielle par machine learning (Random Forest & LSTM).',
-      en: 'My engineering capstone: modelling and predicting an industrial machine’s behaviour with machine learning (Random Forest & LSTM).',
-    },
+    categories: ['ia', 'automatisme'],
+    tech: ['Python', 'Scikit-learn', 'Random Forest', 'LSTM', 'Jumeau numérique'],
+    title: { fr: 'Jumeau numérique d’une machine industrielle', en: 'Digital Twin of an Industrial Machine' },
     description: {
-      fr: [
-        'Projet de fin d’études (PFE) chez [À COMPLÉTER : entreprise], visant à construire le jumeau numérique d’une machine industrielle [À COMPLÉTER : type de machine] à partir de ses données capteurs.',
-        'L’approche combine un modèle Random Forest et un réseau de neurones récurrent LSTM pour modéliser et prédire [À COMPLÉTER : grandeur prédite], au service de la maintenance prédictive et de l’aide à la décision.',
-        'Résultats : [À COMPLÉTER : précision du modèle, indicateurs, gains obtenus].',
-      ],
-      en: [
-        'Final-year project (PFE) at [TO COMPLETE: company], building the digital twin of an industrial machine [TO COMPLETE: machine type] from its sensor data.',
-        'The approach combines a Random Forest model and an LSTM recurrent neural network to model and predict [TO COMPLETE: predicted variable], supporting predictive maintenance and decision-making.',
-        'Results: [TO COMPLETE: model accuracy, KPIs, gains achieved].',
-      ],
+      fr: 'Projet de fin d’études chez [À COMPLÉTER : entreprise] : construction du jumeau numérique d’une machine industrielle [À COMPLÉTER : type] à partir de ses données capteurs. Un modèle Random Forest et un réseau LSTM sont combinés pour prédire [À COMPLÉTER : grandeur] au service de la maintenance prédictive.',
+      en: 'Final-year project at [À COMPLÉTER : company]: building the digital twin of an industrial machine [À COMPLÉTER : type] from its sensor data. A Random Forest model and an LSTM network are combined to predict [À COMPLÉTER : target] for predictive maintenance.',
     },
-    tech: ['Python', 'Machine Learning', 'Random Forest', 'LSTM', 'Jumeau numérique'],
-    // ➤ Ajouter votre image ici (capture du dashboard / schéma du pipeline ML / modèle). Taille recommandée : 1200×750 px (ratio 16:10).
+    role: {
+      fr: 'Conception du pipeline de données, entraînement et comparaison des modèles, mise en place de la logique de prédiction.',
+      en: 'Designed the data pipeline, trained and compared the models, and built the prediction logic.',
+    },
+    learned: {
+      fr: 'Modélisation prédictive sur données capteurs, séries temporelles (LSTM), évaluation de modèles ML.',
+      en: 'Predictive modeling on sensor data, time series (LSTM), ML model evaluation.',
+    },
+    result: { fr: '[À COMPLÉTER : précision du modèle, gains de maintenance]', en: '[À COMPLÉTER : model accuracy, maintenance gains]' },
+    link: '[À COMPLÉTER : lien]',
+    featured: true,
   },
   {
-    id: 'generator-ar',
-    category: { fr: 'Réalité augmentée', en: 'Augmented reality' },
-    title: { fr: 'Émulateur de groupe électrogène + AR', en: 'Generator emulator + AR app' },
-    summary: {
-      fr: 'Un émulateur physique et une application AR immersive pour former les techniciens sans immobiliser une vraie machine.',
-      en: 'A physical emulator and an immersive AR app to train technicians without tying up a real machine.',
-    },
-    description: {
-      fr: [
-        'Application mobile en réalité augmentée (Vuforia, Unity, C#) pour explorer virtuellement chaque composant d’un groupe électrogène, avec quiz intégré.',
-        'Composants modélisés sous SolidWorks et Blender ; émulateur physique réalisé avec Arduino et composants électriques.',
-      ],
-      en: [
-        'Augmented-reality mobile app (Vuforia, Unity, C#) to virtually explore each component of a generator, with a built-in quiz.',
-        'Components modelled in SolidWorks and Blender; physical emulator built with Arduino and electrical components.',
-      ],
-    },
+    id: 'genarino-ar',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['ar', 'mecanique'],
     tech: ['Unity', 'Vuforia', 'C#', 'SolidWorks', 'Blender', 'Arduino'],
+    title: { fr: 'Émulateur de groupe électrogène + AR', en: 'Generator Set Emulator + AR' },
+    description: {
+      fr: 'Émulateur physique d’un groupe électrogène couplé à une application de réalité augmentée (GenARino) pour former les techniciens sans immobiliser une vraie machine. L’application superpose les composants en 3D et propose des quiz interactifs.',
+      en: 'A physical generator-set emulator paired with an augmented-reality app (GenARino) to train technicians without tying up a real machine. The app overlays 3D components and offers interactive quizzes.',
+    },
+    role: {
+      fr: 'Modélisation 3D (SolidWorks/Blender), développement de l’app AR (Unity/Vuforia) et de la maquette électronique (Arduino).',
+      en: '3D modeling (SolidWorks/Blender), AR app development (Unity/Vuforia) and the electronic mock-up (Arduino).',
+    },
+    learned: {
+      fr: 'Réalité augmentée, modélisation 3D temps réel, intégration matériel/logiciel.',
+      en: 'Augmented reality, real-time 3D modeling, hardware/software integration.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
     images: ['/app.jpg', '/8.jpg'],
   },
   {
-    id: 'crack-robot',
-    category: { fr: 'Robotique · IA', en: 'Robotics · AI' },
-    title: { fr: 'Robot autonome de détection de fissures', en: 'Autonomous crack-detection robot' },
-    summary: {
-      fr: 'Un robot mobile qui inspecte les structures et repère les fissures par intelligence artificielle.',
-      en: 'A mobile robot that inspects structures and spots cracks using artificial intelligence.',
-    },
+    id: 'robot-fissures',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['robotique', 'ia', 'iot', 'mecanique'],
+    tech: ['SolidWorks', 'VGG16', 'Deep Learning', 'ESP32', 'Computer Vision'],
+    title: { fr: 'Robot autonome de détection de fissures', en: 'Autonomous Crack-Detection Robot' },
     description: {
-      fr: [
-        'Conception et réalisation d’un robot autonome de détection de fissures : conception mécanique sous SolidWorks, traitement par intelligence artificielle et pilotage par carte ESP32.',
-      ],
-      en: [
-        'Design and build of an autonomous crack-detection robot: mechanical design in SolidWorks, AI-based processing, and control via an ESP32 board.',
-      ],
+      fr: 'Robot mobile autonome qui inspecte les structures et détecte les fissures par vision (modèle VGG16). Piloté par ESP32 avec une application de commande dédiée.',
+      en: 'An autonomous mobile robot that inspects structures and detects cracks through computer vision (VGG16), driven by an ESP32 with a dedicated control app.',
     },
-    tech: ['SolidWorks', 'Intelligence artificielle', 'ESP32'],
+    role: {
+      fr: 'Conception mécanique (SolidWorks), entraînement du modèle de détection VGG16, intégration ESP32 et application de commande.',
+      en: 'Mechanical design (SolidWorks), training the VGG16 detection model, ESP32 integration and the control app.',
+    },
+    learned: {
+      fr: 'Vision par ordinateur / deep learning (VGG16), robotique mobile, embarqué ESP32.',
+      en: 'Computer vision / deep learning (VGG16), mobile robotics, ESP32 embedded systems.',
+    },
+    result: { fr: '[À COMPLÉTER : précision de détection]', en: '[À COMPLÉTER : detection accuracy]' },
+    link: '[À COMPLÉTER : lien]',
     images: ['/crac.jpg'],
     videos: ['/video.mp4'],
   },
   {
-    id: 'production-supervision',
-    category: { fr: 'Automatisation · IoT', en: 'Automation · IoT' },
-    title: { fr: 'Supervision de production temps réel', en: 'Real-time production supervision' },
-    summary: {
-      fr: 'Du capteur sur la ligne au tableau de bord : une chaîne complète pour suivre la production de câbles en direct.',
-      en: 'From the sensor on the line to the dashboard: a full chain to track cable production live.',
-    },
+    id: 'supervision-production',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['automatisme', 'iot', 'mecanique'],
+    tech: ['Python', 'Arduino', 'SolidWorks', 'Capteur E3F-DS30C4'],
+    title: { fr: 'Supervision de production en temps réel', en: 'Real-Time Production Monitoring' },
     description: {
-      fr: [
-        'Application desktop Python comptabilisant la production par ouvrier, avec tableau de bord de supervision.',
-        'Poste de comptage conçu sous SolidWorks, partie électrique intégrant un capteur de proximité E3F-DS30C4 et une carte Arduino, données enregistrées dans l’application.',
-      ],
-      en: [
-        'Python desktop application tracking output per worker, with a supervisory dashboard.',
-        'Counting station designed in SolidWorks; electrical part integrating an E3F-DS30C4 proximity sensor and an Arduino board, with data logged into the app.',
-      ],
+      fr: 'Supervision en temps réel d’une ligne de production de câbles, du capteur sur la ligne jusqu’au tableau de bord : comptage des pièces et suivi de la production en direct.',
+      en: 'Real-time monitoring of a cable production line, from the sensor on the line to the dashboard — counting parts and tracking output live.',
     },
-    tech: ['Python', 'SolidWorks', 'Arduino', 'E3F-DS30C4'],
+    role: {
+      fr: 'Conception du poste (SolidWorks), acquisition capteur (Arduino) et développement du tableau de bord temps réel (Python).',
+      en: 'Designed the station (SolidWorks), sensor acquisition (Arduino) and the real-time dashboard (Python).',
+    },
+    learned: {
+      fr: 'Acquisition de données capteurs, supervision temps réel, traitement des données de production.',
+      en: 'Sensor data acquisition, real-time monitoring, production data processing.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
     images: ['/gd.png', '/gd1.png', '/gd3.png', '/gd4.png', '/gd5.png', '/gd6.png', '/GD12.png', '/gd11.png'],
   },
   {
-    id: 'fault-simulator',
-    category: { fr: 'Automatisation', en: 'Automation' },
-    title: { fr: 'Simulateur de pannes + app de diagnostic', en: 'Fault simulator + diagnosis app' },
-    summary: {
-      fr: 'Un banc de simulation de pannes et une application mobile qui rend chaque code défaut compréhensible.',
-      en: 'A fault-simulation bench and a mobile app that makes every fault code understandable.',
-    },
+    id: 'simulateur-pannes',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['automatisme', 'iot'],
+    tech: ['Java', 'Électronique', 'Microcontrôleur'],
+    title: { fr: 'Simulateur de pannes + application de diagnostic', en: 'Fault Simulator + Diagnostic App' },
     description: {
-      fr: [
-        'Application mobile (Java) traduisant un code de panne en description claire.',
-        'Simulateur de pannes à base d’un contrôleur Guardrevolution et de composants électriques.',
-        'Dossier de fabrication, définition des besoins et travaux pratiques pédagogiques.',
-      ],
-      en: [
-        'Java mobile app translating a fault code into a clear description.',
-        'Fault simulator built around a Guardrevolution controller and electrical components.',
-        'Manufacturing dossier, requirements definition and hands-on training material.',
-      ],
+      fr: 'Banc de simulation de pannes électriques couplé à une application de diagnostic qui traduit les codes défaut en messages clairs pour accélérer le dépannage.',
+      en: 'An electrical fault-simulation bench paired with a diagnostic app that turns fault codes into clear messages to speed up troubleshooting.',
     },
-    tech: ['Java', 'Guardrevolution', 'Électronique'],
+    role: {
+      fr: 'Conception du banc électronique et développement de l’application de diagnostic (Java).',
+      en: 'Designed the electronic bench and built the diagnostic app (Java).',
+    },
+    learned: {
+      fr: 'Diagnostic de pannes, électronique, développement applicatif Java.',
+      en: 'Fault diagnosis, electronics, Java application development.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
     images: ['/groupe.jpg', '/projet  groupe.jpg', '/Phone.jpg', '/phone1.jpg', '/phone 3.jpg', '/phone 4.jpg', '/phone 5.jpg'],
     videos: ['/video1.mp4', '/video2.mp4', '/video3.mp4'],
   },
   {
-    id: 'robotic-arm',
-    category: { fr: 'Robotique', en: 'Robotics' },
-    title: { fr: 'Bras robotique — gravure sur bois', en: 'Robotic arm — engraving on wood' },
-    summary: {
-      fr: 'Programmation d’un bras robotique industriel pour reproduire des motifs précis sur le bois.',
-      en: 'Programming an industrial robotic arm to reproduce precise patterns on wood.',
-    },
+    id: 'bras-gravure',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['robotique', 'mecanique'],
+    tech: ['CATIA V5', 'RT ToolBox', 'Robot industriel'],
+    title: { fr: 'Bras robotique — gravure sur bois', en: 'Robotic Arm — Wood Engraving' },
     description: {
-      fr: [
-        'Commande d’un bras robotique réalisant des motifs sur le bois, programmé sous RT Tool Box, avec des pièces conçues sous CATIA V5.',
-      ],
-      en: [
-        'Control of a robotic arm creating patterns on wood, programmed in RT Tool Box, with parts designed in CATIA V5.',
-      ],
+      fr: 'Programmation d’un bras robotique industriel pour graver des motifs précis sur bois, avec trajectoires définies et simulées avant exécution.',
+      en: 'Programming an industrial robotic arm to engrave precise patterns on wood, with toolpaths defined and simulated before execution.',
     },
-    tech: ['RT Tool Box', 'CATIA V5', 'Robotique'],
+    role: {
+      fr: 'Conception CAO (CATIA V5), programmation et simulation des trajectoires (RT ToolBox).',
+      en: 'CAD design (CATIA V5), toolpath programming and simulation (RT ToolBox).',
+    },
+    learned: {
+      fr: 'Programmation de robots industriels, trajectoires/usinage, CAO CATIA V5.',
+      en: 'Industrial robot programming, toolpaths/machining, CATIA V5 CAD.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
     images: ['/rttoolbox.png'],
   },
   {
-    id: 'line-follower',
-    category: { fr: 'Robotique', en: 'Robotics' },
-    title: { fr: 'Suiveur de ligne, anti-obstacles & parking', en: 'Line follower, obstacle avoidance & parking' },
-    summary: {
-      fr: 'Un robot mobile autonome combinant suivi de ligne, évitement d’obstacles et stationnement automatique.',
-      en: 'An autonomous mobile robot combining line following, obstacle avoidance and automatic parking.',
-    },
+    id: 'suiveur-ligne',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['robotique', 'iot', 'mecanique'],
+    tech: ['Arduino', 'SolidWorks', 'Capteurs IR/Ultrason'],
+    title: { fr: 'Suiveur de ligne, anti-obstacles & parking', en: 'Line Follower, Obstacle Avoidance & Parking' },
     description: {
-      fr: [
-        'Conception et réalisation d’un robot suiveur de ligne doté d’un détecteur d’obstacles et d’un système de parking, à base d’Arduino, avec structure conçue sous SolidWorks.',
-      ],
-      en: [
-        'Design and build of a line-following robot with obstacle detection and a parking system, based on Arduino, with a structure designed in SolidWorks.',
-      ],
+      fr: 'Robot mobile autonome capable de suivre une ligne, d’éviter les obstacles et de se garer automatiquement, à base de capteurs infrarouges et ultrason.',
+      en: 'An autonomous mobile robot that follows a line, avoids obstacles and parks itself, using infrared and ultrasonic sensors.',
     },
-    tech: ['Arduino', 'SolidWorks'],
-    // ➤ Ajouter votre image ici (photo du robot). Taille recommandée : 1200×750 px.
+    role: {
+      fr: 'Conception mécanique (SolidWorks), électronique et programmation des comportements (Arduino).',
+      en: 'Mechanical design (SolidWorks), electronics and behavior programming (Arduino).',
+    },
+    learned: {
+      fr: 'Robotique mobile, asservissement par capteurs, logique de contrôle embarquée.',
+      en: 'Mobile robotics, sensor-based control, embedded control logic.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
   },
   {
-    id: 'smart-reservoir',
-    category: { fr: 'IoT', en: 'IoT' },
-    title: { fr: 'Réservoir intelligent — dashboard IoT', en: 'Smart reservoir — IoT dashboard' },
-    summary: {
-      fr: 'Supervision en temps réel d’un réservoir via un tableau de bord Node-RED connecté en MQTT.',
-      en: 'Real-time monitoring of a reservoir via a Node-RED dashboard connected over MQTT.',
-    },
+    id: 'reservoir-iot',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['iot', 'automatisme'],
+    tech: ['ESP32', 'MQTT', 'Node-RED', 'Firebase'],
+    title: { fr: 'Réservoir intelligent — dashboard IoT', en: 'Smart Tank — IoT Dashboard' },
     description: {
-      fr: [
-        'Développement d’un tableau de bord Node-RED relié à un ESP32 via MQTT, pour la supervision en temps réel d’un réservoir intelligent.',
-      ],
-      en: [
-        'Built a Node-RED dashboard linked to an ESP32 over MQTT, for real-time monitoring of a smart reservoir.',
-      ],
+      fr: 'Système IoT de gestion d’un réservoir et d’une pompe à eau : mesure du niveau, communication MQTT vers un tableau de bord Node-RED en temps réel, et stockage Firebase.',
+      en: 'An IoT system for a tank and water pump: level sensing, MQTT communication to a real-time Node-RED dashboard, and Firebase storage.',
     },
-    tech: ['Node-RED', 'MQTT', 'ESP32'],
-    // ➤ Ajouter votre image ici (capture du dashboard Node-RED). Taille recommandée : 1200×750 px.
+    role: {
+      fr: 'Mise en place de la chaîne IoT complète : capteur → ESP32 → MQTT → dashboard Node-RED.',
+      en: 'Built the full IoT chain: sensor → ESP32 → MQTT → Node-RED dashboard.',
+    },
+    learned: {
+      fr: 'Chaîne IoT de bout en bout, MQTT, tableaux de bord Node-RED, Firebase.',
+      en: 'End-to-end IoT chain, MQTT, Node-RED dashboards, Firebase.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
+  },
+  {
+    id: 'siemens-expert',
+    type: { fr: 'Académique — Certification', en: 'Academic — Certification' },
+    status: null,
+    categories: ['automatisme', 'iot', 'energie'],
+    tech: ['TIA Portal', 'SIMATIC S7', 'HMI TP700', 'IO-Link', 'RFID RF210', 'Servo S210', 'Startdrive'],
+    title: { fr: 'Académie Siemens Expert — automatisme avancé', en: 'Siemens Expert Academy — Advanced Automation' },
+    description: {
+      fr: 'Certification Siemens niveau Expert : configuration, programmation et pilotage de technologies industrielles avancées (servo-moteur S210, IO-Link, RFID, energy-meter) sous TIA Portal, avec création d’interfaces HMI.',
+      en: 'Siemens Expert-level certification: configuring, programming and driving advanced industrial technologies (S210 servo drive, IO-Link, RFID, energy meter) in TIA Portal, with HMI interfaces.',
+    },
+    role: {
+      fr: 'Configuration matérielle et réseau, programmation de l’automate et conception des IHM de supervision et de pilotage.',
+      en: 'Hardware and network configuration, PLC programming and design of the supervision/control HMIs.',
+    },
+    learned: {
+      fr: 'TIA Portal, motion control (servo S210), IO-Link/RFID, supervision HMI, qualité d’énergie.',
+      en: 'TIA Portal, motion control (S210 servo), IO-Link/RFID, HMI supervision, power quality.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
+  },
+  {
+    id: 'photovoltaique',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['energie'],
+    tech: ['PVSyst', 'Dimensionnement PV', 'Électrotechnique'],
+    title: { fr: 'Atelier photovoltaïque — dimensionnement', en: 'Photovoltaic Workshop — System Sizing' },
+    description: {
+      fr: 'Dimensionnement d’installations photovoltaïques (résidentielle et pompage solaire) : choix des composants, calcul des sections de câbles et simulation sous PVSyst.',
+      en: 'Sizing photovoltaic installations (residential and solar pumping): component selection, cable-section calculations and PVSyst simulation.',
+    },
+    role: {
+      fr: 'Étude et dimensionnement complet des installations, simulations PVSyst, calcul des câbles selon les normes.',
+      en: 'Full study and sizing of the installations, PVSyst simulations, standards-based cable calculations.',
+    },
+    learned: {
+      fr: 'Dimensionnement PV, simulation PVSyst, normes d’installation électrique.',
+      en: 'PV sizing, PVSyst simulation, electrical installation standards.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
+  },
+  {
+    id: 'erp-sap',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['gestion'],
+    tech: ['SAP S/4HANA', 'Module MM', 'Module PP', 'Module EAM'],
+    title: { fr: 'ERP — SAP S/4HANA', en: 'ERP — SAP S/4HANA' },
+    description: {
+      fr: 'Mise en pratique d’un ERP sur SAP S/4HANA : gestion des achats (MM), de la production (PP) et de la maintenance (EAM), avec modélisation d’une nomenclature et de gammes de fabrication.',
+      en: 'Hands-on ERP work on SAP S/4HANA: procurement (MM), production (PP) and maintenance (EAM), with a bill of materials and production routings modeled.',
+    },
+    role: {
+      fr: 'Paramétrage et manipulation des modules MM, PP et EAM, création des données de base (articles, nomenclatures, postes de travail).',
+      en: 'Configured and operated the MM, PP and EAM modules, created master data (items, BOM, work centers).',
+    },
+    learned: {
+      fr: 'ERP SAP S/4HANA, processus achat/production/maintenance, gestion industrielle.',
+      en: 'SAP S/4HANA ERP, procurement/production/maintenance processes, industrial management.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
+  },
+  {
+    id: 'gmao',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['gestion'],
+    tech: ['[À COMPLÉTER : techno]', 'Base de données', 'GMAO'],
+    title: { fr: 'GMAO — gestion de maintenance assistée par ordinateur', en: 'CMMS — Computerized Maintenance Management' },
+    description: {
+      fr: 'Application de GMAO développée pour gérer la maintenance d’un parc machines : suivi des pannes, des interventions et de l’état des équipements (en marche / en panne).',
+      en: 'A CMMS application built to manage a machine fleet’s maintenance: tracking breakdowns, interventions and equipment status (running / down).',
+    },
+    role: {
+      fr: 'Conception de l’application et de sa base de données, modélisation des workflows panne → intervention.',
+      en: 'Designed the application and its database, modeled the breakdown → intervention workflows.',
+    },
+    learned: {
+      fr: 'Gestion de maintenance (GMAO), modélisation de données, développement applicatif.',
+      en: 'Maintenance management (CMMS), data modeling, application development.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
+  },
+  {
+    id: 'mes',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['automatisme', 'iot', 'gestion'],
+    tech: ['WinDev', 'Carte d’acquisition', 'Base de données', 'MTTR/MTBF'],
+    title: { fr: 'MES — Manufacturing Execution System', en: 'MES — Manufacturing Execution System' },
+    description: {
+      fr: 'Système d’exécution de la production (MES) basé sur une carte d’acquisition : suivi des arrêts (avec MTTR/MTBF), de la production conforme/non conforme et des consommations (matière, température) via une interface WinDev.',
+      en: 'A production execution system (MES) based on an acquisition card: tracking stoppages (with MTTR/MTBF), conforming/non-conforming output and consumption (material, temperature) through a WinDev interface.',
+    },
+    role: {
+      fr: 'Programmation de la carte d’acquisition et développement de l’interface MES avec sa base de données (WinDev).',
+      en: 'Programmed the acquisition card and built the MES interface with its database (WinDev).',
+    },
+    learned: {
+      fr: 'MES, indicateurs de maintenance (MTTR/MTBF), acquisition de données, WinDev.',
+      en: 'MES, maintenance KPIs (MTTR/MTBF), data acquisition, WinDev.',
+    },
+    result: null,
+    link: '[À COMPLÉTER : lien]',
+    images: ['/mes1.png', '/MES2.png', '/MES3.png', '/mes4.png'],
   },
 ]
 
@@ -418,7 +571,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: { fr: 'Automatisation & électronique', en: 'Automation & electronics' },
-    items: ['Arduino', 'ESP32', 'Capteurs industriels', 'Node-RED', 'MQTT', 'RT Tool Box'],
+    items: ['Arduino', 'ESP32', 'TIA Portal', 'Capteurs industriels', 'Node-RED', 'MQTT', 'RT ToolBox'],
   },
   {
     title: { fr: 'Développement logiciel', en: 'Software development' },
@@ -426,14 +579,18 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: { fr: 'IA, Machine Learning & AR', en: 'AI, Machine Learning & AR' },
-    items: ['Machine Learning', 'Random Forest', 'LSTM', 'Maintenance prédictive', 'Unity', 'Vuforia'],
+    items: ['Machine Learning', 'Random Forest', 'LSTM', 'Computer Vision', 'Maintenance prédictive', 'Unity', 'Vuforia'],
+  },
+  {
+    title: { fr: 'Gestion industrielle', en: 'Industrial management' },
+    items: ['SAP S/4HANA', 'GMAO / CMMS', 'MES', 'MTTR / MTBF', 'PVSyst'],
   },
 ]
 
-/** Tools marquee (real tools from the CV/skills only) */
+/** Tools marquee (real tools from the CV/projects only) */
 export const tools: string[] = [
   'SolidWorks', 'CATIA V5', 'Blender', 'Python', 'C#', 'Java',
-  'Arduino', 'ESP32', 'Unity', 'Vuforia', 'Node-RED', 'MQTT', 'RT Tool Box', 'Machine Learning',
+  'Arduino', 'ESP32', 'TIA Portal', 'Unity', 'Vuforia', 'Node-RED', 'MQTT', 'RT ToolBox', 'SAP S/4HANA', 'PVSyst',
 ]
 
 /* ------------------------------------------------------------------ */

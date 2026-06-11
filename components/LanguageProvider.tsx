@@ -41,6 +41,10 @@ const ui: Record<Lang, Record<string, string>> = {
     'projects.tech': 'Technologies',
     'projects.gallery': 'Aperçu',
     'projects.all': 'Tous les projets',
+    'projects.role': 'Mon rôle',
+    'projects.learned': 'Ce que j’ai appris',
+    'projects.result': 'Résultat',
+    'projects.filter': 'Filtrer par catégorie',
 
     'skills.kicker': 'Savoir-faire',
     'skills.title': 'Compétences',
@@ -107,6 +111,10 @@ const ui: Record<Lang, Record<string, string>> = {
     'projects.tech': 'Technologies',
     'projects.gallery': 'Preview',
     'projects.all': 'All projects',
+    'projects.role': 'My role',
+    'projects.learned': 'What I learned',
+    'projects.result': 'Result',
+    'projects.filter': 'Filter by category',
 
     'skills.kicker': 'Expertise',
     'skills.title': 'Skills',

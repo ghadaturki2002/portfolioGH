@@ -80,29 +80,31 @@ export interface Experience {
 
 export const experiences: Experience[] = [
   {
-    company: '[À COMPLÉTER : entreprise du PFE]',
+    company: 'TUNIAOS',
     location: { fr: 'Tunisie', en: 'Tunisia' },
     period: '03/2026 – 09/2026',
     current: true,
     featured: true,
     role: { fr: 'Projet de fin d’études — Ingénieur (PFE)', en: 'Engineering final-year project (PFE)' },
     summary: {
-      fr: 'Jumeau numérique d’une machine industrielle piloté par machine learning (Random Forest & LSTM).',
-      en: 'Machine-learning-driven digital twin of an industrial machine (Random Forest & LSTM).',
+      fr: 'Jumeau numérique d’une machine de gravure ionique : prédiction de la durée de vie restante (RUL) et du type de panne par machine learning (Random Forest & LSTM).',
+      en: 'Digital twin of an ion-milling machine: predicting Remaining Useful Life (RUL) and fault type with machine learning (Random Forest & LSTM).',
     },
     bullets: {
       fr: [
-        'Conception d’un jumeau numérique modélisant le comportement d’une machine industrielle [À COMPLÉTER : type de machine] à partir de ses données capteurs.',
-        'Développement de modèles de machine learning combinant Random Forest et réseau de neurones récurrent LSTM pour prédire [À COMPLÉTER : grandeur prédite / objectif].',
-        'Objectif : aide à la décision et maintenance prédictive — [À COMPLÉTER : résultats obtenus, ex. précision du modèle, gain].',
+        'Construction du jumeau numérique d’une machine de gravure ionique à partir de ses données capteurs (jeu PHM 2018 : 20 machines, ~80 M de mesures).',
+        'Pipeline à deux étages — Random Forest (détection précoce) + LSTM (estimation de la RUL) — avec ingénierie des variables, dont un résiduel physique débit/pression, et un ensemble de modèles.',
+        'Déploiement temps réel : ESP32 → MQTT → serveur Flask (7 modèles) → tableau de bord Node-RED (RUL, type de panne, alertes).',
+        'Résultats : bat l’article de référence (RMSE jusqu’à ~12× meilleur) ; détection ROC AUC 0,98–0,999 avec un rappel de 100 %.',
       ],
       en: [
-        'Building a digital twin that models the behaviour of an industrial machine [TO COMPLETE: machine type] from its sensor data.',
-        'Developing machine-learning models combining Random Forest and an LSTM recurrent neural network to predict [TO COMPLETE: predicted variable / objective].',
-        'Goal: decision support and predictive maintenance — [TO COMPLETE: results achieved, e.g. model accuracy, gains].',
+        'Built the digital twin of an ion-milling machine from its sensor data (PHM 2018 dataset: 20 machines, ~80 M measurements).',
+        'Two-stage pipeline — Random Forest (early detection) + LSTM (RUL estimation) — with feature engineering including a physics-based flow/pressure residual, plus a model ensemble.',
+        'Real-time deployment: ESP32 → MQTT → Flask server (7 models) → Node-RED dashboard (RUL, fault type, alerts).',
+        'Results: beats the reference paper (RMSE up to ~12× better); early detection ROC AUC 0.98–0.999 with 100% recall.',
       ],
     },
-    tech: ['Python', 'Machine Learning', 'Random Forest', 'LSTM', 'Jumeau numérique'],
+    tech: ['Python', 'PyTorch', 'Random Forest', 'LSTM', 'ESP32', 'MQTT', 'Node-RED', 'Flask'],
   },
   {
     company: 'MATECH',
@@ -249,6 +251,8 @@ export interface Project {
   tech: string[]
   title: L
   description: L
+  /** optional rich, multi-paragraph story shown in the modal (flagship projects) */
+  details?: LList
   role: L
   learned: L
   result?: L | null
@@ -261,25 +265,43 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'jumeau-numerique',
-    type: { fr: 'PFE — Entreprise', en: 'Final-year project — Company' },
-    status: { fr: 'En cours', en: 'In progress' },
-    categories: ['ia', 'automatisme'],
-    tech: ['Python', 'Scikit-learn', 'Random Forest', 'LSTM', 'Jumeau numérique'],
+    type: { fr: 'PFE — Entreprise (TUNIAOS)', en: 'Final-year project — Company (TUNIAOS)' },
+    status: { fr: 'En cours de finalisation', en: 'In final stages' },
+    categories: ['ia', 'automatisme', 'iot'],
+    tech: ['Python', 'PyTorch', 'scikit-learn', 'Random Forest', 'LSTM', 'ESP32', 'MQTT', 'Node-RED', 'Flask'],
     title: { fr: 'Jumeau numérique d’une machine industrielle', en: 'Digital Twin of an Industrial Machine' },
     description: {
-      fr: 'Projet de fin d’études chez [À COMPLÉTER : entreprise] : construction du jumeau numérique d’une machine industrielle [À COMPLÉTER : type] à partir de ses données capteurs. Un modèle Random Forest et un réseau LSTM sont combinés pour prédire [À COMPLÉTER : grandeur] au service de la maintenance prédictive.',
-      en: 'Final-year project at [À COMPLÉTER : company]: building the digital twin of an industrial machine [À COMPLÉTER : type] from its sensor data. A Random Forest model and an LSTM network are combined to predict [À COMPLÉTER : target] for predictive maintenance.',
+      fr: 'Jumeau numérique d’une machine de gravure ionique qui prédit la durée de vie restante (RUL) et le type de panne, pour basculer vers la maintenance prédictive. Pipeline Random Forest + LSTM, déployé en temps réel (ESP32 → MQTT → Node-RED).',
+      en: 'Digital twin of an ion-milling machine that predicts Remaining Useful Life (RUL) and the fault type, enabling predictive maintenance. A Random Forest + LSTM pipeline, deployed in real time (ESP32 → MQTT → Node-RED).',
+    },
+    details: {
+      fr: [
+        'PFE de 6 mois chez TUNIAOS (ESPRIT, 2026) : construire le jumeau numérique d’une machine de gravure ionique et prédire sa durée de vie restante (RUL) — quand la panne surviendra et de quel type — afin de réduire les arrêts de production et le rebut en salle blanche.',
+        'Démarche : reproduction puis amélioration de l’article de Huang et al. (2018) sur le jeu de données PHM 2018 (20 machines, ~80 M de mesures, 33 Go). Pipeline à deux étages : un Random Forest par mode de panne sert de « porte » de détection précoce (malgré le fort déséquilibre des données), puis un LSTM estime la RUL à partir des ~5 dernières heures de signaux.',
+        'Ingénierie des données : nettoyage et découpage en séquences « run-to-fault », RUL convertie en nombre de mesures, et un résiduel physique débit/pression qui révèle fuites et blocages. Conversion des 33 Go de CSV en Parquet (2,8 Go) pour tenir sur un PC, et ensemble de modèles pour réduire la variance.',
+        'Déploiement temps réel (machine réelle indisponible) : un ESP32 rejoue une séquence d’avant-panne avec deux potentiomètres (pression et débit du refroidissement) ; les données partent en MQTT vers un serveur Flask exécutant les 7 modèles, et un tableau de bord Node-RED affiche en direct la RUL, le type de panne et les alertes.',
+      ],
+      en: [
+        'A 6-month final-year project at TUNIAOS (ESPRIT, 2026): building the digital twin of an ion-milling machine and predicting its Remaining Useful Life (RUL) — when a failure will happen and of which type — to cut downtime and cleanroom scrap.',
+        'Approach: reproducing then improving Huang et al. (2018) on the PHM 2018 dataset (20 machines, ~80 M measurements, 33 GB). A two-stage pipeline: one Random Forest per fault mode acts as an early-detection gate (despite heavy data imbalance), then an LSTM estimates the RUL from the last ~5 hours of signals.',
+        'Data engineering: cleaning and splitting into run-to-fault sequences, RUL converted to a number of measurements, and a physics-based flow/pressure residual that reveals leaks and blockages. Converted 33 GB of CSV to Parquet (2.8 GB) to fit on a laptop, plus a model ensemble to reduce variance.',
+        'Real-time deployment (no access to the real machine): an ESP32 replays a pre-failure trace with two potentiometers (cooling pressure and flow); data is sent over MQTT to a Flask server running the 7 models, and a Node-RED dashboard shows the RUL, fault type and alerts live.',
+      ],
     },
     role: {
-      fr: 'Conception du pipeline de données, entraînement et comparaison des modèles, mise en place de la logique de prédiction.',
-      en: 'Designed the data pipeline, trained and compared the models, and built the prediction logic.',
+      fr: 'Projet mené de bout en bout : conception du pipeline de données, ingénierie des variables, entraînement et comparaison des modèles (Random Forest + LSTM), et déploiement IoT temps réel (ESP32 → MQTT → Flask → Node-RED).',
+      en: 'End-to-end ownership: data pipeline design, feature engineering, training and comparison of the models (Random Forest + LSTM), and real-time IoT deployment (ESP32 → MQTT → Flask → Node-RED).',
     },
     learned: {
-      fr: 'Modélisation prédictive sur données capteurs, séries temporelles (LSTM), évaluation de modèles ML.',
-      en: 'Predictive modeling on sensor data, time series (LSTM), ML model evaluation.',
+      fr: 'Montée en compétence rapide en machine learning hors de ma spécialité, maîtrise d’un très gros volume de données déséquilibré, et un réflexe clé : ne jamais croire un résultat « trop beau » sans le valider visuellement. Ma compréhension physique de la machine (relation débit/pression) a été un atout pour créer une variable décisive.',
+      en: 'Fast upskilling in machine learning outside my specialty, handling a very large imbalanced dataset, and one key reflex: never trust a result that looks “too good” without validating it visually. My physical understanding of the machine (flow/pressure relationship) was an asset for creating a decisive feature.',
     },
-    result: { fr: '[À COMPLÉTER : précision du modèle, gains de maintenance]', en: '[À COMPLÉTER : model accuracy, maintenance gains]' },
+    result: {
+      fr: 'Bat l’article de référence sur les 3 modes de panne (RMSE ~12× meilleur sur le mode 1, ~3× sur le mode 2). Détection précoce : ROC AUC 0,98–0,999, rappel 100 %. RUL suivie à ±3 min sur 5 h. Pipeline complet (20 machines, 80 M de lignes) en ~90 min sur un PC portable.',
+      en: 'Beats the reference paper on all 3 fault modes (RMSE ~12× better on mode 1, ~3× on mode 2). Early detection: ROC AUC 0.98–0.999, 100% recall. RUL tracked within ±3 min over 5 h. Full pipeline (20 machines, 80 M rows) in ~90 min on a laptop.',
+    },
     link: '[À COMPLÉTER : lien]',
+    images: ['/jumeau-numerique.jpg'],
     featured: true,
   },
   {

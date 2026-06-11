@@ -8,9 +8,12 @@
 
 Cherche ces marqueurs dans **`lib/content.ts`** : **`[À COMPLÉTER : …]`** / **`[TO COMPLETE: …]`**.
 
-### PFE — Jumeau numérique (projet phare)
-- **Entreprise**, **type de machine**, **grandeur prédite**, **résultats/précision** → dans le projet `jumeau-numerique` ET l'expérience `experiences[0]`.
-- **Date de début** : j'ai mis `03/2026 – 09/2026` (PFE 6 mois, fin **09/09/2026**) — confirme la date de début.
+### PFE — Jumeau numérique (projet phare) — ✅ contenu détaillé intégré
+- Le contenu réel est intégré (TUNIAOS, machine de gravure ionique, pipeline Random Forest + LSTM, déploiement ESP32/MQTT/Node-RED, résultats chiffrés battant l'article de référence) — dans `jumeau-numerique` ET `experiences[0]`.
+- 📷 **Photo** : dépose ta photo sous **`public/jumeau-numerique.jpg`** (emplacement déjà réservé ; un visuel décoratif s'affiche en attendant — rien n'est inventé). ~1200×750 px (16:10).
+- ⚠️ **À confirmer** : j'ai écrit « machine de **gravure ionique (ion milling)** » (cohérent avec le dataset PHM 2018). Tu avais évoqué « gravure ionique réactive (**RIE**) » — confirme le terme exact (dans `jumeau-numerique` et `experiences[0]`).
+- **Date de début** : `03/2026 – 09/2026` (fin 09/09/2026) — confirme la date de début.
+- **Lien** : ajoute l'URL (démo / rapport / dépôt) dans `jumeau-numerique.link`.
 
 ### Autres projets
 - **Robot de détection de fissures** → `result` : **précision de détection** (`[À COMPLÉTER : précision de détection]`).
@@ -19,7 +22,6 @@ Cherche ces marqueurs dans **`lib/content.ts`** : **`[À COMPLÉTER : …]`** / 
 
 ### Images de projets manquantes (un visuel décoratif élégant s'affiche en attendant)
 Ajoute tes captures dans `public/` puis renseigne `images: ['/ton-image.png']` du projet dans `lib/content.ts` :
-- `jumeau-numerique` → dashboard / schéma du pipeline ML — **1200×750 px (16:10)**
 - `suiveur-ligne` → photo du robot
 - `reservoir-iot` → capture du dashboard Node-RED
 - `siemens-expert`, `photovoltaique`, `erp-sap`, `gmao` → une capture/photo chacun si tu en as

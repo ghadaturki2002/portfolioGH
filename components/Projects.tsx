@@ -12,6 +12,39 @@ import { projects, projectCategories, type Project } from '@/lib/content'
 /** A link counts as "provided" only when it isn't a placeholder. */
 const hasRealLink = (l?: string | null) => !!l && !l.trim().startsWith('[')
 
+/**
+ * Card cover: shows the project image (with the unifying veil + cyan tint),
+ * and gracefully falls back to the decorative artwork if there's no image yet
+ * or the file is missing — so a reserved image path never shows broken.
+ */
+function ProjectCover({
+  src,
+  alt,
+  fallbackId,
+  fallbackLabel,
+}: {
+  src?: string
+  alt: string
+  fallbackId: string
+  fallbackLabel: string
+}) {
+  const [err, setErr] = useState(false)
+  if (!src || err) return <ProjectArtwork id={fallbackId} label={fallbackLabel} />
+  return (
+    <>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        onError={() => setErr(true)}
+        className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.04] group-hover:grayscale-0"
+      />
+      <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-bg/70 via-bg/10 to-transparent" />
+      <span aria-hidden="true" className="absolute inset-0 bg-accent/10 mix-blend-soft-light" />
+    </>
+  )
+}
+
 export default function Projects() {
   const { language, t } = useLanguage()
   const reduce = useReducedMotion()
@@ -93,21 +126,12 @@ export default function Projects() {
                     <article className="card group relative flex h-full flex-col overflow-hidden hover:border-accent/40">
                       {/* MEDIA */}
                       <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-2">
-                        {cover ? (
-                          <>
-                            <img
-                              src={cover}
-                              alt={project.title[language]}
-                              loading="lazy"
-                              className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.04] group-hover:grayscale-0"
-                            />
-                            {/* unifying veil + faint cyan tint (consistent series look) */}
-                            <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-bg/70 via-bg/10 to-transparent" />
-                            <span aria-hidden="true" className="absolute inset-0 bg-accent/10 mix-blend-soft-light" />
-                          </>
-                        ) : (
-                          <ProjectArtwork id={project.id} label={eyebrow || project.type[language]} />
-                        )}
+                        <ProjectCover
+                          src={cover}
+                          alt={project.title[language]}
+                          fallbackId={project.id}
+                          fallbackLabel={eyebrow || project.type[language]}
+                        />
 
                         {/* type badge */}
                         <span className="absolute left-3 top-3 rounded-full border border-hairline bg-bg/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-ink backdrop-blur">
@@ -217,7 +241,15 @@ export default function Projects() {
 
               <div className="overflow-y-auto px-6 py-7">
                 <h3 className="display text-2xl text-ink sm:text-3xl">{active.title[language]}</h3>
-                <p className="mt-4 text-pretty leading-relaxed text-ink-soft">{active.description[language]}</p>
+                {active.details ? (
+                  <div className="mt-4 space-y-4">
+                    {active.details[language].map((para, i) => (
+                      <p key={i} className="text-pretty leading-relaxed text-ink-soft">{para}</p>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="mt-4 text-pretty leading-relaxed text-ink-soft">{active.description[language]}</p>
+                )}
 
                 {/* media */}
                 {active.videos && active.videos.length > 0 && (

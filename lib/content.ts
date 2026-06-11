@@ -406,24 +406,39 @@ export const projects: Project[] = [
   },
   {
     id: 'simulateur-pannes',
-    type: { fr: 'Académique', en: 'Academic' },
+    type: { fr: 'PFE Licence — Binôme', en: 'Bachelor’s final project — Pair' },
     status: null,
     categories: ['automatisme', 'iot'],
-    tech: ['Java', 'Électronique', 'Microcontrôleur'],
+    tech: ['Arduino', 'Guard Revolution', 'Électronique', 'Java'],
     title: { fr: 'Simulateur de pannes + application de diagnostic', en: 'Fault Simulator + Diagnostic App' },
     description: {
-      fr: 'Banc de simulation de pannes électriques couplé à une application de diagnostic qui traduit les codes défaut en messages clairs pour accélérer le dépannage.',
-      en: 'An electrical fault-simulation bench paired with a diagnostic app that turns fault codes into clear messages to speed up troubleshooting.',
+      fr: 'Banc interactif reproduisant un groupe électrogène, qui permet de provoquer des pannes à volonté (batterie, démarreur, surchauffe…) pour s’entraîner au diagnostic en toute sécurité. Une application associée explique chaque panne pour guider le dépannage.',
+      en: 'An interactive bench that reproduces a generator set and lets you trigger faults at will (battery, starter, overheating…) to practise diagnosis safely. A companion app explains each fault to guide troubleshooting.',
+    },
+    details: {
+      fr: [
+        'Projet de fin d’études (Licence en Génie mécanique, ISETN, 2023), en binôme et en lien avec la société MATECH. Apprendre à diagnostiquer les pannes d’un groupe électrogène suppose de pouvoir les reproduire — risqué, voire impossible, sur une machine en service.',
+        'Le banc reproduit le fonctionnement d’un groupe électrogène autour d’un afficheur/contrôleur de marque Guard Revolution, d’une carte Arduino et de composants électriques. Des potentiomètres déclenchent des pannes à la demande (batterie déchargée, démarreur défaillant, surchauffe…), autant de scénarios à diagnostiquer dans un environnement sûr.',
+        'En parallèle, j’ai développé seule une application de diagnostic (Java) : on y saisit le nom d’une panne et elle en affiche le détail, pour guider l’apprentissage du dépannage.',
+      ],
+      en: [
+        'Final-year project (Bachelor’s in Mechanical Engineering, ISETN, 2023), as a pair and with the company MATECH. Learning to diagnose generator-set faults means being able to reproduce them — risky, if not impossible, on a machine in service.',
+        'The bench reproduces a generator set’s operation around a Guard Revolution controller/display, an Arduino board and electrical components. Potentiometers trigger faults on demand (flat battery, faulty starter, overheating…), a range of scenarios to diagnose in a safe environment.',
+        'In parallel, I developed a diagnostic app on my own (Java): you type a fault’s name and it displays the details, to guide troubleshooting practice.',
+      ],
     },
     role: {
-      fr: 'Conception du banc électronique et développement de l’application de diagnostic (Java).',
-      en: 'Designed the electronic bench and built the diagnostic app (Java).',
+      fr: 'Conception du banc à deux ; développement seule de l’application de diagnostic (Java).',
+      en: 'Designed the bench together; developed the diagnostic app on my own (Java).',
     },
     learned: {
-      fr: 'Diagnostic de pannes, électronique, développement applicatif Java.',
-      en: 'Fault diagnosis, electronics, Java application development.',
+      fr: 'La principale difficulté : comprendre l’afficheur/contrôleur Guard Revolution, une technologie entièrement nouvelle pour moi. J’ai appris à apprivoiser un équipement industriel inconnu par la documentation et l’expérimentation, puis à traduire son comportement en un outil réellement pédagogique.',
+      en: 'The main challenge: understanding the Guard Revolution controller/display, a completely new technology for me. I learned to tame an unfamiliar industrial device through documentation and experimentation, then to translate its behavior into a genuinely educational tool.',
     },
-    result: null,
+    result: {
+      fr: 'Banc fonctionnel, et même en cours d’utilisation chez la société MATECH — la meilleure preuve de son utilité réelle pour la formation et le diagnostic.',
+      en: 'A functional bench, and even in use at the company MATECH — the best proof of its real value for training and diagnosis.',
+    },
     link: '[À COMPLÉTER : lien]',
     images: ['/groupe.jpg', '/projet  groupe.jpg', '/Phone.jpg', '/phone1.jpg', '/phone 3.jpg', '/phone 4.jpg', '/phone 5.jpg'],
     videos: ['/video1.mp4', '/video2.mp4', '/video3.mp4'],

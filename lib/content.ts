@@ -417,12 +417,12 @@ export const projects: Project[] = [
     },
     details: {
       fr: [
-        'Projet de fin d’études (Licence en Génie mécanique, ISETN, 2023), en binôme et en lien avec la société MATECH. Apprendre à diagnostiquer les pannes d’un groupe électrogène suppose de pouvoir les reproduire — risqué, voire impossible, sur une machine en service.',
+        'Projet de fin d’études (Licence en Génie mécanique, ISETN, 2023 — 4 mois), en binôme et en lien avec la société MATECH. Apprendre à diagnostiquer les pannes d’un groupe électrogène suppose de pouvoir les reproduire — risqué, voire impossible, sur une machine en service.',
         'Le banc reproduit le fonctionnement d’un groupe électrogène autour d’un afficheur/contrôleur de marque Guard Revolution, d’une carte Arduino et de composants électriques. Des potentiomètres déclenchent des pannes à la demande (batterie déchargée, démarreur défaillant, surchauffe…), autant de scénarios à diagnostiquer dans un environnement sûr.',
         'En parallèle, j’ai développé seule une application de diagnostic (Java) : on y saisit le nom d’une panne et elle en affiche le détail, pour guider l’apprentissage du dépannage.',
       ],
       en: [
-        'Final-year project (Bachelor’s in Mechanical Engineering, ISETN, 2023), as a pair and with the company MATECH. Learning to diagnose generator-set faults means being able to reproduce them — risky, if not impossible, on a machine in service.',
+        'Final-year project (Bachelor’s in Mechanical Engineering, ISETN, 2023 — 4 months), as a pair and with the company MATECH. Learning to diagnose generator-set faults means being able to reproduce them — risky, if not impossible, on a machine in service.',
         'The bench reproduces a generator set’s operation around a Guard Revolution controller/display, an Arduino board and electrical components. Potentiometers trigger faults on demand (flat battery, faulty starter, overheating…), a range of scenarios to diagnose in a safe environment.',
         'In parallel, I developed a diagnostic app on my own (Java): you type a fault’s name and it displays the details, to guide troubleshooting practice.',
       ],

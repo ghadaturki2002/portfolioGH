@@ -445,24 +445,37 @@ export const projects: Project[] = [
   },
   {
     id: 'bras-gravure',
-    type: { fr: 'Académique', en: 'Academic' },
+    type: { fr: 'Académique — Individuel', en: 'Academic — Individual' },
     status: null,
     categories: ['robotique', 'mecanique'],
-    tech: ['CATIA V5', 'RT ToolBox', 'Robot industriel'],
+    tech: ['CATIA V5', 'RT ToolBox', 'Robot 6 axes'],
     title: { fr: 'Bras robotique — gravure sur bois', en: 'Robotic Arm — Wood Engraving' },
     description: {
-      fr: 'Programmation d’un bras robotique industriel pour graver des motifs précis sur bois, avec trajectoires définies et simulées avant exécution.',
-      en: 'Programming an industrial robotic arm to engrave precise patterns on wood, with toolpaths defined and simulated before execution.',
+      fr: 'Commande d’un bras robotisé 6 axes pour une opération de gravure : d’un motif conçu en CAO jusqu’au mouvement précis exécuté par le robot. Conception sous CATIA V5, programmation des trajectoires sous RT ToolBox.',
+      en: 'Programming a 6-axis robotic arm for an engraving operation: from a CAD-designed pattern to a precise motion executed by the robot. Design in CATIA V5, toolpath programming in RT ToolBox.',
+    },
+    details: {
+      fr: [
+        'Projet académique libre (2024) dont j’ai choisi le sujet : prendre en main et commander un bras robotisé à 6 axes via son logiciel de programmation, pour lui faire réaliser une opération de gravure. L’enjeu : passer d’un motif conçu sur ordinateur à un mouvement précis exécuté par le robot dans le monde réel.',
+        'J’ai d’abord utilisé CATIA V5 pour la conception : la pièce à graver — portant le motif « MECA » — ainsi que le support / la table monté sur le bras. J’ai ensuite programmé le bras 6 axes avec RT ToolBox, en définissant les trajectoires pour que le robot suive fidèlement le tracé du motif et le grave.',
+      ],
+      en: [
+        'A free academic project (2024) whose topic I chose myself: getting hands-on with and programming a 6-axis robotic arm through its software, to have it perform an engraving operation. The challenge: going from a pattern designed on a computer to a precise motion executed by the robot in the real world.',
+        'I first used CATIA V5 for the design: the part to be engraved — bearing the “MECA” pattern — and the support/table mounted on the arm. I then programmed the 6-axis arm with RT ToolBox, defining the toolpaths so the robot faithfully follows the pattern and engraves it.',
+      ],
     },
     role: {
-      fr: 'Conception CAO (CATIA V5), programmation et simulation des trajectoires (RT ToolBox).',
-      en: 'CAD design (CATIA V5), toolpath programming and simulation (RT ToolBox).',
+      fr: 'Projet mené seule : conception CAO (CATIA V5) et programmation du robot 6 axes (RT ToolBox), de la définition des trajectoires à l’exécution.',
+      en: 'Run solo: CAD design (CATIA V5) and 6-axis robot programming (RT ToolBox), from toolpath definition to execution.',
     },
     learned: {
-      fr: 'Programmation de robots industriels, trajectoires/usinage, CAO CATIA V5.',
-      en: 'Industrial robot programming, toolpaths/machining, CATIA V5 CAD.',
+      fr: 'J’ai découvert la programmation d’un robot industriel : définir des trajectoires propres et sûres dans RT ToolBox et faire en sorte qu’un motif dessiné en CAO se traduise fidèlement en mouvement réel. J’ai surtout saisi le lien concret entre la conception (CATIA) et l’exécution par le robot.',
+      en: 'I discovered industrial robot programming: defining clean, safe toolpaths in RT ToolBox and making a CAD-designed pattern translate faithfully into real motion. Above all I grasped the concrete link between design (CATIA) and execution by the robot.',
     },
-    result: null,
+    result: {
+      fr: 'Un programme fonctionnel qui amène le bras 6 axes à suivre le tracé du motif « MECA » et à le graver — la chaîne complète, du modèle CAO jusqu’au mouvement réel du robot.',
+      en: 'A working program that drives the 6-axis arm to follow and engrave the “MECA” pattern — the full chain, from the CAD model to the robot’s real motion.',
+    },
     link: '[À COMPLÉTER : lien]',
     images: ['/rttoolbox.png'],
   },

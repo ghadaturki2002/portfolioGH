@@ -54,7 +54,7 @@ export const about = {
   } as LList,
   stats: [
     { value: '6', label: { fr: 'Expériences en entreprise', en: 'Industry experiences' } as L },
-    { value: '13', label: { fr: 'Projets d’ingénierie', en: 'Engineering projects' } as L },
+    { value: '14', label: { fr: 'Projets d’ingénierie', en: 'Engineering projects' } as L },
     { value: '6', label: { fr: 'Certifications', en: 'Certifications' } as L },
     { value: '3', label: { fr: 'Diplômes', en: 'Degrees' } as L },
   ],
@@ -560,6 +560,42 @@ export const projects: Project[] = [
     },
     link: '[À COMPLÉTER : lien]',
     images: ['/siemens.jpg'],
+  },
+  {
+    id: 'pick-place',
+    type: { fr: 'Académique — Équipe de 5', en: 'Academic — Team of 5' },
+    status: null,
+    categories: ['automatisme'],
+    tech: ['Siemens S7-1200', 'GRAFCET', 'Ladder', 'Factory IO'],
+    title: { fr: 'Pick & Place automatisé (Siemens + Factory IO)', en: 'Automated Pick & Place (Siemens + Factory IO)' },
+    description: {
+      fr: 'Système pick & place qui empile des caisses de façon entièrement automatique, piloté par un automate Siemens S7-1200 et validé en simulation 3D sous Factory IO.',
+      en: 'A pick & place system that stacks boxes fully automatically, driven by a Siemens S7-1200 PLC and validated in 3D simulation with Factory IO.',
+    },
+    details: {
+      fr: [
+        'Projet académique en équipe de 5 (ESPRIT, 2024, sur l’année). Objectif : automatiser une opération de pick & place — empiler des caisses les unes sur les autres, du bas vers le haut, entièrement automatiquement. Le système est développé et validé en simulation sous Factory IO, qui reproduit l’usine en 3D et permet de tester le programme automate sans matériel réel.',
+        'Le système est piloté par un automate Siemens S7-1200. J’ai d’abord modélisé le fonctionnement en GRAFCET, puis je l’ai traduit en programme Ladder, le tout validé sous Factory IO. Le cœur du programme est la gestion de l’empilage : pour positionner chaque caisse et enchaîner correctement les étapes, j’ai utilisé deux compteurs — un horizontal et un vertical.',
+      ],
+      en: [
+        'Academic project in a team of 5 (ESPRIT, 2024, over the year). Goal: automate a pick & place operation — stacking boxes on top of one another, from bottom to top, fully automatically. The system is developed and validated in simulation with Factory IO, which recreates the factory in 3D and lets you test the PLC program without real hardware.',
+        'The system is driven by a Siemens S7-1200 PLC. I first modeled the operation in GRAFCET, then translated it into a Ladder program, all validated in Factory IO. The heart of the program is stacking management: to position each box and chain the steps correctly, I used two counters — one horizontal and one vertical.',
+      ],
+    },
+    role: {
+      fr: 'Travail collaboratif (équipe de 5) : modélisation GRAFCET et programmation Ladder de l’empilage.',
+      en: 'Collaborative work (team of 5): GRAFCET modeling and Ladder programming of the stacking.',
+    },
+    learned: {
+      fr: 'La principale difficulté : enchaîner correctement les étapes d’empilage, au bon moment. Résolue avec deux compteurs (horizontal et vertical) qui suivent la position de chaque caisse et déclenchent l’étape suivante. J’ai consolidé la méthode du GRAFCET au Ladder et mesuré l’intérêt de la simulation (Factory IO) pour valider un programme automate avant tout matériel.',
+      en: 'The main challenge was chaining the stacking steps at the right moment. I solved it with two counters (horizontal and vertical) that track each box’s position and trigger the next step. I consolidated the GRAFCET-to-Ladder method and saw the real value of simulation (Factory IO) for validating a PLC program before any hardware.',
+    },
+    result: {
+      fr: 'Système fonctionnant parfaitement en simulation : caisses empilées de façon fiable, du bas vers le haut, en cycle automatique complet.',
+      en: 'The system works flawlessly in simulation: boxes stacked reliably, from bottom to top, in a full automatic cycle.',
+    },
+    link: '[À COMPLÉTER : lien]',
+    images: ['/pick-place.jpg'],
   },
   {
     id: 'photovoltaique',

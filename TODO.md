@@ -25,14 +25,14 @@ Cherche ces marqueurs dans **`lib/content.ts`** : **`[À COMPLÉTER : …]`** / 
 - **ERP — SAP S/4HANA** → ✅ contenu détaillé intégré (binôme, **ESPRIT 2026**, un semestre ; modélisation d'un vélo, modules MM/PP/EAM). 📷 Emplacement réservé → `public/erp-sap.jpg`. *À valider* : le paragraphe « Ce que j'ai appris ».
 - **Réservoir intelligent (IoT)** → ✅ contenu détaillé intégré (équipe de 3, **ESPRIT 2026** ; capteur → ESP32 → MQTT → Node-RED → Firebase, pompe auto, testé en Wokwi + réel). 📷 Emplacement réservé → `public/reservoir-iot.jpg`. *Optionnel* : durée + ta part précise ; valider « Ce que j'ai appris ».
 - **MES (carte d'acquisition + WinDev)** → ✅ contenu détaillé intégré (individuel, **ESPRIT 2026, un semestre**, **noté 19/20** ; Arduino + WinDev, arrêts MTTR/MTBF, production, consommations). Vraies captures `mes1…mes4` conservées.
-- **GMAO** → la **technologie** de l'application est inconnue : `tech: ['[À COMPLÉTER : techno]', …]` (WinDev ? Java ? autre ?).
+- **GMAO** → ✅ contenu détaillé intégré (ISETN, **2022** ; logiciel de GMAO paramétré et alimenté). Le **nom du logiciel est volontairement omis** (« GMAO »), donc plus de placeholder techno. 📷 Emplacement réservé → `public/gmao.jpg`. *À préciser* : type (individuel / équipe) + durée.
 - **Liens « Voir le projet »** : chaque projet a `link: '[À COMPLÉTER : lien]'`. Tant que c'est un placeholder, **aucun bouton « Voir le projet » ne s'affiche** (volontaire). Ajoute une vraie URL (démo / dépôt GitHub / vidéo) pour faire apparaître le lien sur la carte et dans la modale.
 
 ### Images de projets manquantes (un visuel décoratif élégant s'affiche en attendant)
 Ajoute tes captures dans `public/` puis renseigne `images: ['/ton-image.png']` du projet dans `lib/content.ts` :
 - `suiveur-ligne` → photo du robot
-- `photovoltaique`, `gmao` → une capture/photo chacun si tu en as (sinon un visuel décoratif s'affiche)
-- (déjà réservés, dépose juste le fichier) : `jumeau-numerique.jpg`, `siemens.jpg`, `pick-place.jpg`, `erp-sap.jpg`, `reservoir-iot.jpg`
+- `photovoltaique` → une capture/photo si tu en as (sinon un visuel décoratif s'affiche)
+- (déjà réservés, dépose juste le fichier dans `public/`) : `jumeau-numerique.jpg`, `siemens.jpg`, `pick-place.jpg`, `erp-sap.jpg`, `reservoir-iot.jpg`, `gmao.jpg`
 
 ### Photo de profil
 - `public/ghada-turki-photo.jpg` est peut-être basse résolution → remplace par une version **HD** (portrait ratio **4:5**, ~1000×1250 px, même nom).

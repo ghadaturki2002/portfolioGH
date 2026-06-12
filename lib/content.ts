@@ -676,22 +676,36 @@ export const projects: Project[] = [
     type: { fr: 'Académique', en: 'Academic' },
     status: null,
     categories: ['gestion'],
-    tech: ['[À COMPLÉTER : techno]', 'Base de données', 'GMAO'],
-    title: { fr: 'GMAO — gestion de maintenance assistée par ordinateur', en: 'CMMS — Computerized Maintenance Management' },
+    tech: ['Logiciel GMAO', 'Maintenance industrielle', 'Structuration de données'],
+    title: { fr: 'GMAO — gestion de maintenance', en: 'CMMS — Maintenance Management' },
     description: {
-      fr: 'Application de GMAO développée pour gérer la maintenance d’un parc machines : suivi des pannes, des interventions et de l’état des équipements (en marche / en panne).',
-      en: 'A CMMS application built to manage a machine fleet’s maintenance: tracking breakdowns, interventions and equipment status (running / down).',
+      fr: 'Mise en œuvre d’un logiciel de GMAO pour structurer la maintenance d’un parc machines : déclarer une panne, gérer l’intervention, suivre l’état des équipements (en marche / en panne) et conserver l’historique.',
+      en: 'Setting up a CMMS to structure a machine fleet’s maintenance: reporting a fault, managing the intervention, tracking equipment status (running / down) and keeping the history.',
+    },
+    details: {
+      fr: [
+        'Projet académique (ISETN, 2022). Découvrir et mettre en œuvre une GMAO (gestion de maintenance assistée par ordinateur) : structurer la maintenance d’un parc machines pour suivre les pannes, les interventions et l’état des équipements.',
+        'Le projet s’appuyait sur un logiciel de GMAO existant. Mon travail : le paramétrer et l’alimenter avec les données du parc (machines, équipements, pièces de rechange, techniciens). Une fois structuré, l’outil permet de déclarer une panne, gérer l’intervention, suivre l’état des équipements et conserver l’historique de maintenance.',
+      ],
+      en: [
+        'Academic project (ISETN, 2022). Discovering and setting up a CMMS: structuring a machine fleet’s maintenance to track breakdowns, interventions and equipment status.',
+        'The project was based on existing CMMS software. My work: configuring and populating it with the fleet’s data (machines, equipment, spare parts, technicians). Once structured, the tool lets you report a fault, manage the intervention, track equipment status and keep the maintenance history.',
+      ],
     },
     role: {
-      fr: 'Conception de l’application et de sa base de données, modélisation des workflows panne → intervention.',
-      en: 'Designed the application and its database, modeled the breakdown → intervention workflows.',
+      fr: 'Paramétrage et alimentation du logiciel de GMAO avec les données du parc (machines, équipements, pièces de rechange, techniciens).',
+      en: 'Configuring and populating the CMMS software with the fleet’s data (machines, equipment, spare parts, technicians).',
     },
     learned: {
-      fr: 'Gestion de maintenance (GMAO), modélisation de données, développement applicatif.',
-      en: 'Maintenance management (CMMS), data modeling, application development.',
+      fr: 'J’ai découvert le fonctionnement d’une GMAO et l’importance de bien structurer les données de maintenance : sans un parc correctement décrit (machines, pièces, techniciens), le suivi des pannes et des interventions perd tout son sens. Une première approche concrète de l’organisation de la maintenance industrielle.',
+      en: 'I discovered how a CMMS works and the importance of structuring maintenance data well: without a properly described fleet (machines, parts, technicians), tracking breakdowns and interventions makes no sense. A first hands-on look at how industrial maintenance is organized.',
     },
-    result: null,
+    result: {
+      fr: 'Une GMAO opérationnelle, alimentée et structurée, capable de tracer le cycle complet panne → intervention → remise en service et de garder l’historique du parc.',
+      en: 'An operational CMMS, populated and structured, able to trace the full breakdown → intervention → return-to-service cycle and keep the fleet’s history.',
+    },
     link: '[À COMPLÉTER : lien]',
+    images: ['/gmao.jpg'],
   },
   {
     id: 'mes',

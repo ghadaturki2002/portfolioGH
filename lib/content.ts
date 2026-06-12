@@ -621,25 +621,41 @@ export const projects: Project[] = [
   },
   {
     id: 'erp-sap',
-    type: { fr: 'Académique', en: 'Academic' },
+    type: { fr: 'Académique — Binôme', en: 'Academic — Pair' },
     status: null,
     categories: ['gestion'],
     tech: ['SAP S/4HANA', 'Module MM', 'Module PP', 'Module EAM'],
     title: { fr: 'ERP — SAP S/4HANA', en: 'ERP — SAP S/4HANA' },
     description: {
-      fr: 'Mise en pratique d’un ERP sur SAP S/4HANA : gestion des achats (MM), de la production (PP) et de la maintenance (EAM), avec modélisation d’une nomenclature et de gammes de fabrication.',
-      en: 'Hands-on ERP work on SAP S/4HANA: procurement (MM), production (PP) and maintenance (EAM), with a bill of materials and production routings modeled.',
+      fr: 'Modélisation complète d’un produit — un vélo — sur SAP S/4HANA, de sa nomenclature à sa gamme de fabrication, avec les flux d’achats, de production et de maintenance.',
+      en: 'Full modeling of a product — a bicycle — on SAP S/4HANA, from its bill of materials to its production routing, with the procurement, production and maintenance flows.',
+    },
+    details: {
+      fr: [
+        'Projet ERP (ESPRIT, 2026, un semestre, en binôme). Un ERP est le système nerveux d’une entreprise industrielle : il relie les achats, la production et la maintenance autour d’une même base de données. Objectif : modéliser entièrement un vélo sur SAP S/4HANA et faire tourner les flux de gestion correspondants.',
+        'Trois modules clés mis en œuvre : MM (Materials Management) pour les achats et fournisseurs ; PP (Production Planning) pour la nomenclature (BOM) du vélo, les gammes de fabrication et les postes de travail ; EAM (Enterprise Asset Management) pour la maintenance des équipements.',
+        'Travail réparti en binôme, mais nous avons toutes deux touché à l’ensemble des modules — création des données de base (articles, nomenclature, gammes) et suivi des flux d’un bout à l’autre.',
+      ],
+      en: [
+        'ERP project (ESPRIT, 2026, one semester, as a pair). An ERP is the nervous system of an industrial company: it links procurement, production and maintenance around a single database. Goal: fully model a bicycle on SAP S/4HANA and run the corresponding management flows.',
+        'Three key modules implemented: MM (Materials Management) for procurement and suppliers; PP (Production Planning) for the bicycle’s bill of materials (BOM), production routings and work centers; EAM (Enterprise Asset Management) for equipment maintenance.',
+        'Work split as a pair, but we both worked across all the modules — creating the master data (items, BOM, routings) and following the flows end to end.',
+      ],
     },
     role: {
-      fr: 'Paramétrage et manipulation des modules MM, PP et EAM, création des données de base (articles, nomenclatures, postes de travail).',
-      en: 'Configured and operated the MM, PP and EAM modules, created master data (items, BOM, work centers).',
+      fr: 'Travail réparti en binôme ; nous avons toutes deux touché à l’ensemble des modules (MM, PP, EAM), de la création des données de base au suivi des flux.',
+      en: 'Work split as a pair; we both worked across all the modules (MM, PP, EAM), from master-data creation to following the flows.',
     },
     learned: {
-      fr: 'ERP SAP S/4HANA, processus achat/production/maintenance, gestion industrielle.',
-      en: 'SAP S/4HANA ERP, procurement/production/maintenance processes, industrial management.',
+      fr: 'J’ai compris comment un ERP relie des métiers qui semblent séparés : un achat, un ordre de fabrication et une opération de maintenance parlent le même langage de données. L’exigence principale est la rigueur des données de base — une nomenclature ou une gamme mal saisie, et tout se dérègle. En tant qu’électromécanicienne, j’ai aussi découvert le versant gestion et organisation de l’industrie, complémentaire de la technique.',
+      en: 'I understood how an ERP links jobs that seem separate: a purchase, a production order and a maintenance task speak the same data language. The key requirement is master-data rigor — one wrong BOM or routing and everything downstream goes off. As an electromechanical engineer, I also discovered the management and organizational side of industry, complementary to the technical one.',
     },
-    result: null,
+    result: {
+      fr: 'Un paramétrage SAP fonctionnel : le produit modélisé, les modules configurés et les flux de gestion qui tournent de bout en bout.',
+      en: 'A functional SAP setup: the product modeled, the modules configured and the management flows running end to end.',
+    },
     link: '[À COMPLÉTER : lien]',
+    images: ['/erp-sap.jpg'],
   },
   {
     id: 'gmao',

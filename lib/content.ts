@@ -695,24 +695,37 @@ export const projects: Project[] = [
   },
   {
     id: 'mes',
-    type: { fr: 'Académique', en: 'Academic' },
+    type: { fr: 'Académique — Individuel', en: 'Academic — Individual' },
     status: null,
     categories: ['automatisme', 'iot', 'gestion'],
-    tech: ['WinDev', 'Carte d’acquisition', 'Base de données', 'MTTR/MTBF'],
+    tech: ['WinDev', 'Arduino', 'Base de données', 'MTTR / MTBF'],
     title: { fr: 'MES — Manufacturing Execution System', en: 'MES — Manufacturing Execution System' },
     description: {
-      fr: 'Système d’exécution de la production (MES) basé sur une carte d’acquisition : suivi des arrêts (avec MTTR/MTBF), de la production conforme/non conforme et des consommations (matière, température) via une interface WinDev.',
-      en: 'A production execution system (MES) based on an acquisition card: tracking stoppages (with MTTR/MTBF), conforming/non-conforming output and consumption (material, temperature) through a WinDev interface.',
+      fr: 'Système MES qui relie l’atelier au pilotage : à partir d’une carte d’acquisition, il suit les arrêts (avec MTTR/MTBF), la production conforme/non conforme et les consommations (matière, température) dans une interface de supervision.',
+      en: 'A MES that bridges the shop floor and management: from an acquisition card, it tracks stoppages (with MTTR/MTBF), conforming/non-conforming production and consumption (material, temperature) in a supervision interface.',
+    },
+    details: {
+      fr: [
+        'Projet MES (ESPRIT, 2026, un semestre, mené seule). Un MES capte ce qui se passe sur la ligne et le transforme en indicateurs exploitables, reliant l’atelier au pilotage.',
+        'Chaîne complète : côté acquisition, une carte Arduino lit les capteurs (niveau de matière première, température) ainsi que les signaux de production et d’arrêts. Côté logiciel, j’ai développé l’interface MES et sa base de données sous WinDev, en plusieurs vues : suivi des arrêts (type, date, heure) avec calcul du MTTR et du MTBF ; production journalière (conforme / non conforme / totale) ; consommations (matière première dans le temps, historique de température).',
+      ],
+      en: [
+        'MES project (ESPRIT, 2026, one semester, run solo). A MES captures what happens on the line and turns it into usable indicators, bridging the shop floor and management.',
+        'Full chain: on the acquisition side, an Arduino board reads the sensors (raw-material level, temperature) and the production and stoppage signals. On the software side, I built the MES interface and its WinDev database in several views: stoppage tracking (type, date, time) with MTTR and MTBF computation; daily production (conforming / non-conforming / total); consumption (raw material over time, temperature history).',
+      ],
     },
     role: {
-      fr: 'Programmation de la carte d’acquisition et développement de l’interface MES avec sa base de données (WinDev).',
-      en: 'Programmed the acquisition card and built the MES interface with its database (WinDev).',
+      fr: 'Projet réalisé seule : programmation de la carte d’acquisition (Arduino) et développement de l’interface MES avec sa base de données (WinDev).',
+      en: 'Built on my own: programmed the acquisition card (Arduino) and built the MES interface with its database (WinDev).',
     },
     learned: {
-      fr: 'MES, indicateurs de maintenance (MTTR/MTBF), acquisition de données, WinDev.',
-      en: 'MES, maintenance KPIs (MTTR/MTBF), data acquisition, WinDev.',
+      fr: 'La principale difficulté : coder le calcul du MTBF et du MTTR — passer des formules théoriques de fiabilité à un calcul correct à partir des données réelles d’arrêts (durées, fréquences). J’ai appris à traduire des indicateurs de maintenance en code fiable et à mener un MES de bout en bout, de l’acquisition Arduino jusqu’à la restitution dans l’interface.',
+      en: 'The main challenge: coding the MTBF and MTTR calculations — going from theoretical reliability formulas to a correct computation based on real stoppage data (durations, frequencies). I learned to turn maintenance indicators into reliable code and to run a MES end to end, from Arduino acquisition to the interface.',
     },
-    result: null,
+    result: {
+      fr: 'Un système fonctionnel et complet, qui acquiert les données en temps réel et restitue les indicateurs (MTTR, MTBF, production, consommations). Projet noté 19/20.',
+      en: 'A functional, complete system that acquires data in real time and reports the indicators (MTTR, MTBF, production, consumption). Graded 19/20.',
+    },
     link: '[À COMPLÉTER : lien]',
     images: ['/mes1.png', '/MES2.png', '/MES3.png', '/mes4.png'],
   },

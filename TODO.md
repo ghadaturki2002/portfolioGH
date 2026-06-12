@@ -24,6 +24,7 @@ Cherche ces marqueurs dans **`lib/content.ts`** : **`[À COMPLÉTER : …]`** / 
 - **Pick & Place automatisé (Siemens + Factory IO)** → ✅ NOUVEAU projet ajouté (14ᵉ) — équipe de 5, **ESPRIT 2024** ; S7-1200, GRAFCET → Ladder, simulation Factory IO, double compteur. 📷 Emplacement réservé → `public/pick-place.jpg` (visuel décoratif en attendant).
 - **ERP — SAP S/4HANA** → ✅ contenu détaillé intégré (binôme, **ESPRIT 2026**, un semestre ; modélisation d'un vélo, modules MM/PP/EAM). 📷 Emplacement réservé → `public/erp-sap.jpg`. *À valider* : le paragraphe « Ce que j'ai appris ».
 - **Réservoir intelligent (IoT)** → ✅ contenu détaillé intégré (équipe de 3, **ESPRIT 2026** ; capteur → ESP32 → MQTT → Node-RED → Firebase, pompe auto, testé en Wokwi + réel). 📷 Emplacement réservé → `public/reservoir-iot.jpg`. *Optionnel* : durée + ta part précise ; valider « Ce que j'ai appris ».
+- **MES (carte d'acquisition + WinDev)** → ✅ contenu détaillé intégré (individuel, **ESPRIT 2026, un semestre**, **noté 19/20** ; Arduino + WinDev, arrêts MTTR/MTBF, production, consommations). Vraies captures `mes1…mes4` conservées.
 - **GMAO** → la **technologie** de l'application est inconnue : `tech: ['[À COMPLÉTER : techno]', …]` (WinDev ? Java ? autre ?).
 - **Liens « Voir le projet »** : chaque projet a `link: '[À COMPLÉTER : lien]'`. Tant que c'est un placeholder, **aucun bouton « Voir le projet » ne s'affiche** (volontaire). Ajoute une vraie URL (démo / dépôt GitHub / vidéo) pour faire apparaître le lien sur la carte et dans la modale.
 

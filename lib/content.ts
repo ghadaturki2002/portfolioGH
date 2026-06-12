@@ -525,25 +525,41 @@ export const projects: Project[] = [
   },
   {
     id: 'siemens-expert',
-    type: { fr: 'Académique — Certification', en: 'Academic — Certification' },
+    type: { fr: 'Académique — Individuel', en: 'Academic — Individual' },
     status: null,
     categories: ['automatisme', 'iot', 'energie'],
-    tech: ['TIA Portal', 'SIMATIC S7', 'HMI TP700', 'IO-Link', 'RFID RF210', 'Servo S210', 'Startdrive'],
-    title: { fr: 'Académie Siemens Expert — automatisme avancé', en: 'Siemens Expert Academy — Advanced Automation' },
+    tech: ['TIA Portal', 'SIMATIC S7', 'Servo S210', 'Startdrive', 'IO-Link', 'RFID RF210', 'Energy meter', 'HMI TP700'],
+    title: { fr: 'Automatisme avancé Siemens (TIA Portal)', en: 'Advanced Siemens Automation (TIA Portal)' },
     description: {
-      fr: 'Certification Siemens niveau Expert : configuration, programmation et pilotage de technologies industrielles avancées (servo-moteur S210, IO-Link, RFID, energy-meter) sous TIA Portal, avec création d’interfaces HMI.',
-      en: 'Siemens Expert-level certification: configuring, programming and driving advanced industrial technologies (S210 servo drive, IO-Link, RFID, energy meter) in TIA Portal, with HMI interfaces.',
+      fr: 'Configuration, programmation et supervision d’un système d’automatisme avancé sur maquette Siemens réelle, sous TIA Portal : servo-moteur, IO-Link, RFID et compteur d’énergie, le tout piloté depuis un pupitre HMI.',
+      en: 'Configuring, programming and supervising an advanced automation system on a real Siemens rig in TIA Portal: servo drive, IO-Link, RFID and an energy meter, all driven from an HMI panel.',
+    },
+    details: {
+      fr: [
+        'Projet d’automatisme avancé (Siemens) — ESPRIT, 5ᵉ année Mécatronique, 2025, un semestre, mené seule. Faire fonctionner ensemble des technologies très différentes (servo-moteur, capteurs en réseau, compteur d’énergie) dans un même système piloté est un vrai enjeu d’intégration.',
+        'Sous TIA Portal, sur une maquette réelle : un servo-moteur S210 (mise en service Startdrive, régulation de vitesse et de position) ; la communication IO-Link et un capteur RFID (RF210, lecture/écriture des étiquettes) ; un energy-meter pour la qualité d’énergie ; et des interfaces HMI (pupitre TP700) pour superviser et piloter l’ensemble.',
+        'J’ai pris en charge la configuration matérielle et réseau, la programmation de l’automate et la conception des écrans HMI.',
+      ],
+      en: [
+        'Advanced automation project (Siemens) — ESPRIT, 5th-year Mechatronics, 2025, one semester, run solo. Making very different technologies work together (servo drive, networked sensors, energy meter) within a single controlled system is a real integration challenge.',
+        'In TIA Portal, on a real rig: an S210 servo drive (Startdrive commissioning, speed and position control); IO-Link communication and an RFID sensor (RF210, reading/writing tags); an energy meter for power-quality monitoring; and HMI interfaces (TP700 panel) to supervise and drive the whole system.',
+        'I handled the hardware and network configuration, the PLC programming and the design of the HMI screens.',
+      ],
     },
     role: {
-      fr: 'Configuration matérielle et réseau, programmation de l’automate et conception des IHM de supervision et de pilotage.',
-      en: 'Hardware and network configuration, PLC programming and design of the supervision/control HMIs.',
+      fr: 'Projet mené seule : configuration matérielle et réseau, programmation de l’automate (SIMATIC S7) et conception des interfaces HMI de supervision et de pilotage.',
+      en: 'Run solo: hardware and network configuration, PLC programming (SIMATIC S7) and design of the supervision/control HMIs.',
     },
     learned: {
-      fr: 'TIA Portal, motion control (servo S210), IO-Link/RFID, supervision HMI, qualité d’énergie.',
-      en: 'TIA Portal, motion control (S210 servo), IO-Link/RFID, HMI supervision, power quality.',
+      fr: 'Pas de blocage majeur — ce qui m’a marquée, c’est ma manière de travailler : je trouvais souvent la solution par moi-même avant même qu’elle soit expliquée en cours. J’ai appris à faire cohabiter des technologies très différentes (motion, IO-Link, RFID, mesure d’énergie) dans un projet cohérent, et à penser la supervision du point de vue de l’opérateur via les interfaces HMI.',
+      en: 'No major roadblock — what stood out was my way of working: I often found the solution on my own before it was even explained in class. I learned to make very different technologies (motion, IO-Link, RFID, energy metering) coexist in one coherent project, and to think about supervision from the operator’s point of view through the HMI interfaces.',
     },
-    result: null,
+    result: {
+      fr: 'Un système complet, configuré et fonctionnel sur la maquette : servo asservi en vitesse et en position, lecture/écriture RFID via IO-Link, suivi de l’énergie, le tout supervisé et piloté depuis le pupitre HMI.',
+      en: 'A complete, configured and functional system on the rig: the servo controlled in speed and position, RFID read/write over IO-Link, energy monitoring, all supervised and driven from the HMI panel.',
+    },
     link: '[À COMPLÉTER : lien]',
+    images: ['/siemens.jpg'],
   },
   {
     id: 'photovoltaique',

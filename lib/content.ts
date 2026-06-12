@@ -383,24 +383,39 @@ export const projects: Project[] = [
   },
   {
     id: 'supervision-production',
-    type: { fr: 'Académique', en: 'Academic' },
+    type: { fr: 'Stage ingénieur — Entreprise (GD Tunisie)', en: 'Engineering internship — Company (GD Tunisie)' },
     status: null,
-    categories: ['automatisme', 'iot', 'mecanique'],
-    tech: ['Python', 'Arduino', 'SolidWorks', 'Capteur E3F-DS30C4'],
-    title: { fr: 'Supervision de production en temps réel', en: 'Real-Time Production Monitoring' },
+    categories: ['automatisme', 'iot', 'gestion'],
+    tech: ['Python', 'QR Code', 'Capteur E3F-DS30C4', 'Excel', 'Base de données'],
+    title: { fr: 'Gestion de production — tableau de bord', en: 'Production Management — Dashboard' },
     description: {
-      fr: 'Supervision en temps réel d’une ligne de production de câbles, du capteur sur la ligne jusqu’au tableau de bord : comptage des pièces et suivi de la production en direct.',
-      en: 'Real-time monitoring of a cable production line, from the sensor on the line to the dashboard — counting parts and tracking output live.',
+      fr: 'Logiciel qui remplace le suivi papier d’un fabricant de câbles : gestion des ouvriers et des opérations par QR code, suivi des shifts, comptage automatique des câbles par capteur, et tableau de bord avec historique exportable en Excel.',
+      en: 'Software replacing a cable manufacturer’s paper tracking: worker and operation management via QR codes, shift tracking, automatic sensor-based cable counting, and a dashboard with history exportable to Excel.',
+    },
+    details: {
+      fr: [
+        'Stage d’ingénieur chez GD Tunisie (fabricant de câbles, 2025, 2 mois, en individuel). Le suivi de production se faisait entièrement sur papier : l’objectif était de le remplacer par un logiciel de gestion et de suivi en temps réel.',
+        'Volet gestion : ajout d’un ouvrier (photo + QR code), génération de QR codes d’opération, suivi du début et de la fin de shift, et un tableau de bord avec détail et historique, exportable en fichier Excel.',
+        'Volet temps réel : un capteur placé à la dernière étape de fabrication détecte chaque câble terminé et l’ajoute automatiquement au comptage. Faute d’équipement industriel (caméra / scanner) sur site, j’ai validé l’application sur mon PC, avec sa webcam, pour démontrer le fonctionnement complet.',
+      ],
+      en: [
+        'Engineering internship at GD Tunisie (cable manufacturer, 2025, 2 months, individual). Production tracking was done entirely on paper: the goal was to replace it with real-time management and tracking software.',
+        'Management side: adding a worker (photo + QR code), generating operation QR codes, tracking shift start and end, and a dashboard with details and history, exportable to Excel.',
+        'Real-time side: a sensor placed at the last manufacturing step detects each finished cable and automatically adds it to the count. With no industrial hardware (camera / scanner) on site, I validated the app on my PC, using its webcam, to demonstrate the full functionality.',
+      ],
     },
     role: {
-      fr: 'Conception du poste (SolidWorks), acquisition capteur (Arduino) et développement du tableau de bord temps réel (Python).',
-      en: 'Designed the station (SolidWorks), sensor acquisition (Arduino) and the real-time dashboard (Python).',
+      fr: 'Conception et développement complet du logiciel (Python) et du comptage par capteur, en autonomie sur site.',
+      en: 'Full design and development of the software (Python) and of the sensor-based counting, autonomously on site.',
     },
     learned: {
-      fr: 'Acquisition de données capteurs, supervision temps réel, traitement des données de production.',
-      en: 'Sensor data acquisition, real-time monitoring, production data processing.',
+      fr: 'La principale contrainte a été matérielle : sans caméra ni scanner industriels sur site, j’ai contourné la limite en validant l’application sur mon PC (avec sa webcam) pour prouver qu’elle fonctionnait. Surtout, j’ai appris à répondre à un vrai besoin d’entreprise : transformer un suivi papier en un outil numérique simple et utile au quotidien.',
+      en: 'The main constraint was hardware: with no industrial cameras or scanners on site, I worked around it by validating the app on my PC (with its webcam) to prove it worked. Above all, I learned to answer a real business need: turning paper tracking into a simple, day-to-day digital tool.',
     },
-    result: null,
+    result: {
+      fr: 'Un logiciel fonctionnel remplaçant le suivi papier : gestion ouvriers/opérations par QR code, suivi des shifts, comptage automatique, tableau de bord avec historique et export Excel. Fonctionnement validé sur PC ; le déploiement complet sur site reste conditionné à l’équipement (caméra / scanner).',
+      en: 'A functional software replacing paper tracking: worker/operation management via QR codes, shift tracking, automatic counting, a dashboard with history and Excel export. Validated on PC; full on-site deployment remains conditional on the equipment (camera / scanner).',
+    },
     link: '[À COMPLÉTER : lien]',
     images: ['/gd.png', '/gd1.png', '/gd3.png', '/gd4.png', '/gd5.png', '/gd6.png', '/GD12.png', '/gd11.png'],
   },
@@ -539,7 +554,7 @@ export const projects: Project[] = [
   },
   {
     id: 'stm32-embedded',
-    type: { fr: 'Académique', en: 'Academic' },
+    type: { fr: 'Académique — Équipe de 3', en: 'Academic — Team of 3' },
     status: null,
     categories: ['iot'],
     tech: ['STM32', 'I2C', 'UART', 'Capteur ultrason', 'LCD', 'Proteus ISIS'],
@@ -550,11 +565,11 @@ export const projects: Project[] = [
     },
     details: {
       fr: [
-        'Projet académique (2024, un semestre). Objectif : maîtriser deux protocoles incontournables des systèmes embarqués — I2C et UART — en les mettant en œuvre concrètement sur un microcontrôleur STM32, à travers un petit montage.',
+        'Projet académique (ESPRIT, 2024, un semestre, en équipe de 3). Objectif : maîtriser deux protocoles incontournables des systèmes embarqués — I2C et UART — en les mettant en œuvre concrètement sur un microcontrôleur STM32, à travers un petit montage.',
         'Le montage, développé sur STM32 et simulé sous Proteus ISIS, réunit un capteur à ultrasons, un moteur, des boutons et un afficheur LCD, et met en œuvre la communication I2C ainsi qu’une liaison série UART.',
       ],
       en: [
-        'Academic project (2024, one semester). Goal: master two essential embedded-systems protocols — I2C and UART — by implementing them concretely on an STM32 microcontroller through a small setup.',
+        'Academic project (ESPRIT, 2024, one semester, in a team of 3). Goal: master two essential embedded-systems protocols — I2C and UART — by implementing them concretely on an STM32 microcontroller through a small setup.',
         'The setup, developed on STM32 and simulated in Proteus ISIS, combines an ultrasonic sensor, a motor, buttons and an LCD display, and implements I2C communication as well as a UART serial link.',
       ],
     },

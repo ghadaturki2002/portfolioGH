@@ -97,7 +97,7 @@ export default function Hero() {
             </motion.div>
 
             {/* three worlds — her differentiator, all truthful */}
-            <motion.ul variants={item} className="mt-8 grid max-w-xl grid-cols-1 gap-2.5 sm:grid-cols-3">
+            <motion.ul variants={item} className="mt-8 hidden max-w-xl grid-cols-3 gap-2.5 sm:grid">
               {worlds.map((wd) => (
                 <li
                   key={wd.key}
@@ -156,7 +156,7 @@ function Portrait({
     'radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px))'
 
   return (
-    <div className="relative mx-auto aspect-square w-56 sm:w-64 lg:w-[22rem]">
+    <div className="relative mx-auto aspect-square w-48 sm:w-60 lg:w-[22rem]">
       {/* texture + bloom behind the disc */}
       <div className="dot-grid pointer-events-none absolute inset-[-8%] -z-10 rounded-full opacity-50" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-[6%] -z-10 rounded-full bg-accent/15 blur-2xl" aria-hidden="true" />

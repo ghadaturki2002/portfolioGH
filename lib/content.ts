@@ -54,7 +54,7 @@ export const about = {
   } as LList,
   stats: [
     { value: '6', label: { fr: 'Expériences en entreprise', en: 'Industry experiences' } as L },
-    { value: '14', label: { fr: 'Projets d’ingénierie', en: 'Engineering projects' } as L },
+    { value: '15', label: { fr: 'Projets d’ingénierie', en: 'Engineering projects' } as L },
     { value: '6', label: { fr: 'Certifications', en: 'Certifications' } as L },
     { value: '3', label: { fr: 'Diplômes', en: 'Degrees' } as L },
   ],
@@ -536,6 +536,42 @@ export const projects: Project[] = [
     },
     link: '[À COMPLÉTER : lien]',
     images: ['/reservoir-iot.jpg'],
+  },
+  {
+    id: 'stm32-embedded',
+    type: { fr: 'Académique', en: 'Academic' },
+    status: null,
+    categories: ['iot'],
+    tech: ['STM32', 'I2C', 'UART', 'Capteur ultrason', 'LCD', 'Proteus ISIS'],
+    title: { fr: 'Projet embarqué STM32 — I2C & UART', en: 'STM32 Embedded Project — I2C & UART' },
+    description: {
+      fr: 'Système embarqué sur STM32 mettant en œuvre les protocoles de communication I2C et UART, avec capteur à ultrasons, moteur, boutons et afficheur LCD. Développé et validé en simulation sous Proteus ISIS.',
+      en: 'An STM32 embedded system implementing the I2C and UART communication protocols, with an ultrasonic sensor, motor, buttons and an LCD display. Developed and validated in simulation with Proteus ISIS.',
+    },
+    details: {
+      fr: [
+        'Projet académique (2024, un semestre). Objectif : maîtriser deux protocoles incontournables des systèmes embarqués — I2C et UART — en les mettant en œuvre concrètement sur un microcontrôleur STM32, à travers un petit montage.',
+        'Le montage, développé sur STM32 et simulé sous Proteus ISIS, réunit un capteur à ultrasons, un moteur, des boutons et un afficheur LCD, et met en œuvre la communication I2C ainsi qu’une liaison série UART.',
+      ],
+      en: [
+        'Academic project (2024, one semester). Goal: master two essential embedded-systems protocols — I2C and UART — by implementing them concretely on an STM32 microcontroller through a small setup.',
+        'The setup, developed on STM32 and simulated in Proteus ISIS, combines an ultrasonic sensor, a motor, buttons and an LCD display, and implements I2C communication as well as a UART serial link.',
+      ],
+    },
+    role: {
+      fr: 'Mise en œuvre des communications I2C et UART sur STM32, et réalisation du montage (capteur, moteur, boutons, LCD) développé et simulé sous Proteus ISIS.',
+      en: 'Implementing I2C and UART communication on STM32, and building the setup (sensor, motor, buttons, LCD) developed and simulated in Proteus ISIS.',
+    },
+    learned: {
+      fr: 'Mettre en œuvre concrètement les protocoles I2C et UART sur STM32 : comprendre comment des composants communiquent sur un même bus (I2C) et comment établir une liaison série (UART). La simulation sous Proteus m’a permis de valider le montage et le code avant tout matériel réel.',
+      en: 'Implementing the I2C and UART protocols concretely on STM32: understanding how components communicate on a shared bus (I2C) and how to set up a serial link (UART). Simulating in Proteus let me validate the setup and the code before any real hardware.',
+    },
+    result: {
+      fr: 'Montage fonctionnel en simulation (Proteus) démontrant les communications I2C et UART sur STM32.',
+      en: 'A setup functional in simulation (Proteus) demonstrating I2C and UART communication on STM32.',
+    },
+    link: '[À COMPLÉTER : lien]',
+    images: ['/stm32.jpg'],
   },
   {
     id: 'siemens-expert',

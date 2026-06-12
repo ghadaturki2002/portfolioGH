@@ -32,9 +32,8 @@ Cherche ces marqueurs dans **`lib/content.ts`** : **`[À COMPLÉTER : …]`** / 
 
 ### Images de projets manquantes (un visuel décoratif élégant s'affiche en attendant)
 Ajoute tes captures dans `public/` puis renseigne `images: ['/ton-image.png']` du projet dans `lib/content.ts` :
-- `suiveur-ligne` → photo du robot
-- `photovoltaique` → une capture/photo si tu en as (sinon un visuel décoratif s'affiche)
-- (déjà réservés, dépose juste le fichier dans `public/`) : `jumeau-numerique.jpg`, `siemens.jpg`, `pick-place.jpg`, `erp-sap.jpg`, `reservoir-iot.jpg`, `gmao.jpg`
+- `suiveur-ligne` → photo du robot (sinon un visuel décoratif s'affiche)
+- (déjà réservés, dépose juste le fichier dans `public/`) : `jumeau-numerique.jpg`, `siemens.jpg`, `pick-place.jpg`, `erp-sap.jpg`, `reservoir-iot.jpg`, `gmao.jpg`, `stm32.jpg`, `photovoltaique.jpg`
 
 ### Photo de profil
 - `public/ghada-turki-photo.jpg` est peut-être basse résolution → remplace par une version **HD** (portrait ratio **4:5**, ~1000×1250 px, même nom).

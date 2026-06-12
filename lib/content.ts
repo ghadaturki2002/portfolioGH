@@ -664,25 +664,39 @@ export const projects: Project[] = [
   },
   {
     id: 'photovoltaique',
-    type: { fr: 'Académique', en: 'Academic' },
+    type: { fr: 'Académique — Individuel', en: 'Academic — Individual' },
     status: null,
     categories: ['energie'],
-    tech: ['PVSyst', 'Dimensionnement PV', 'Électrotechnique'],
+    tech: ['PVSyst', 'Dimensionnement PV', 'Pompage solaire', 'Électrotechnique'],
     title: { fr: 'Atelier photovoltaïque — dimensionnement', en: 'Photovoltaic Workshop — System Sizing' },
     description: {
-      fr: 'Dimensionnement d’installations photovoltaïques (résidentielle et pompage solaire) : choix des composants, calcul des sections de câbles et simulation sous PVSyst.',
-      en: 'Sizing photovoltaic installations (residential and solar pumping): component selection, cable-section calculations and PVSyst simulation.',
+      fr: 'Dimensionnement complet de deux installations solaires — résidentielle et pompage solaire — du choix des composants au calcul des câbles, avec validation des performances sous PVSyst.',
+      en: 'Full sizing of two solar installations — residential and solar pumping — from component selection to cable calculations, with performance validated in PVSyst.',
+    },
+    details: {
+      fr: [
+        'Atelier photovoltaïque (ESPRIT, 2026, un semestre, en individuel). Une installation mal dimensionnée, c’est de l’énergie perdue ou des coûts inutiles : l’objectif était de dimensionner correctement deux installations solaires et de valider leurs performances par simulation.',
+        'Étude complète sous PVSyst : dimensionnement d’une installation résidentielle puis d’un système de pompage solaire ; choix des composants (panneaux et équipements) selon les besoins ; calcul des sections de câbles selon les normes ; et simulation des performances pour valider les choix.',
+      ],
+      en: [
+        'Photovoltaic workshop (ESPRIT, 2026, one semester, individual). A poorly sized installation means wasted energy or needless cost: the goal was to correctly size two solar installations and validate their performance through simulation.',
+        'Full study in PVSyst: sizing a residential installation then a solar pumping system; selecting the components (panels and equipment) based on the needs; computing cable sections to standards; and simulating performance to validate the choices.',
+      ],
     },
     role: {
-      fr: 'Étude et dimensionnement complet des installations, simulations PVSyst, calcul des câbles selon les normes.',
-      en: 'Full study and sizing of the installations, PVSyst simulations, standards-based cable calculations.',
+      fr: 'Étude et dimensionnement complets réalisés seule : choix des composants, calcul des câbles selon les normes et simulations PVSyst.',
+      en: 'Full study and sizing done on my own: component selection, standards-based cable calculations and PVSyst simulations.',
     },
     learned: {
-      fr: 'Dimensionnement PV, simulation PVSyst, normes d’installation électrique.',
-      en: 'PV sizing, PVSyst simulation, electrical installation standards.',
+      fr: 'Le photovoltaïque était un domaine nouveau pour moi : j’ai dû en apprendre la méthode de dimensionnement et l’appliquer rigoureusement — chaque choix (panneaux, câbles) découle d’un calcul et d’une norme, jamais d’une approximation. PVSyst m’a permis de confronter mes calculs à une simulation réaliste et de mesurer l’écart entre le papier et le terrain.',
+      en: 'Photovoltaics was a new field for me: I had to learn the sizing method and apply it rigorously — every choice (panels, cables) follows from a calculation and a standard, never a guess. PVSyst let me test my calculations against a realistic simulation and measure the gap between paper and the field.',
     },
-    result: null,
+    result: {
+      fr: 'Projet validé : les deux installations correctement dimensionnées, les câbles calculés selon les normes, et les performances confirmées par la simulation PVSyst.',
+      en: 'Project validated: both installations correctly sized, cables computed to standards, and performance confirmed by PVSyst simulation.',
+    },
     link: '[À COMPLÉTER : lien]',
+    images: ['/photovoltaique.jpg'],
   },
   {
     id: 'erp-sap',

@@ -503,25 +503,39 @@ export const projects: Project[] = [
   },
   {
     id: 'reservoir-iot',
-    type: { fr: 'Académique', en: 'Academic' },
+    type: { fr: 'Académique — Équipe de 3', en: 'Academic — Team of 3' },
     status: null,
     categories: ['iot', 'automatisme'],
-    tech: ['ESP32', 'MQTT', 'Node-RED', 'Firebase'],
+    tech: ['ESP32', 'MQTT', 'Node-RED', 'Firebase', 'Wokwi', 'Capteur de niveau'],
     title: { fr: 'Réservoir intelligent — dashboard IoT', en: 'Smart Tank — IoT Dashboard' },
     description: {
-      fr: 'Système IoT de gestion d’un réservoir et d’une pompe à eau : mesure du niveau, communication MQTT vers un tableau de bord Node-RED en temps réel, et stockage Firebase.',
-      en: 'An IoT system for a tank and water pump: level sensing, MQTT communication to a real-time Node-RED dashboard, and Firebase storage.',
+      fr: 'Chaîne IoT complète qui surveille le niveau d’eau d’un réservoir et pilote automatiquement une pompe selon ce niveau. Suivi en temps réel sur un tableau de bord Node-RED, données historisées dans Firebase.',
+      en: 'A full IoT chain that monitors a tank’s water level and automatically controls a pump based on it. Real-time tracking on a Node-RED dashboard, data logged in Firebase.',
+    },
+    details: {
+      fr: [
+        'Projet IoT (ESPRIT, 2026, en équipe de 3). Objectif : apprendre à construire une chaîne IoT complète et son tableau de bord, sur un cas concret — surveiller le niveau d’eau d’un réservoir et piloter automatiquement une pompe selon ce niveau.',
+        'Un capteur de niveau immergé mesure le niveau ; un ESP32 récupère la mesure et la publie via MQTT. Un tableau de bord Node-RED affiche le niveau en temps réel et les données sont historisées dans Firebase. Selon le niveau, la pompe se déclenche automatiquement. Le système a été développé et testé en simulation (Wokwi) comme avec de vrais composants électroniques.',
+      ],
+      en: [
+        'IoT project (ESPRIT, 2026, in a team of 3). Goal: learn to build a full IoT chain and its dashboard, on a concrete case — monitoring a tank’s water level and automatically controlling a pump based on it.',
+        'An immersed level sensor measures the level; an ESP32 reads it and publishes it over MQTT. A Node-RED dashboard displays the level in real time and the data is logged in Firebase. Depending on the level, the pump turns on automatically. The system was developed and tested in simulation (Wokwi) and with real electronic components.',
+      ],
     },
     role: {
-      fr: 'Mise en place de la chaîne IoT complète : capteur → ESP32 → MQTT → dashboard Node-RED.',
-      en: 'Built the full IoT chain: sensor → ESP32 → MQTT → Node-RED dashboard.',
+      fr: 'Travail en équipe (3 personnes) sur la chaîne IoT complète (capteur → ESP32 → MQTT → Node-RED → Firebase) et le tableau de bord de supervision.',
+      en: 'Teamwork (3 people) on the full IoT chain (sensor → ESP32 → MQTT → Node-RED → Firebase) and the supervision dashboard.',
     },
     learned: {
-      fr: 'Chaîne IoT de bout en bout, MQTT, tableaux de bord Node-RED, Firebase.',
-      en: 'End-to-end IoT chain, MQTT, Node-RED dashboards, Firebase.',
+      fr: 'Concevoir un tableau de bord clair et utile : transformer un flux de données capteur en information lisible en temps réel. J’ai compris la logique publication/abonnement de MQTT et la façon de relier tous les maillons d’une chaîne IoT — capteur, ESP32, dashboard, base de données — pour fermer la boucle jusqu’au pilotage automatique de la pompe.',
+      en: 'Designing a clear, useful dashboard: turning a stream of sensor data into readable, real-time information. I understood MQTT’s publish/subscribe logic and how to connect every link of an IoT chain — sensor, ESP32, dashboard, database — to close the loop all the way to automatic pump control.',
     },
-    result: null,
+    result: {
+      fr: 'Système IoT fonctionnel : niveau suivi en direct sur le tableau de bord, pompe déclenchée automatiquement au bon niveau, données historisées — validé en simulation (Wokwi) comme en réel.',
+      en: 'A functional IoT system: level tracked live on the dashboard, pump triggered automatically at the right level, data logged — validated in simulation (Wokwi) and in real life.',
+    },
     link: '[À COMPLÉTER : lien]',
+    images: ['/reservoir-iot.jpg'],
   },
   {
     id: 'siemens-expert',

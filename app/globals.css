@@ -95,6 +95,51 @@
   .btn-outline {
     @apply btn border border-ink/25 text-ink hover:border-accent hover:text-accent;
   }
+  /* glowing primary CTA — a "powered-on" signal button that breathes,
+     with a sweeping highlight on hover (like current through a trace) */
+  .btn-glow {
+    @apply btn relative overflow-hidden bg-accent text-bg hover:-translate-y-0.5;
+    animation: glow-breathe 2.6s ease-in-out infinite;
+  }
+  .btn-glow::before {
+    content: '';
+    @apply pointer-events-none absolute inset-0;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.28) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-glow:hover::before {
+    transform: translateX(120%);
+  }
+  .btn-glow:hover {
+    background-color: rgb(var(--accent-strong));
+  }
+  /* frosted-glass secondary CTA — tokens only, works in both themes */
+  .btn-glass {
+    @apply btn border border-hairline text-ink;
+    background-color: rgb(var(--surface) / 0.4);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgb(var(--ink) / 0.06);
+  }
+  .dark .btn-glass {
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08);
+  }
+  .btn-glass:hover {
+    @apply -translate-y-0.5 border-accent text-accent;
+    background-color: rgb(var(--surface) / 0.6);
+    box-shadow: inset 0 1px 0 rgb(var(--ink) / 0.06), 0 0 0 1px rgb(var(--accent) / 0.25),
+      0 0 24px -8px rgb(var(--accent) / 0.5);
+  }
+  /* fallback where backdrop-filter is unsupported (older Firefox/Safari) */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .btn-glass {
+      background-color: rgb(var(--surface) / 0.92);
+    }
+    .btn-glass:hover {
+      background-color: rgb(var(--surface));
+    }
+  }
   .link-underline {
     @apply relative inline-block;
   }
@@ -131,6 +176,28 @@
   .dot-grid {
     background-image: radial-gradient(rgb(var(--ink) / 0.07) 1px, transparent 1px);
     background-size: 22px 22px;
+  }
+  /* faint scanline texture for the intro portrait reveal */
+  .scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgb(var(--ink) / 0.04) 0px,
+      rgb(var(--ink) / 0.04) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+}
+
+/* "powered-on" breathing glow for the primary CTA (auto-stilled under
+   reduced motion by the global block below) */
+@keyframes glow-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgb(var(--accent) / 0.3), 0 0 24px -6px rgb(var(--accent) / 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgb(var(--accent) / 0.45), 0 0 40px -4px rgb(var(--accent) / 0.7);
   }
 }
 

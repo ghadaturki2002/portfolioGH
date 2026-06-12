@@ -27,6 +27,13 @@ const ui: Record<Lang, Record<string, string>> = {
     'hero.contact': 'Me contacter',
     'hero.scroll': 'Découvrir',
 
+    'intro.loading': 'Chargement',
+    'intro.skip': 'Passer',
+    'intro.replay': 'Revoir l’intro',
+
+    'carousel.kicker': 'En mouvement',
+    'carousel.title': 'Mon terrain de jeu technique',
+
     'about.kicker': 'À propos',
     'about.title': 'Profil',
     'about.focusAreas': 'Domaines clés',
@@ -96,6 +103,13 @@ const ui: Record<Lang, Record<string, string>> = {
     'hero.downloadCV': 'Download CV',
     'hero.contact': 'Get in touch',
     'hero.scroll': 'Scroll',
+
+    'intro.loading': 'Loading',
+    'intro.skip': 'Skip',
+    'intro.replay': 'Replay intro',
+
+    'carousel.kicker': 'In motion',
+    'carousel.title': 'My technical playground',
 
     'about.kicker': 'About',
     'about.title': 'Profile',

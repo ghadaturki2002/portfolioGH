@@ -1,6 +1,6 @@
 'use client'
 
-import { Linkedin, Mail, ArrowUp } from 'lucide-react'
+import { Linkedin, Mail, ArrowUp, RotateCcw } from 'lucide-react'
 import { useLanguage } from './LanguageProvider'
 import Reveal from './ui/Reveal'
 import { identity } from '@/lib/content'
@@ -22,6 +22,16 @@ export default function Footer() {
     if (!el) return
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: reduce ? 'auto' : 'smooth' })
+  }
+
+  // Replay the intro — handy for live interview demos.
+  const replayIntro = () => {
+    try {
+      window.sessionStorage.removeItem('intro_seen')
+    } catch {
+      /* ignore */
+    }
+    window.location.reload()
   }
 
   return (
@@ -91,13 +101,22 @@ export default function Footer() {
           <p className="font-mono text-xs text-ink-soft">
             © {year} {identity.name}. {t('footer.rights')}
           </p>
-          <button
-            onClick={() => go('#hero')}
-            className="group inline-flex items-center gap-2 self-start font-mono text-xs uppercase tracking-[0.2em] text-ink-soft transition-colors hover:text-accent sm:self-auto"
-          >
-            {t('footer.top')}
-            <ArrowUp className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5" />
-          </button>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <button
+              onClick={replayIntro}
+              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-ink-soft transition-colors hover:text-accent"
+            >
+              <RotateCcw className="h-3.5 w-3.5 transition-transform group-hover:-rotate-45" />
+              {t('intro.replay')}
+            </button>
+            <button
+              onClick={() => go('#hero')}
+              className="group inline-flex items-center gap-2 self-start font-mono text-xs uppercase tracking-[0.2em] text-ink-soft transition-colors hover:text-accent sm:self-auto"
+            >
+              {t('footer.top')}
+              <ArrowUp className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5" />
+            </button>
+          </div>
         </div>
       </div>
     </footer>

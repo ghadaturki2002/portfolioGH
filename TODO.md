@@ -4,22 +4,24 @@
 
 ---
 
-## 0. ✨ REFONTE « WAW » (nouveau design — fait)
+## 0. ✨ REFONTE TOTALE — identité « TRICHROME » (faite, déployée)
 
-Direction retenue : **« Convergence — Trois mondes, un signal »** (mécanique · électronique · logiciel qui fusionnent en toi).
+Refonte **complète** à partir de zéro (nouvelle palette, polices, animations, copie). On a **gardé uniquement** : tes infos (100 % exactes) et ta photo. L'ancien design (« Signal » graphite+cyan, puis « Convergence ») a été **entièrement supprimé**.
 
-- **Écran d'intro cinématique** (`ConvergenceIntro`) : 3 lignes « signal » (Mécanique / Électronique / Logiciel) se rejoignent, fusionnent en un point cyan, qui s'ouvre sur **ta photo** (révélée par un balayage gris → couleur), puis **ta photo se « pose » sur le Hero** (transition fluide, pas de coupure). Effet **parallaxe** à la souris. Passable (bouton « Passer » / clic / touche), ~2,6 s, joué une fois par session.
-- **Engrenage retiré** du Hero → remplacé par ta **photo en médaillon** (anneau cyan lumineux qui tourne lentement, léger tilt 3D au survol, légère parallaxe au scroll) + 3 étiquettes « mondes ».
-- **Boutons** : `.btn-glow` (halo qui respire + reflet au survol) et `.btn-glass` (effet verre dépoli). Hero : bouton principal = glow, secondaires = verre.
-- **Section « sticky »** (`ConvergenceScroll`, juste après le Hero) : récit en 3 actes au scroll (Mécanique → Électronique → Logiciel) qui convergent en un seul signal. Sur mobile / mouvement réduit → 3 cartes simples.
-- **Carrousel en boucle** (`Carousel`, entre Compétences et Certifications) : 2 rangées de cartes « verre » de tes compétences, en boucle, **pause au survol et au focus clavier**.
-- **Accroches** (vraies) : Hero « Bonjour — et si votre prochaine recrue parlait mécanique, électronique ET code ? » ; intro « Trois mondes. Un seul signal. Une seule ingénieure. »
-- **« Revoir l'intro »** : bouton en bas de page (pied de page) pour rejouer l'intro pendant un entretien.
-- ✅ **Accessibilité** : tout respecte `prefers-reduced-motion` (animations coupées), bilingue FR/EN, clair/sombre.
+**Idée** : tu parles 3 langues d'ingénieure → 3 canaux couleur servent de **système de repérage** (jamais de déco) :
+- 🔵 **bleu gentiane** = Mécanique · 🟠 **ambre** = Électronique/Automatisme · 🟣 **magenta** = Logiciel/IA.
+- Base neutre **os/bitume chaud** (sombre par défaut = « atelier la nuit » ; clair = « labo papier »). **Zéro graphite/cyan, orange, émeraude.** Zéro dégradé. ≥ 90 % de l'écran reste neutre ; 1 seule teinte dominante par écran ; 1 seul « glow » par écran.
 
-### 📷 Important pour l'intro/Hero
-- **Ta photo** (`public/ghada-turki-photo.jpg`) est maintenant **très en avant** (médaillon Hero + intro). Mets une version **HD** et bien cadrée (visage centré). Idéalement **carrée** (~1024×1024) pour un cercle parfait — sinon le cadrage automatique s'en occupe.
-- *(Anciens fichiers `BootLoader.tsx`, `Gear3DScene.tsx`, `GearCanvas.tsx` ne sont plus utilisés — laissés dans le code, sans effet.)*
+**Ce qui a été construit** (tout bilingue FR/EN, clair/sombre, `prefers-reduced-motion`) :
+- **Intro « Calibration »** (`HeroCalibration`) : les 3 puces s'enclenchent (compteur 00→100) puis **volent** se ranger sous ton nom pendant que **ta photo se « met au point »** (3 plaques d'impression qui s'alignent). Sans coupure. Bouton « Passer », ~2,6 s, joué une fois/session.
+- **Hero** : accroche par défaut « Je dessine la pièce, je câble la carte, j'écris le code. » (+ 3 alternatives, voir plus bas), photo en plaques trichromes, boutons verre + glow.
+- **8 sections, chacune un traitement distinct** : `01 Fiche technique` (portrait collant + barres par canal), `02 Le registre` (expériences en ledger sobre), `03 Le catalogue` (projets filtrables qui **recolorent** la section + modale ← → clavier), `04 L'établi` (compétences dont **le gras = l'usage réel**), `05 Le tapis roulant` (carrousel CSS infini sans couture, pause survol/clavier), `06 Les sceaux` (certifs qui « s'impriment »), `07 Les archives` (formation en étagère), `08 La passation` (contact, fond de points réactif au curseur).
+- **Header** : puces qui s'allument selon la section active. **Footer** : le triptyque de puces = signature, **clic = rejouer l'intro** (pour les entretiens).
+- **Engrenage** : supprimé partout.
+
+### 📷 Important
+- **Ta photo** (`public/ghada-turki-photo.jpg`) est **très en avant** (intro + Hero, en ratio 4:5). Mets une version **HD, visage bien cadré**. (Le cadrage automatique gère le ratio.)
+- **Accroche du Hero** : modifiable dans `lib/content.ts` → `identity.headline` (3 alternatives sont notées juste au-dessus, en commentaire).
 
 ---
 

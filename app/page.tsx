@@ -1,32 +1,26 @@
 import Header from '@/components/Header'
-import Hero from '@/components/Hero'
+import HeroCalibration from '@/components/HeroCalibration'
 import About from '@/components/About'
 import Experience from '@/components/Experience'
 import Projects from '@/components/Projects'
 import Skills from '@/components/Skills'
-import Carousel from '@/components/fx/Carousel'
+import Conveyor from '@/components/Conveyor'
 import Certifications from '@/components/Certifications'
 import Education from '@/components/Education'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
-import ConvergenceIntro from '@/components/fx/ConvergenceIntro'
-import ConvergenceScroll from '@/components/ConvergenceScroll'
-import ReadingProgress from '@/components/fx/ReadingProgress'
 
 export default function Home() {
   return (
     <>
-      <ConvergenceIntro />
-      <ReadingProgress />
       <Header />
       <main id="main">
-        <Hero />
-        <ConvergenceScroll />
+        <HeroCalibration />
         <About />
         <Experience />
         <Projects />
         <Skills />
-        <Carousel />
+        <Conveyor />
         <Certifications />
         <Education />
         <Contact />

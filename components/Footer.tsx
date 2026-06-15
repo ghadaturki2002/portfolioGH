@@ -1,13 +1,30 @@
 'use client'
 
-import { Linkedin, Mail, ArrowUp, RotateCcw } from 'lucide-react'
+import { Linkedin, Mail, ArrowUp } from 'lucide-react'
 import { useLanguage } from './LanguageProvider'
-import Reveal from './ui/Reveal'
 import { identity } from '@/lib/content'
+import { ChipTriplet, Reveal } from './ui/primitives'
 
 export default function Footer() {
   const { t } = useLanguage()
   const year = new Date().getFullYear()
+
+  const go = (href: string) => {
+    const el = document.querySelector(href)
+    if (!el) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 72, behavior: reduce ? 'auto' : 'smooth' })
+  }
+
+  // the docked signature triplet replays the intro — built for live interviews
+  const replayIntro = () => {
+    try {
+      window.sessionStorage.removeItem('gt-intro-seen')
+    } catch {
+      /* ignore */
+    }
+    window.location.reload()
+  }
 
   const nav = [
     { href: '#about', label: t('nav.about') },
@@ -17,40 +34,24 @@ export default function Footer() {
     { href: '#contact', label: t('nav.contact') },
   ]
 
-  const go = (href: string) => {
-    const el = document.querySelector(href)
-    if (!el) return
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: reduce ? 'auto' : 'smooth' })
-  }
-
-  // Replay the intro — handy for live interview demos.
-  const replayIntro = () => {
-    try {
-      window.sessionStorage.removeItem('intro_seen')
-    } catch {
-      /* ignore */
-    }
-    window.location.reload()
-  }
-
   return (
     <footer className="border-t border-hairline">
       <div className="container-px py-12 md:py-16">
         <Reveal>
           <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
-            {/* wordmark + built line */}
+            {/* signature triplet — click to replay the intro */}
             <div className="max-w-sm">
               <button
-                onClick={() => go('#hero')}
-                className="font-display text-2xl font-semibold tracking-tight text-ink"
-                aria-label={t('footer.top')}
+                onClick={replayIntro}
+                className="group flex items-center gap-3"
+                aria-label={t('intro.replay')}
               >
-                Ghada<span className="text-accent">.</span>
+                <ChipTriplet />
+                <span className="sys text-ink-soft transition-colors group-hover:text-ink">
+                  {t('intro.replay')}
+                </span>
               </button>
-              <p className="mt-4 text-sm leading-relaxed text-ink-soft text-pretty">
-                {t('footer.built')}
-              </p>
+              <p className="mt-5 text-sm leading-relaxed text-ink-soft text-pretty">{t('footer.built')}</p>
             </div>
 
             {/* nav + socials */}
@@ -65,7 +66,7 @@ export default function Footer() {
                           e.preventDefault()
                           go(item.href)
                         }}
-                        className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
+                        className="link-underline sys text-ink-soft transition-colors hover:text-ink"
                       >
                         {item.label}
                       </a>
@@ -80,14 +81,14 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`LinkedIn — ${identity.name}`}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-soft transition-colors hover:border-accent hover:text-accent"
+                  className="glass flex h-10 w-10 items-center justify-center rounded-full text-ink-soft transition-colors hover:text-ink"
                 >
                   <Linkedin className="h-4 w-4" />
                 </a>
                 <a
                   href={`mailto:${identity.email}`}
                   aria-label={`Email — ${identity.email}`}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-ink-soft transition-colors hover:border-accent hover:text-accent"
+                  className="glass flex h-10 w-10 items-center justify-center rounded-full text-ink-soft transition-colors hover:text-ink"
                 >
                   <Mail className="h-4 w-4" />
                 </a>
@@ -98,20 +99,16 @@ export default function Footer() {
 
         {/* bottom row */}
         <div className="mt-12 flex flex-col gap-4 border-t border-hairline pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-xs text-ink-soft">
+          <p className="font-mono text-[13px] text-ink-soft">
             © {year} {identity.name}. {t('footer.rights')}
           </p>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <button
-              onClick={replayIntro}
-              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-ink-soft transition-colors hover:text-accent"
-            >
-              <RotateCcw className="h-3.5 w-3.5 transition-transform group-hover:-rotate-45" />
-              {t('intro.replay')}
-            </button>
+          <div className="flex items-center gap-6">
+            <span className="sys text-ink-soft/70" aria-hidden="true">
+              {t('footer.fin')}
+            </span>
             <button
               onClick={() => go('#hero')}
-              className="group inline-flex items-center gap-2 self-start font-mono text-xs uppercase tracking-[0.2em] text-ink-soft transition-colors hover:text-accent sm:self-auto"
+              className="sys group inline-flex items-center gap-2 text-ink-soft transition-colors hover:text-ink"
             >
               {t('footer.top')}
               <ArrowUp className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5" />

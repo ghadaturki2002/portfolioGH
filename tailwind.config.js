@@ -6,7 +6,7 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class', // .dark = graphite (default) ; :root = cool light
+  darkMode: 'class', // .dark = warm workshop at night (default) ; :root = paper lab
   theme: {
     extend: {
       colors: {
@@ -16,8 +16,14 @@ module.exports = {
         ink: 'rgb(var(--ink) / <alpha-value>)',
         'ink-soft': 'rgb(var(--ink-soft) / <alpha-value>)',
         hairline: 'rgb(var(--hairline) / <alpha-value>)',
-        accent: 'rgb(var(--accent) / <alpha-value>)',
-        'accent-strong': 'rgb(var(--accent-strong) / <alpha-value>)',
+        // TRICHROME channels — text-safe tokens
+        mech: 'rgb(var(--mech) / <alpha-value>)',
+        elec: 'rgb(var(--elec) / <alpha-value>)',
+        soft: 'rgb(var(--soft) / <alpha-value>)',
+        // chip/fill-only tokens (never set type in these)
+        'mech-chip': 'rgb(var(--mech-chip) / <alpha-value>)',
+        'elec-chip': 'rgb(var(--elec-chip) / <alpha-value>)',
+        'soft-chip': 'rgb(var(--soft-chip) / <alpha-value>)',
       },
       fontFamily: {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
@@ -25,42 +31,8 @@ module.exports = {
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       maxWidth: {
-        content: '1200px',
+        content: '1280px',
         prose: '68ch',
-      },
-      keyframes: {
-        'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(16px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
-        'marquee-reverse': {
-          '0%': { transform: 'translateX(-50%)' },
-          '100%': { transform: 'translateX(0)' },
-        },
-        'pulse-glow': {
-          '0%, 100%': { opacity: '0.55' },
-          '50%': { opacity: '1' },
-        },
-        'spin-slow': {
-          to: { transform: 'rotate(360deg)' },
-        },
-        blink: {
-          '0%, 49%': { opacity: '1' },
-          '50%, 100%': { opacity: '0' },
-        },
-      },
-      animation: {
-        'fade-up': 'fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
-        marquee: 'marquee 38s linear infinite',
-        'marquee-slow': 'marquee 50s linear infinite',
-        'marquee-reverse': 'marquee-reverse 56s linear infinite',
-        'pulse-glow': 'pulse-glow 2.4s ease-in-out infinite',
-        'spin-slow': 'spin-slow 30s linear infinite',
-        blink: 'blink 1.1s step-end infinite',
       },
     },
   },

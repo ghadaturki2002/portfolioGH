@@ -3,33 +3,57 @@
 @tailwind utilities;
 
 /* ============================================================
-   "SIGNAL" DESIGN SYSTEM — electronics / engineering theme
-   .dark  = graphite (default)
-   :root  = cool light
-   One accent: electric cyan (signal/PCB current). Tokens are RGB
-   channel triplets used as rgb(var(--token) / <alpha-value>).
+   TRICHROME DESIGN SYSTEM — "the three-channel engineer"
+   Three disciplined channel hues on a warm bone/bitumen base:
+     --mech  gentian blue   (machine-tool paint)  = mechanics
+     --elec  phosphor amber (instrument displays) = electronics
+     --soft  process magenta (print/data channel) = software & AI
+   .dark = "warm workshop at night" (DEFAULT) ; :root = paper lab.
+   Rules: ≥90% of any viewport neutral · one dominant hue per view
+   · hues only as chips/rails/glow/tints · ZERO color gradients
+   (transparency masks only) · max ONE glow per viewport.
+   Tokens are RGB triplets consumed as rgb(var(--token) / <alpha>).
    ============================================================ */
 @layer base {
   :root {
-    --bg: 243 246 248;          /* cool near-white #F3F6F8 */
-    --surface: 255 255 255;
-    --surface-2: 234 239 243;   /* #EAEFF3 */
-    --ink: 14 21 25;            /* graphite ink #0E1519 */
-    --ink-soft: 81 98 110;      /* #51626E */
-    --hairline: 220 227 233;    /* #DCE3E9 */
-    --accent: 14 116 144;       /* cyan-700 #0E7490 (AA on white) */
-    --accent-strong: 21 94 117; /* cyan-800 #155E75 */
+    /* LIGHT — "paper-and-daylight lab" */
+    --bg: 246 241 232;          /* #F6F1E8 bone paper */
+    --surface: 255 255 255;     /* #FFFFFF card */
+    --surface-2: 236 229 216;   /* #ECE5D8 recessed band */
+    --ink: 33 27 20;            /* #211B14 espresso (AAA on bg) */
+    --ink-soft: 110 100 87;     /* #6E6457 secondary (AA) */
+    --hairline: 220 210 194;    /* #DCD2C2 */
+
+    /* channel accents — text-safe (AA on --bg) */
+    --mech: 42 85 201;          /* #2A55C9 gentian text */
+    --elec: 138 90 0;           /* #8A5A00 amber text */
+    --soft: 182 48 127;         /* #B6307F magenta text */
+    /* channel accents — chip/fill only (never set type in these) */
+    --mech-chip: 42 85 201;
+    --elec-chip: 232 155 45;    /* #E89B2D — light-mode amber chips always
+                                   carry a 1px ink/20 border (see .chip-sq) */
+    --soft-chip: 182 48 127;
+
+    --shadow-card: 0 1px 2px rgb(33 27 20 / 0.06), 0 4px 16px rgb(33 27 20 / 0.05);
   }
 
   .dark {
-    --bg: 11 14 17;             /* graphite near-black #0B0E11 */
-    --surface: 17 22 27;        /* #11161B */
-    --surface-2: 22 29 35;      /* #161D23 */
-    --ink: 231 238 243;         /* #E7EEF3 */
-    --ink-soft: 147 164 177;    /* #93A4B1 */
-    --hairline: 35 44 52;       /* #232C34 */
-    --accent: 34 211 238;       /* electric cyan-400 #22D3EE */
-    --accent-strong: 103 232 249; /* cyan-300 #67E8F9 */
+    /* DARK — "warm workshop at night" (DEFAULT) */
+    --bg: 22 19 15;             /* #16130F warm bitumen — NOT blue-graphite */
+    --surface: 31 27 21;        /* #1F1B15 */
+    --surface-2: 42 36 28;      /* #2A241C raised: modals, inputs */
+    --ink: 244 239 230;         /* #F4EFE6 bone (AAA) */
+    --ink-soft: 173 163 149;    /* #ADA395 (AA+) */
+    --hairline: 59 52 42;       /* #3B342A */
+
+    --mech: 94 142 247;         /* #5E8EF7 gentian */
+    --elec: 242 163 60;         /* #F2A33C phosphor amber */
+    --soft: 226 86 158;         /* #E2569E process magenta */
+    --mech-chip: 94 142 247;
+    --elec-chip: 242 163 60;
+    --soft-chip: 226 86 158;
+
+    --shadow-card: none;        /* dark relies on surface steps + hairlines */
   }
 
   * {
@@ -47,16 +71,16 @@
     font-family: var(--font-sans), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
-    background: rgb(var(--accent));
+    background: rgb(var(--ink));
     color: rgb(var(--bg));
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--accent));
+    outline: 2px solid rgb(var(--mech));
     outline-offset: 3px;
     border-radius: 3px;
   }
@@ -67,85 +91,83 @@
     @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-12;
   }
   .section {
-    @apply scroll-mt-24 py-20 md:py-28 lg:py-32;
+    @apply relative scroll-mt-24 py-20 md:py-28 lg:py-32;
   }
-  /* mono eyebrow with a leading rule + node */
-  .kicker {
-    @apply inline-flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-[0.22em] text-accent;
-  }
-  .kicker::before {
-    content: '';
-    @apply inline-block h-px w-8 bg-accent;
+
+  /* registry voice — 13px mono floor, uppercase, indexed */
+  .sys {
+    @apply font-mono text-[13px] font-medium uppercase tracking-[0.08em];
   }
   .display {
-    @apply font-display font-semibold leading-[1.05] tracking-[-0.015em];
+    @apply font-display font-extrabold leading-[0.98] tracking-[-0.02em];
   }
-  .chip {
-    @apply inline-flex items-center rounded-md border border-hairline bg-surface px-2.5 py-1 font-mono text-[12px] text-ink-soft transition-colors;
+
+  /* THE CHIP — 10px oscilloscope channel marker. Light-mode amber chips
+     always get a 1px ink border (color never the sole carrier). */
+  .chip-sq {
+    @apply inline-block h-2.5 w-2.5 shrink-0 rounded-[3px];
   }
-  .card {
-    @apply rounded-2xl border border-hairline bg-surface transition-all duration-300;
+
+  /* PROOF TAG — hairline mono pill reserved for verifiable facts */
+  .proof-tag {
+    @apply inline-flex items-center gap-2 rounded-full border border-hairline bg-surface px-3 py-1 font-mono text-[13px] uppercase tracking-[0.06em] text-ink;
   }
+
+  /* GLASS — accent technique only (buttons, pills, tooltips, nav, contact) */
+  .glass {
+    background-color: rgb(var(--surface) / 0.65);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgb(var(--ink) / 0.12);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6);
+  }
+  .dark .glass {
+    background-color: rgb(var(--surface) / 0.55);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass {
+      background-color: rgb(var(--surface) / 0.95);
+    }
+  }
+
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200;
   }
-  .btn-primary {
-    @apply btn bg-accent text-bg hover:bg-accent-strong hover:-translate-y-0.5;
+  /* primary CTA: ink-filled, channel glow on hover */
+  .btn-ink {
+    @apply btn bg-ink text-bg active:scale-[0.98];
+    transition: box-shadow 220ms ease-out, transform 150ms ease-out;
   }
-  .btn-outline {
-    @apply btn border border-ink/25 text-ink hover:border-accent hover:text-accent;
-  }
-  /* glowing primary CTA — a "powered-on" signal button that breathes,
-     with a sweeping highlight on hover (like current through a trace) */
-  .btn-glow {
-    @apply btn relative overflow-hidden bg-accent text-bg hover:-translate-y-0.5;
-    animation: glow-breathe 2.6s ease-in-out infinite;
-  }
-  .btn-glow::before {
-    content: '';
-    @apply pointer-events-none absolute inset-0;
-    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.28) 50%, transparent 70%);
-    transform: translateX(-120%);
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .btn-glow:hover::before {
-    transform: translateX(120%);
-  }
-  .btn-glow:hover {
-    background-color: rgb(var(--accent-strong));
-  }
-  /* frosted-glass secondary CTA — tokens only, works in both themes */
   .btn-glass {
-    @apply btn border border-hairline text-ink;
-    background-color: rgb(var(--surface) / 0.4);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    box-shadow: inset 0 1px 0 rgb(var(--ink) / 0.06);
-  }
-  .dark .btn-glass {
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08);
+    @apply btn glass rounded-full text-ink;
+    transition: box-shadow 220ms ease-out, border-color 220ms ease-out,
+      transform 150ms ease-out;
   }
   .btn-glass:hover {
-    @apply -translate-y-0.5 border-accent text-accent;
-    background-color: rgb(var(--surface) / 0.6);
-    box-shadow: inset 0 1px 0 rgb(var(--ink) / 0.06), 0 0 0 1px rgb(var(--accent) / 0.25),
-      0 0 24px -8px rgb(var(--accent) / 0.5);
+    transform: translateY(-1px);
   }
-  /* fallback where backdrop-filter is unsupported (older Firefox/Safari) */
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .btn-glass {
-      background-color: rgb(var(--surface) / 0.92);
-    }
-    .btn-glass:hover {
-      background-color: rgb(var(--surface));
-    }
+
+  /* channel glow — attach on interaction only, max ONE per viewport */
+  .glow-mech:hover,
+  .glow-mech:focus-visible {
+    box-shadow: 0 0 0 1px rgb(var(--mech) / 0.35), 0 0 24px rgb(var(--mech) / 0.25);
   }
+  .glow-elec:hover,
+  .glow-elec:focus-visible {
+    box-shadow: 0 0 0 1px rgb(var(--elec) / 0.35), 0 0 24px rgb(var(--elec) / 0.25);
+  }
+  .glow-soft:hover,
+  .glow-soft:focus-visible {
+    box-shadow: 0 0 0 1px rgb(var(--soft) / 0.35), 0 0 24px rgb(var(--soft) / 0.25);
+  }
+
   .link-underline {
     @apply relative inline-block;
   }
   .link-underline::after {
     content: '';
-    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-accent transition-all duration-300;
+    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-ink transition-all duration-300;
   }
   .link-underline:hover::after {
     @apply w-full;
@@ -159,45 +181,91 @@
   .text-pretty {
     text-wrap: pretty;
   }
-  /* cyan glow for accent elements (dark theme reads as "powered on") */
-  .glow {
-    box-shadow: 0 0 0 1px rgb(var(--accent) / 0.25), 0 0 28px -6px rgb(var(--accent) / 0.5);
-  }
-  .text-glow {
-    text-shadow: 0 0 18px rgb(var(--accent) / 0.45);
-  }
-  /* faint engineering grid backdrop */
-  .grid-bg {
-    background-image:
-      linear-gradient(rgb(var(--ink) / 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(var(--ink) / 0.045) 1px, transparent 1px);
-    background-size: 48px 48px;
-  }
-  .dot-grid {
-    background-image: radial-gradient(rgb(var(--ink) / 0.07) 1px, transparent 1px);
-    background-size: 22px 22px;
-  }
-  /* faint scanline texture for the intro portrait reveal */
-  .scanlines {
-    background-image: repeating-linear-gradient(
-      to bottom,
-      rgb(var(--ink) / 0.04) 0px,
-      rgb(var(--ink) / 0.04) 1px,
-      transparent 1px,
-      transparent 3px
-    );
+  .card-lift {
+    box-shadow: var(--shadow-card);
   }
 }
 
-/* "powered-on" breathing glow for the primary CTA (auto-stilled under
-   reduced motion by the global block below) */
-@keyframes glow-breathe {
+/* ------------------------------------------------------------
+   DELAYED HOVER — one site-wide mechanism. Enter is delayed via
+   --dh-delay (default 350ms); exit is ALWAYS instant; keyboard
+   focus reveals instantly. Touch uses data-open (tap-toggle).
+   ------------------------------------------------------------ */
+.dh {
+  position: relative;
+}
+.dh-panel {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 220ms ease-out, transform 220ms ease-out;
+  transition-delay: 0ms; /* exit instant */
+}
+.dh:hover > .dh-panel,
+.dh[data-open='true'] > .dh-panel {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition-delay: var(--dh-delay, 350ms); /* enter delayed */
+}
+.dh:focus-visible > .dh-panel,
+.dh:focus-within > .dh-panel {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition-delay: 0ms; /* keyboard instant */
+}
+
+/* ------------------------------------------------------------
+   THE CONVEYOR — mathematically seamless CSS-only belt.
+   Track = items rendered EXACTLY TWICE, no flex gap (each item
+   carries its own margin-right, including the last), so both
+   halves are pixel-identical and the -50% wrap is invisible.
+   Pause = play-state (seam-safe). Never change duration mid-flight.
+   ------------------------------------------------------------ */
+@keyframes belt {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.belt-track {
+  display: flex;
+  width: max-content;
+  animation: belt var(--belt-duration, 40s) linear infinite;
+  will-change: transform;
+}
+.belt:hover .belt-track,
+.belt:focus-within .belt-track,
+.belt[data-paused='true'] .belt-track {
+  animation-play-state: paused;
+}
+
+/* availability dot pulse — pseudo-element transform/opacity (paint-cheap) */
+@keyframes dot-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 1px rgb(var(--accent) / 0.3), 0 0 24px -6px rgb(var(--accent) / 0.45);
+    transform: scale(1);
+    opacity: 1;
   }
   50% {
-    box-shadow: 0 0 0 1px rgb(var(--accent) / 0.45), 0 0 40px -4px rgb(var(--accent) / 0.7);
+    transform: scale(1.6);
+    opacity: 0.35;
+  }
+}
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: inherit;
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+/* no-JS safety: the intro overlay always clears */
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
@@ -214,7 +282,7 @@
   border: 3px solid rgb(var(--bg));
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--accent));
+  background: rgb(var(--ink-soft));
 }
 
 /* Reduced motion: collapse animations + smooth scroll */
@@ -229,5 +297,14 @@
   }
   html {
     scroll-behavior: auto;
+  }
+  .belt-track {
+    animation: none;
+  }
+  .belt {
+    overflow-x: auto;
+  }
+  .dh-panel {
+    transition-delay: 0ms;
   }
 }

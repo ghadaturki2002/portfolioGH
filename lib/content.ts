@@ -36,79 +36,45 @@ export const identity = {
   linkedin: 'https://www.linkedin.com/in/ghada-turki-20319b217',
   photo: '/ghada-turki-photo.jpg',
   cv: { fr: '/CV_Ghada_Turki.pdf', en: '/resume GhadaTurki.pdf' } as L,
-  /* Recruiter hooks (true: she works across the three worlds below). */
-  heroHook: {
-    fr: 'Bonjour — et si votre prochaine recrue parlait mécanique, électronique ET code ?',
-    en: 'Hi — what if your next hire spoke mechanics, electronics AND code?',
+  /* Recruiter headline (TRICHROME). Default = option B below.
+     ALTERNATIVES (swap here if Ghada prefers another — facts all true):
+     A fr: 'Vous cherchez quelqu’un qui parle mécanique, électronique et logiciel ? Bonjour — moi, c’est Ghada.'
+       en: 'Looking for someone who speaks mechanics, electronics and software? Hi — I’m Ghada.'
+     C fr: 'Trois langues d’ingénieur. Une seule ingénieure.'
+       en: 'Three engineering languages. One engineer.'
+     D fr: 'Du jumeau numérique à l’atelier : ingénieure de bout en bout.'
+       en: 'From digital twin to factory floor: an end-to-end engineer.' */
+  headline: {
+    fr: 'Je dessine la pièce, je câble la carte, j’écris le code.',
+    en: 'I draw the part, wire the board, write the code.',
   } as L,
-  loaderHook: {
-    fr: 'Trois mondes. Un seul signal. Une seule ingénieure.',
-    en: 'Three worlds. One signal. One engineer.',
+  introLine: {
+    fr: 'INITIALISATION · TROIS CANAUX · UNE INGÉNIEURE',
+    en: 'INITIALIZING · THREE CHANNELS · ONE ENGINEER',
   } as L,
 }
 
 /* ------------------------------------------------------------------ */
-/* THREE WORLDS — her differentiator (mechanics · electronics · code)  */
+/* THREE CHANNELS — her differentiator (TRICHROME wayfinding).         */
 /*  Proof lines are 100% true (drawn from her tools/projects).         */
 /* ------------------------------------------------------------------ */
-export const worlds: { key: string; label: L; proof: L }[] = [
+export const worlds: { key: 'mech' | 'elec' | 'soft'; label: L; proof: L }[] = [
   {
-    key: 'mecanique',
+    key: 'mech',
     label: { fr: 'Mécanique', en: 'Mechanics' },
     proof: { fr: 'SolidWorks · CATIA V5', en: 'SolidWorks · CATIA V5' },
   },
   {
-    key: 'electronique',
+    key: 'elec',
     label: { fr: 'Électronique', en: 'Electronics' },
     proof: { fr: 'Arduino · ESP32 · TIA Portal', en: 'Arduino · ESP32 · TIA Portal' },
   },
   {
-    key: 'logiciel',
+    key: 'soft',
     label: { fr: 'Logiciel & IA', en: 'Software & AI' },
     proof: { fr: 'Python · jumeau numérique (RF + LSTM)', en: 'Python · digital twin (RF + LSTM)' },
   },
 ]
-
-/* ------------------------------------------------------------------ */
-/* CONVERGENCE — sticky 3-act scroll story (facts only).               */
-/* ------------------------------------------------------------------ */
-export const convergence = {
-  kicker: { fr: 'Mon ADN d’ingénieure', en: 'My engineering DNA' } as L,
-  title: { fr: 'Trois mondes → un signal', en: 'Three worlds → one signal' } as L,
-  acts: [
-    {
-      key: 'mecanique',
-      label: { fr: 'Mécanique', en: 'Mechanics' } as L,
-      line: {
-        fr: 'Conception 3D et CAO — de la pièce au mécanisme complet.',
-        en: '3D design & CAD — from a single part to the full mechanism.',
-      } as L,
-      tags: ['SolidWorks', 'CATIA V5'],
-    },
-    {
-      key: 'electronique',
-      label: { fr: 'Électronique & automatisme', en: 'Electronics & automation' } as L,
-      line: {
-        fr: 'Cartes, capteurs et automates — je donne vie à la mécanique.',
-        en: 'Boards, sensors and PLCs — I bring the mechanics to life.',
-      } as L,
-      tags: ['Arduino', 'ESP32', 'TIA Portal'],
-    },
-    {
-      key: 'logiciel',
-      label: { fr: 'Logiciel & intelligence artificielle', en: 'Software & machine learning' } as L,
-      line: {
-        fr: 'Jumeau numérique piloté par ML — qui a battu l’article de référence.',
-        en: 'ML-driven digital twin — which beat the reference paper.',
-      } as L,
-      tags: ['Python', 'Random Forest', 'LSTM'],
-    },
-  ],
-  outro: {
-    fr: 'Trois savoir-faire qui convergent en une seule ingénieure mécatronique.',
-    en: 'Three skill sets converging into one mechatronics engineer.',
-  } as L,
-}
 
 /* ------------------------------------------------------------------ */
 /* ABOUT                                                              */

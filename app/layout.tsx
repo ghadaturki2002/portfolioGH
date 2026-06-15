@@ -1,25 +1,28 @@
 import type { Metadata } from 'next'
-import { Sora, Inter, JetBrains_Mono } from 'next/font/google'
+import { Bricolage_Grotesque, Instrument_Sans, Spline_Sans_Mono } from 'next/font/google'
 import './globals.css'
 import ThemeProvider from '@/components/ThemeProvider'
 import { LanguageProvider } from '@/components/LanguageProvider'
 import { ReactNode } from 'react'
 
-// Modern geometric display — techy yet professional
-const display = Sora({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+/* TRICHROME type system — three voices */
+// DISPLAY — "hand-machined" ink-trap grotesk (variable: wght via CSS)
+const display = Bricolage_Grotesque({
+  subsets: ['latin', 'latin-ext'], // latin-ext for œ/Œ in French
   variable: '--font-display',
   display: 'swap',
 })
-const sans = Inter({
-  subsets: ['latin'],
+// BODY/UI — warm, engineered
+const sans = Instrument_Sans({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500', '600'],
   variable: '--font-sans',
   display: 'swap',
 })
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
+// SYSTEM LAYER — index codes, dates, labels (13px hard floor)
+const mono = Spline_Sans_Mono({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500'],
   variable: '--font-mono',
   display: 'swap',
 })

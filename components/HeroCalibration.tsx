@@ -30,6 +30,7 @@ import { useLanguage } from './LanguageProvider'
 import { identity, worlds } from '@/lib/content'
 import type { Channel } from '@/lib/channels'
 import { Chip, CHIP_BG, TEXT_CH, EASE } from './ui/primitives'
+import ParticleNetwork from './fx/ParticleNetwork'
 
 const SEEN_KEY = 'gt-intro-seen'
 type Stage = 'intro' | 'morph' | 'done'
@@ -227,7 +228,18 @@ export default function HeroCalibration() {
     <LayoutGroup>
       {/* ================= HERO (always mounted beneath the overlay) ================= */}
       <section ref={heroRef} id="hero" className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 md:pt-28">
-        <div className="container-px w-full pb-16">
+        {/* STARFIELD — drifting stars, trichrome links to the cursor */}
+        <motion.div
+          aria-hidden="true"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: heroIn ? 1 : 0 }}
+          transition={{ duration: 1.1, ease: EASE, delay: 0.15 }}
+          className="pointer-events-none absolute inset-0 z-0 [-webkit-mask-image:radial-gradient(120%_95%_at_50%_45%,#000_30%,transparent_100%)] [mask-image:radial-gradient(120%_95%_at_50%_45%,#000_30%,transparent_100%)]"
+        >
+          <ParticleNetwork className="absolute inset-0 h-full w-full" />
+        </motion.div>
+
+        <div className="container-px relative z-10 w-full pb-16">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
             {/* LEFT — cols 1–7 */}
             <motion.div

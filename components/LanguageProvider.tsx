@@ -69,7 +69,7 @@ const ui: Record<Lang, Record<string, string>> = {
 
     'certifications.kicker': 'Les sceaux',
     'certifications.title': 'Certifications',
-    'certifications.download': 'Voir le certificat',
+    'certifications.download': 'Télécharger le PDF',
 
     'education.kicker': 'Les archives',
     'education.title': 'Formation',
@@ -148,7 +148,7 @@ const ui: Record<Lang, Record<string, string>> = {
 
     'certifications.kicker': 'The seals',
     'certifications.title': 'Certifications',
-    'certifications.download': 'View certificate',
+    'certifications.download': 'Download PDF',
 
     'education.kicker': 'The archive',
     'education.title': 'Education',

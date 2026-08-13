@@ -37,3 +37,6 @@ next-env.d.ts
 
 # throwaway design preview (not part of the site)
 design-sample.html
+
+# dossier source des certificats (doublons + .zip) — les PDF servis sont dans public/certifications/
+/Solidworks certification/

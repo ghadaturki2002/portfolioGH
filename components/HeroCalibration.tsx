@@ -178,6 +178,15 @@ export default function HeroCalibration() {
   const cX = useTransform([snap, sx, sep], ([s, p, sc]: number[]) => s * 6 - p * 2 + sc)
   const cY = useTransform([snap, sy], ([s, p]: number[]) => s * -4 - p * 2)
 
+  // TRICHROME FRINGING IS MOTION-ONLY. The colour plates used to sit on the
+  // portrait permanently, which tinted her skin. They now fade in strictly in
+  // proportion to how far OFF-REGISTER they are — full during the calibration
+  // snap and while the hero scrolls away, exactly 0 once registered. At rest
+  // the portrait is her photograph in its true colours.
+  // 0 → 1 only; the light/dark ceiling stays in CSS on the wrapper, so a theme
+  // toggle can never leave this value stale.
+  const offRegister = useTransform([snap, sep], ([s, sc]: number[]) => Math.max(s, sc / 4))
+
   const [canHover, setCanHover] = useState(false)
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return
@@ -329,41 +338,60 @@ export default function HeroCalibration() {
                 style={canHover && !reduce ? { rotateX, rotateY, transformPerspective: 900 } : undefined}
                 className="relative aspect-[4/5] overflow-hidden rounded-[24px] border border-hairline bg-surface-2 card-lift [isolation:isolate]"
               >
-                {/* PLATE A — warm grayscale base */}
+                {/* COLOUR PLATES FIRST, PHOTOGRAPH LAST — the photo sits ON TOP of
+                    the stack, so nothing is ever laid over her face and her colours
+                    are untouched. The plates are wider than the photo, so when they
+                    go off-register they show as a thin trichrome edge around it. */}
+
+                {/* PLATE B — gentian channel (screen in dark / multiply in light).
+                    Ceiling in CSS, off-register amount in motion: invisible at rest. */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 opacity-[0.16] mix-blend-multiply dark:opacity-[0.45] dark:mix-blend-screen"
+                >
+                  <motion.div
+                    style={{
+                      x: bX,
+                      y: bY,
+                      opacity: offRegister,
+                      backgroundImage: `url(${identity.photo})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundColor: 'rgb(var(--mech-chip))',
+                      backgroundBlendMode: 'multiply',
+                    }}
+                    className="absolute inset-0"
+                  />
+                </div>
+                {/* PLATE C — magenta channel (md+ only, perf on phones) */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 hidden opacity-[0.16] mix-blend-multiply dark:opacity-[0.45] dark:mix-blend-screen md:block"
+                >
+                  <motion.div
+                    style={{
+                      x: cX,
+                      y: cY,
+                      opacity: offRegister,
+                      backgroundImage: `url(${identity.photo})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundColor: 'rgb(var(--soft-chip))',
+                      backgroundBlendMode: 'multiply',
+                    }}
+                    className="absolute inset-0"
+                  />
+                </div>
+
+                {/* PLATE A — HER PHOTOGRAPH, painted last = on top of everything.
+                    Inset by 5px so the colour plates can only ever show as an edge
+                    around it, never across her face. True colours, nothing over it. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={identity.photo}
                   alt={identity.name}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  style={{ filter: 'grayscale(0.9) sepia(0.12) contrast(1.03)' }}
-                />
-                {/* PLATE B — gentian channel (screen in dark / multiply in light) */}
-                <motion.div
-                  aria-hidden="true"
-                  style={{
-                    x: bX,
-                    y: bY,
-                    backgroundImage: `url(${identity.photo})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundColor: 'rgb(var(--mech-chip))',
-                    backgroundBlendMode: 'multiply',
-                  }}
-                  className="absolute inset-0 opacity-[0.08] mix-blend-multiply dark:opacity-[0.45] dark:mix-blend-screen"
-                />
-                {/* PLATE C — magenta channel (md+ only, perf on phones) */}
-                <motion.div
-                  aria-hidden="true"
-                  style={{
-                    x: cX,
-                    y: cY,
-                    backgroundImage: `url(${identity.photo})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundColor: 'rgb(var(--soft-chip))',
-                    backgroundBlendMode: 'multiply',
-                  }}
-                  className="absolute inset-0 hidden opacity-[0.08] mix-blend-multiply dark:opacity-[0.45] dark:mix-blend-screen md:block"
+                  className="absolute inset-[5px] h-[calc(100%_-_10px)] w-[calc(100%_-_10px)] rounded-[19px] object-cover"
+                  style={{ filter: 'contrast(1.02) saturate(1.04)' }}
                 />
               </motion.div>
 

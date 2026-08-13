@@ -51,6 +51,11 @@ Cherche ces marqueurs dans **`lib/content.ts`** : **`[À COMPLÉTER : …]`** / 
 - **GMAO** → ✅ contenu détaillé intégré (ISETN, **2022** ; logiciel de GMAO paramétré et alimenté). Le **nom du logiciel est volontairement omis** (« GMAO »), donc plus de placeholder techno. 📷 Emplacement réservé → `public/gmao.jpg`. *À préciser* : type (individuel / équipe) + durée.
 - **Liens « Voir le projet »** : chaque projet a `link: '[À COMPLÉTER : lien]'`. Tant que c'est un placeholder, **aucun bouton « Voir le projet » ne s'affiche** (volontaire). Ajoute une vraie URL (démo / dépôt GitHub / vidéo) pour faire apparaître le lien sur la carte et dans la modale.
 
+### Certifications — ✅ les 12 certificats sont en ligne et téléchargeables
+Tes 10 PDF SolidWorks/Dassault (dossier `Solidworks certification/`, comptes esprit + istic + moi) ont été **copiés dans `public/certifications/`** — c'est obligatoire, un fichier hors de `public/` n'est jamais servi par le site. Les titres et les dates ont été **lus sur les certificats eux-mêmes**, rien n'est inventé. **Toute la carte est cliquable** → télécharge le PDF.
+- ⚠️ **`CSWPA – Sheet Metal`** est la **seule** certification sans fichier : je n'ai trouvé aucun PDF correspondant. Sa carte s'affiche donc **sans bouton de téléchargement**. Dépose le PDF dans `public/certifications/` puis ajoute la ligne `file: '/certifications/…pdf'` (et sa `date`) dans `lib/content.ts` → `certifications`.
+- Le dossier source `Solidworks certification/` reste à la racine (non publié) : c'est ton original, il n'est pas nécessaire au site.
+
 ### Images de projets manquantes (un visuel décoratif élégant s'affiche en attendant)
 Ajoute tes captures dans `public/` puis renseigne `images: ['/ton-image.png']` du projet dans `lib/content.ts` :
 - `suiveur-ligne` → photo du robot (sinon un visuel décoratif s'affiche)

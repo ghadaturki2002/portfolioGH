@@ -4,19 +4,16 @@
  * 06 · THE SEAL WALL — certifications as proof seals.
  * Each card stamps in (scale 1.15 → 1, like a seal being pressed),
  * then answers hover with a gentle press-tilt + channel glow.
- * Channel per issuer: SOLIDWORKS → mech, NVIDIA → soft.
+ * The WHOLE card is the download: a stretched link over the seal pulls the
+ * certificate PDF. Channel comes from what the certificate certifies
+ * (see certificationChannel), not from who issued it.
  */
 import { motion, useReducedMotion } from 'framer-motion'
 import { Download } from 'lucide-react'
 import { useLanguage } from './LanguageProvider'
-import { certifications, type Certification } from '@/lib/content'
-import type { Channel } from '@/lib/channels'
+import { certifications } from '@/lib/content'
+import { certificationChannel, type Channel } from '@/lib/channels'
 import { Chip, SectionHeader, EASE, SPRING_TILT, GLOW_CH } from './ui/primitives'
-
-const ISSUER_CHANNEL: Record<Certification['issuer'], Channel> = {
-  SOLIDWORKS: 'mech',
-  NVIDIA: 'soft',
-}
 
 /* keyboard path: focus-within ring (no tilt) — literal classes for JIT */
 const FOCUS_RING: Record<Channel, string> = {
@@ -44,12 +41,12 @@ export default function Certifications() {
 
         <ul className="mt-14 grid gap-5 sm:grid-cols-2 md:mt-16 lg:grid-cols-3">
           {certifications.map((cert, i) => {
-            const channel = ISSUER_CHANNEL[cert.issuer]
+            const channel = certificationChannel(cert)
             return (
               <li key={`${cert.issuer}-${cert.name}`} className="h-full">
                 <motion.article
                   className={[
-                    'flex h-full flex-col rounded-[14px] border border-hairline bg-surface p-5',
+                    'relative flex h-full flex-col rounded-[14px] border border-hairline bg-surface p-5',
                     'card-lift',
                     GLOW_CH[channel],
                     FOCUS_RING[channel],
@@ -67,10 +64,13 @@ export default function Certifications() {
                     y: TILT_SPRING,
                   }}
                 >
-                  {/* issuer — registry voice with its channel chip */}
-                  <p className="sys flex items-center gap-2 text-ink-soft">
-                    <Chip channel={channel} className="h-2 w-2" />
-                    {cert.issuer}
+                  {/* issuer + issue date — registry voice with its channel chip */}
+                  <p className="sys flex items-center justify-between gap-3 text-ink-soft">
+                    <span className="flex items-center gap-2">
+                      <Chip channel={channel} className="h-2 w-2" />
+                      {cert.issuer}
+                    </span>
+                    {cert.date && <span className="tabular-nums">{cert.date}</span>}
                   </p>
 
                   <h3 className="mt-3 flex-1 font-display text-lg font-semibold leading-snug text-ink">
@@ -78,15 +78,23 @@ export default function Certifications() {
                   </h3>
 
                   {cert.file && (
-                    <a
-                      href={cert.file}
-                      download
-                      className="btn-glass mt-5 self-start px-4 py-2 text-[13px]"
-                      aria-label={`${t('certifications.download')} — ${cert.name}`}
-                    >
-                      <Download className="h-4 w-4" aria-hidden="true" />
-                      {t('certifications.download')}
-                    </a>
+                    <>
+                      {/* affordance only — the stretched link below does the work */}
+                      <span
+                        className="btn-glass pointer-events-none mt-5 self-start px-4 py-2 text-[13px]"
+                        aria-hidden="true"
+                      >
+                        <Download className="h-4 w-4" />
+                        {t('certifications.download')}
+                      </span>
+                      {/* the whole seal is clickable */}
+                      <a
+                        href={cert.file}
+                        download
+                        className="absolute inset-0 rounded-[14px] focus-visible:outline-none"
+                        aria-label={`${t('certifications.download')} — ${cert.name}, ${cert.issuer}`}
+                      />
+                    </>
                   )}
                 </motion.article>
               </li>

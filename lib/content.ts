@@ -890,17 +890,92 @@ export const tools: string[] = [
 /* ------------------------------------------------------------------ */
 export interface Certification {
   name: string
-  issuer: 'SOLIDWORKS' | 'NVIDIA'
+  issuer: 'SOLIDWORKS' | 'Dassault Systèmes' | 'NVIDIA'
+  /** issue date, dd.mm.yyyy — registry voice, language-neutral */
+  date?: string
+  /** public path to the certificate itself; the card downloads it */
   file?: string
 }
 
+/**
+ * Newest first. Titles and dates are read off the certificates themselves
+ * (the SOLIDWORKS/Dassault ones are the PDFs in public/certifications/).
+ */
 export const certifications: Certification[] = [
-  { name: 'Simulation Professional', issuer: 'SOLIDWORKS', file: '/SOLIDWORKS Simulation Professional.jpg' },
-  { name: 'CSWA – Mechanical Design', issuer: 'SOLIDWORKS', file: '/Certified SOLIDWORKS CAD Design Associate.jpg' },
-  { name: 'Additive Manufacturing Associate', issuer: 'SOLIDWORKS', file: '/SOLIDWORKS Additive Manufacturing Associate.jpg' },
+  {
+    name: 'Simulation Associate',
+    issuer: 'SOLIDWORKS',
+    date: '15.06.2026',
+    file: '/certifications/solidworks-simulation-associate.pdf',
+  },
+  {
+    name: 'xDesign Associate',
+    issuer: 'SOLIDWORKS',
+    date: '13.06.2026',
+    file: '/certifications/solidworks-xdesign-associate.pdf',
+  },
+  {
+    name: 'xMold Associate',
+    issuer: 'SOLIDWORKS',
+    date: '13.06.2026',
+    file: '/certifications/solidworks-xmold-associate.pdf',
+  },
+  {
+    name: 'xShape Associate',
+    issuer: 'SOLIDWORKS',
+    date: '13.06.2026',
+    file: '/certifications/solidworks-xshape-associate.pdf',
+  },
+  {
+    name: '3DSwymer Associate',
+    issuer: 'Dassault Systèmes',
+    date: '12.12.2025',
+    file: '/certifications/3dswymer-associate.pdf',
+  },
+  {
+    name: 'Generative AI with Diffusion Models',
+    issuer: 'NVIDIA',
+    date: '14.11.2025',
+    file: '/Certificate Generative AI with Diffusion Models.pdf',
+  },
+  {
+    name: 'Applications of AI for Predictive Maintenance',
+    issuer: 'NVIDIA',
+    date: '23.10.2025',
+    file: '/Certificate Applications of AI for Predictive Maintenance.pdf',
+  },
+  {
+    name: 'Electrical Design Associate',
+    issuer: 'SOLIDWORKS',
+    date: '10.08.2025',
+    file: '/certifications/solidworks-electrical-design-associate.pdf',
+  },
+  {
+    name: 'Sustainability Associate',
+    issuer: 'SOLIDWORKS',
+    date: '08.08.2025',
+    file: '/certifications/solidworks-sustainability-associate.pdf',
+  },
+  {
+    name: 'Additive Manufacturing Associate',
+    issuer: 'SOLIDWORKS',
+    date: '07.08.2025',
+    file: '/certifications/solidworks-additive-manufacturing-associate.pdf',
+  },
+  {
+    name: 'Simulation Professional',
+    issuer: 'SOLIDWORKS',
+    date: '17.06.2024',
+    file: '/certifications/solidworks-simulation-professional.pdf',
+  },
+  {
+    name: 'Design Associate (CSWA)',
+    issuer: 'SOLIDWORKS',
+    date: '17.01.2023',
+    file: '/certifications/solidworks-design-associate-cswa.pdf',
+  },
+  // no certificate file on hand for this one — see TODO.md
   { name: 'CSWPA – Sheet Metal', issuer: 'SOLIDWORKS' },
-  { name: 'AI for Predictive Maintenance', issuer: 'NVIDIA', file: '/Certificate Applications of AI for Predictive Maintenance.pdf' },
-  { name: 'Generative AI with Diffusion Models', issuer: 'NVIDIA', file: '/Certificate Generative AI with Diffusion Models.pdf' },
 ]
 
 /* ------------------------------------------------------------------ */

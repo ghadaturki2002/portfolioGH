@@ -35,7 +35,7 @@ export default function About() {
                 alt={identity.name}
                 loading="lazy"
                 className="aspect-[4/5] w-full max-w-[280px] rounded-[24px] border border-hairline object-cover"
-                style={{ filter: 'grayscale(0.5) sepia(0.08)' }}
+                style={{ filter: 'contrast(1.02) saturate(1.04)' }}
               />
             </Reveal>
 

@@ -6,7 +6,7 @@
  *   elec = electronics & automation (phosphor amber)
  *   soft = software & AI (process magenta)
  */
-import { projects, experiences, type Project, type Experience } from './content'
+import { projects, experiences, type Project, type Experience, type Certification } from './content'
 
 export type Channel = 'mech' | 'elec' | 'soft'
 
@@ -72,6 +72,15 @@ export function experienceChannels(e: Experience): Channel[] {
   if (/(arduino|esp32|tia|capteur|mqtt|node-red|électronique|qr|lean)/.test(t)) out.push('elec')
   if (/(python|c#|java|unity|vuforia|lstm|random forest|pytorch|windev|excel|flask)/.test(t)) out.push('soft')
   return out.length ? out : [experienceChannel(e)]
+}
+
+/** Channel of a certification — by what it certifies, not by who issued it:
+ *  CAD/simulation → mech, electrical schematics → elec, platform & AI → soft. */
+export function certificationChannel(c: Certification): Channel {
+  const s = `${c.name} ${c.issuer}`.toLowerCase()
+  if (/electrical/.test(s)) return 'elec'
+  if (/(nvidia|3dswymer)/.test(s)) return 'soft'
+  return 'mech'
 }
 
 /** Channel of a tool/skill name (for chips on skills, conveyor, about). */

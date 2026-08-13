@@ -969,13 +969,17 @@ export const certifications: Certification[] = [
     file: '/certifications/solidworks-simulation-professional.pdf',
   },
   {
+    name: 'Sheet Metal Professional',
+    issuer: 'SOLIDWORKS',
+    date: '30.01.2023',
+    file: '/certifications/solidworks-sheet-metal-professional.pdf',
+  },
+  {
     name: 'Design Associate (CSWA)',
     issuer: 'SOLIDWORKS',
     date: '17.01.2023',
     file: '/certifications/solidworks-design-associate-cswa.pdf',
   },
-  // no certificate file on hand for this one — see TODO.md
-  { name: 'CSWPA – Sheet Metal', issuer: 'SOLIDWORKS' },
 ]
 
 /* ------------------------------------------------------------------ */

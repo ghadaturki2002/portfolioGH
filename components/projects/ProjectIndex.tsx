@@ -115,7 +115,13 @@ function Modal({
     const root = document.documentElement
     const prev = root.style.overflow
     root.style.overflow = 'hidden'
-    const onCloseEvt = () => onClose()
+    // L'événement « close » est asynchrone. En développement (StrictMode), React
+    // exécute l'effet deux fois : le « close » du premier nettoyage arrive APRÈS la
+    // réouverture et refermait la fiche aussitôt. On ne réagit donc que si la fiche
+    // est réellement fermée.
+    const onCloseEvt = () => {
+      if (!d.open) onClose()
+    }
     d.addEventListener('close', onCloseEvt)
     return () => {
       d.removeEventListener('close', onCloseEvt)

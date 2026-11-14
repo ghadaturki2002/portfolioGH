@@ -265,7 +265,7 @@ export default function HeroCalibration() {
                 ref={headingRef}
                 tabIndex={-1}
                 variants={textItem}
-                className="display mt-6 text-[clamp(38px,6vw,72px)] text-ink outline-none"
+                className="display mt-5 text-[clamp(40px,6.4vw,80px)] text-ink outline-none"
               >
                 {headlineLines.map((line, i) => (
                   <span key={i} className="block text-balance">
@@ -274,6 +274,13 @@ export default function HeroCalibration() {
                   </span>
                 ))}
               </motion.h1>
+
+              <motion.p
+                variants={textItem}
+                className="mt-6 max-w-xl text-lg font-medium leading-relaxed text-ink text-pretty md:text-xl md:leading-snug"
+              >
+                {identity.tagline[language]}
+              </motion.p>
 
               {/* chip-triplet underline — the chips LAND here from the loader */}
               <div className="mt-6 flex h-4 items-center gap-2" aria-hidden="true">
@@ -301,7 +308,7 @@ export default function HeroCalibration() {
               </div>
 
               {/* availability proof tag */}
-              <motion.div variants={textItem} className="mt-7">
+              <motion.div variants={textItem} className="mt-8">
                 <span className="proof-tag glass border-0">
                   <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-elec-chip pulse-dot" aria-hidden="true" />
                   {identity.availability[language]} — {identity.location[language]}
@@ -390,6 +397,10 @@ export default function HeroCalibration() {
                 <img
                   src={identity.photo}
                   alt={identity.name}
+                  width={1024}
+                  height={1024}
+                  decoding="async"
+                  fetchPriority="high"
                   className="absolute inset-[5px] h-[calc(100%_-_10px)] w-[calc(100%_-_10px)] rounded-[19px] object-cover"
                   style={{ filter: 'contrast(1.02) saturate(1.04)' }}
                 />

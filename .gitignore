@@ -40,3 +40,8 @@ design-sample.html
 
 # dossier source des certificats (doublons + .zip) — les PDF servis sont dans public/certifications/
 /Solidworks certification/
+
+# fichiers de travail locaux, à ne pas publier : originaux à intégrer, sauvegarde d avant refonte, notes internes
+/a ajouter/
+/_archive/
+/RAPPORT.md

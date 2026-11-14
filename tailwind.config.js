@@ -1,29 +1,36 @@
 /** @type {import('tailwindcss').Config} */
+const token = (name) => `rgb(var(--${name}) / <alpha-value>)`
+
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
     './lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class', // .dark = warm workshop at night (default) ; :root = paper lab
+  // .dark = « nuit d'observatoire » (défaut) ; :root = « calque » (clair)
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        bg: 'rgb(var(--bg) / <alpha-value>)',
-        surface: 'rgb(var(--surface) / <alpha-value>)',
-        'surface-2': 'rgb(var(--surface-2) / <alpha-value>)',
-        ink: 'rgb(var(--ink) / <alpha-value>)',
-        'ink-soft': 'rgb(var(--ink-soft) / <alpha-value>)',
-        hairline: 'rgb(var(--hairline) / <alpha-value>)',
-        // TRICHROME channels — text-safe tokens
-        mech: 'rgb(var(--mech) / <alpha-value>)',
-        elec: 'rgb(var(--elec) / <alpha-value>)',
-        soft: 'rgb(var(--soft) / <alpha-value>)',
-        // chip/fill-only tokens (never set type in these)
-        'mech-chip': 'rgb(var(--mech-chip) / <alpha-value>)',
-        'elec-chip': 'rgb(var(--elec-chip) / <alpha-value>)',
-        'soft-chip': 'rgb(var(--soft-chip) / <alpha-value>)',
+        bg: token('bg'),
+        'bg-2': token('bg-2'),
+        surface: token('surface'),
+        'surface-2': token('surface-2'),
+        ink: token('ink'),
+        'ink-soft': token('ink-soft'),
+        'ink-faint': token('ink-faint'),
+        hairline: token('hairline'),
+        'hairline-strong': token('hairline-strong'),
+        accent: token('accent'),
+        'accent-fill': token('accent-fill'),
+        'accent-ink': token('accent-ink'),
+        mech: token('mech'),
+        elec: token('elec'),
+        soft: token('soft'),
+        'mech-chip': token('mech-chip'),
+        'elec-chip': token('elec-chip'),
+        'soft-chip': token('soft-chip'),
+        grid: token('grid'),
       },
       fontFamily: {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
@@ -31,8 +38,11 @@ module.exports = {
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       maxWidth: {
-        content: '1280px',
-        prose: '68ch',
+        content: '1200px',
+        prose: '66ch',
+      },
+      transitionTimingFunction: {
+        out: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
     },
   },

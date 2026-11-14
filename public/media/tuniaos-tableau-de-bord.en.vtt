@@ -1,0 +1,129 @@
+WEBVTT
+
+1
+00:00:00.200 --> 00:00:07.648 line:85%
+After developing our emulator, we built a
+Node-RED dashboard to track the machine's
+status in real time,
+
+2
+00:00:07.648 --> 00:00:11.400 line:85%
+with the option to change the interface
+theme and language.
+
+3
+00:00:12.000 --> 00:00:14.773 line:85%
+We can then choose the control source,
+
+4
+00:00:14.773 --> 00:00:17.220 line:85%
+either our emulator or the PC directly.
+
+5
+00:00:18.000 --> 00:00:19.397 line:85%
+For this demonstration,
+
+6
+00:00:19.397 --> 00:00:23.700 line:85%
+we use the emulator and start the machine's
+normal operation.
+
+7
+00:00:24.150 --> 00:00:26.692 line:85%
+The synoptic view animates the cooling
+circuit,
+
+8
+00:00:26.692 --> 00:00:28.980 line:85%
+and no fault is detected for now.
+
+9
+00:00:29.430 --> 00:00:33.360 line:85%
+Now to the first failure, characterized by a
+pressure drop.
+
+10
+00:00:33.900 --> 00:00:35.759 line:85%
+We can simulate this anomaly,
+
+11
+00:00:35.759 --> 00:00:41.130 line:85%
+set the playback speed and choose the
+starting position in the data replayed by
+the emulator.
+
+12
+00:00:41.700 --> 00:00:47.900 line:85%
+This lets us watch the parameters evolve and
+follow the machine's behavior during this
+degradation.
+
+13
+00:00:48.350 --> 00:00:50.760 line:85%
+The gauge shows the predicted failure risk,
+
+14
+00:00:50.760 --> 00:00:56.700 line:85%
+and the curve compares the estimated
+remaining useful life with the actual one,
+until the failure is detected.
+
+15
+00:00:57.150 --> 00:01:00.930 line:85%
+We now move to the second scenario, high
+pressure.
+
+16
+00:01:01.400 --> 00:01:01.937 line:85%
+At first,
+
+17
+00:01:01.937 --> 00:01:06.590 line:85%
+the parameters stay in a normal state and
+the failure risk stays low.
+
+18
+00:01:07.040 --> 00:01:10.890 line:85%
+Then the random forest model detects a
+degradation in operation.
+
+19
+00:01:11.340 --> 00:01:12.993 line:85%
+From that detection,
+
+20
+00:01:12.993 --> 00:01:18.070 line:85%
+the LSTM model estimates the time remaining
+before a possible machine failure.
+
+21
+00:01:18.520 --> 00:01:22.418 line:85%
+As you can see, our chatbot answers our
+questions:
+
+22
+00:01:22.418 --> 00:01:26.650 line:85%
+it confirms the fault, gives the remaining
+useful life and says what to do.
+
+23
+00:01:27.100 --> 00:01:30.400 line:85%
+Finally, we simulate a leak in the cooling
+circuit.
+
+24
+00:01:31.000 --> 00:01:35.614 line:85%
+As in the previous scenarios, we watch the
+parameters evolve,
+
+25
+00:01:35.614 --> 00:01:42.680 line:85%
+the random forest model detecting the
+degradation, then the LSTM model estimating
+the time to failure.
+
+26
+00:01:43.500 --> 00:01:49.900 line:85%
+The dashboard thus gives the operator time
+to plan maintenance before the failure
+occurs.

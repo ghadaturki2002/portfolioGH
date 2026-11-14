@@ -1,0 +1,137 @@
+WEBVTT
+
+1
+00:00:00.200 --> 00:00:07.648 line:85%
+Après avoir développé notre émulateur,
+nous avons créé un tableau de bord sous
+Node-RED pour suivre l'état de la machine
+en temps réel,
+
+2
+00:00:07.648 --> 00:00:11.400 line:85%
+avec la possibilité de changer le thème et
+la langue de l'interface.
+
+3
+00:00:12.000 --> 00:00:14.773 line:85%
+Nous pouvons ensuite choisir la source de
+commande,
+
+4
+00:00:14.773 --> 00:00:17.220 line:85%
+soit notre émulateur, soit directement le
+PC.
+
+5
+00:00:18.000 --> 00:00:19.397 line:85%
+Pour cette démonstration,
+
+6
+00:00:19.397 --> 00:00:23.700 line:85%
+nous utilisons l'émulateur et lançons le
+fonctionnement normal de la machine.
+
+7
+00:00:24.150 --> 00:00:26.692 line:85%
+Le synoptique anime le circuit de
+refroidissement,
+
+8
+00:00:26.692 --> 00:00:28.980 line:85%
+et aucun défaut n'est détecté pour le
+moment.
+
+9
+00:00:29.430 --> 00:00:33.360 line:85%
+Passons maintenant à la première panne,
+caractérisée par une baisse de pression.
+
+10
+00:00:33.900 --> 00:00:35.759 line:85%
+Nous pouvons simuler cette anomalie,
+
+11
+00:00:35.759 --> 00:00:41.130 line:85%
+régler la vitesse de lecture et choisir la
+position de départ dans les données
+rejouées par l'émulateur.
+
+12
+00:00:41.700 --> 00:00:47.900 line:85%
+Cela nous permet d'observer l'évolution
+des paramètres et de suivre le
+comportement de la machine au cours de
+cette dégradation.
+
+13
+00:00:48.350 --> 00:00:50.760 line:85%
+La jauge affiche le risque de panne
+prédit,
+
+14
+00:00:50.760 --> 00:00:56.700 line:85%
+et la courbe compare la durée de vie
+restante estimée à la durée réelle,
+jusqu'à la détection de la panne.
+
+15
+00:00:57.150 --> 00:01:00.930 line:85%
+Nous passons maintenant au deuxième
+scénario, une pression élevée.
+
+16
+00:01:01.400 --> 00:01:01.937 line:85%
+Au début,
+
+17
+00:01:01.937 --> 00:01:06.590 line:85%
+les paramètres restent dans un état normal
+et le risque de panne reste faible.
+
+18
+00:01:07.040 --> 00:01:10.890 line:85%
+Puis le modèle random forest détecte une
+dégradation du fonctionnement.
+
+19
+00:01:11.340 --> 00:01:12.993 line:85%
+À partir de cette détection,
+
+20
+00:01:12.993 --> 00:01:18.070 line:85%
+le modèle LSTM estime le temps restant
+avant une éventuelle défaillance de la
+machine.
+
+21
+00:01:18.520 --> 00:01:22.418 line:85%
+Comme vous pouvez le constater, notre
+chatbot répond à nos questions :
+
+22
+00:01:22.418 --> 00:01:26.650 line:85%
+il confirme le défaut, donne la durée de
+vie restante et indique quoi faire.
+
+23
+00:01:27.100 --> 00:01:30.400 line:85%
+Pour terminer, nous simulons une fuite
+dans le circuit de refroidissement.
+
+24
+00:01:31.000 --> 00:01:35.614 line:85%
+Comme pour les scénarios précédents, nous
+observons l'évolution des paramètres,
+
+25
+00:01:35.614 --> 00:01:42.680 line:85%
+la détection de la dégradation par le
+modèle random forest, puis l'estimation du
+délai avant la panne par le modèle LSTM.
+
+26
+00:01:43.500 --> 00:01:49.900 line:85%
+Le tableau de bord donne ainsi à
+l'opérateur le temps de planifier la
+maintenance avant que la panne ne
+survienne.

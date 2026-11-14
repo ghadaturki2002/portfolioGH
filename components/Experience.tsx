@@ -1,141 +1,90 @@
 'use client'
 
 /**
- * 02 · THE REGISTRY — Experience.
- * A sober vertical ledger of the 6 experiences. Color is starved on
- * purpose (chips, a 1.5px channel rail segment per row, one colored
- * role line) so the Projects catalogue lands harder. No glass on rows,
- * no glow anywhere in this section.
+ * 03 · PARCOURS — les six expériences du CV, dans l'ordre du CV.
+ * Les deux missions qui ont une étude de cas (TUNIAOS, MATECH mastère) y renvoient
+ * au lieu de répéter leurs puces ; les autres renvoient à leur fiche projet.
  */
-import { MapPin } from 'lucide-react'
+import { ArrowUpRight, MapPin } from 'lucide-react'
 import { useLanguage } from './LanguageProvider'
-import { experiences } from '@/lib/content'
-import { experienceChannel, experienceChannels } from '@/lib/channels'
-import {
-  Chip,
-  ProofTag,
-  DelayedHover,
-  Reveal,
-  SectionHeader,
-  CHIP_BG,
-  TEXT_CH,
-} from './ui/primitives'
+import { experiences, projects } from '@/lib/content'
+import { Cote, DisciplineTags, Reveal, SectionHeader } from './ui/kit'
+import { hasDetails } from './projects/ProjectIndex'
 
 export default function Experience() {
   const { language, t } = useLanguage()
 
   return (
-    <section id="experience" className="section">
-      <div className="container-px">
-        <SectionHeader
-          index="02"
-          kicker={t('experience.kicker')}
-          title={t('experience.title')}
-          count={`${experiences.length} ${t('experience.roles')}`}
-        />
+    <section id="experience" aria-labelledby="experience-title" className="section border-t">
+      <div className="container-x">
+        <SectionHeader index={3} kicker={t('experience.kicker')} title={t('experience.title')} titleId="experience-title" />
 
-        {/* the ledger — far-left rail built from per-row channel segments */}
-        <ol className="mt-14 border-t border-hairline md:mt-20">
+        <ol className="mt-14">
           {experiences.map((exp, i) => {
-            const ch = experienceChannel(exp)
-            const channels = experienceChannels(exp)
-            const bullets = exp.bullets[language]
-            const lastBullet = bullets[bullets.length - 1]
-            const numeral = String(i + 1).padStart(2, '0')
-
+            const project = projects.find((p) => p.id === exp.projectId)
+            const link = exp.caseStudy
+              ? { href: `#case-${exp.projectId}`, label: t('experience.caseLink') }
+              : project && hasDetails(project)
+                ? { href: `#p-${exp.projectId}`, label: t('experience.projectLink') }
+                : null
             return (
               <Reveal
                 as="li"
-                key={`${exp.company}-${exp.period}`}
-                delay={Math.min(i * 0.07, 0.21)}
-                className="relative border-b border-hairline py-12 pl-6 md:py-16 md:pl-10"
+                key={exp.id}
+                delay={Math.min(i, 3) * 50}
+                className="grid gap-6 border-t border-hairline-strong py-10 md:grid-cols-[15rem_1fr] md:gap-12 md:py-12"
               >
-                {/* rail segment — this row's channel, 1.5px, static */}
-                <span
-                  aria-hidden="true"
-                  className={`pointer-events-none absolute bottom-0 left-0 top-0 w-[1.5px] ${CHIP_BG[ch]}`}
-                />
-
-                {/* ghosted registry numeral */}
-                <span
-                  aria-hidden="true"
-                  className="display pointer-events-none absolute right-0 top-8 select-none text-[10vw] font-extrabold leading-none text-ink/5 lg:text-[7vw]"
-                >
-                  {numeral}
-                </span>
-
-                <div className="relative grid gap-8 md:grid-cols-12 md:gap-10">
-                  {/* LEFT — company / period / location / channel chips */}
-                  <div className="self-start md:sticky md:top-24 md:col-span-4">
-                    <h3 className="display text-2xl text-ink">{exp.company}</h3>
-
-                    {exp.current ? (
-                      <div className="mt-3">
-                        <ProofTag channel="elec">{exp.period}</ProofTag>
-                      </div>
-                    ) : (
-                      <p className="sys mt-3 text-ink-soft">{exp.period}</p>
+                <div>
+                  <p className="mono tabular text-[0.875rem] text-ink-soft">
+                    <time dateTime={exp.start}>{exp.period[language].split(/\s–\s/)[0]}</time>
+                    {exp.start !== exp.end && (
+                      <>
+                        {' – '}
+                        <time dateTime={exp.end}>{exp.period[language].split(/\s–\s/)[1]}</time>
+                      </>
                     )}
+                  </p>
+                  <Cote className="mt-2 hidden max-w-[13rem] md:flex" />
+                  <p className="heading mt-4 text-[1.6rem] text-ink">{exp.company}</p>
+                  <p className="mt-1.5 inline-flex items-start gap-1.5 text-[0.9rem] text-ink-soft">
+                    <MapPin className="mt-[3px] h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                    {exp.place[language]}
+                  </p>
+                  <DisciplineTags list={exp.disciplines} short className="mt-4 flex-col !gap-y-1.5" />
+                </div>
 
-                    <p className="sys mt-2 flex items-center gap-1.5 text-ink-soft">
-                      <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                      {exp.location[language]}
-                    </p>
+                <div className="min-w-0">
+                  <p className="label text-accent">{exp.kind[language]}</p>
+                  <h3 className="heading mt-3 max-w-3xl text-[clamp(1.15rem,1.9vw,1.45rem)] text-ink">{exp.title[language]}</h3>
 
-                    <div className="mt-4 flex items-center gap-1.5">
-                      {channels.map((c) => (
-                        <Chip key={c} channel={c} />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* RIGHT — role / summary / bullets / tech / shipped panel */}
-                  <div className="md:col-span-8">
-                    <p className={`sys ${TEXT_CH[ch]}`}>{exp.role[language]}</p>
-
-                    <p className="mt-3 max-w-2xl text-lg text-ink text-pretty">
-                      {exp.summary[language]}
-                    </p>
-
-                    <ul className="mt-6 max-w-2xl space-y-3 border-l-[1.5px] border-hairline pl-4 text-ink-soft">
-                      {bullets.map((b, j) => (
-                        <li key={j} className="leading-relaxed text-pretty">
-                          {b}
+                  {exp.caseStudy ? (
+                    <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">{t('experience.caseNote')}</p>
+                  ) : (
+                    <ul className="mt-5 max-w-3xl space-y-3">
+                      {exp.bullets[language].map((b) => (
+                        <li key={b} className="flex gap-3 leading-relaxed text-ink">
+                          <span aria-hidden="true" className="mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-[1px] bg-ink-faint" />
+                          <span>{b}</span>
                         </li>
                       ))}
                     </ul>
+                  )}
 
-                    <div className="mt-6 flex max-w-2xl flex-wrap gap-2">
-                      {exp.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="sys rounded-full border border-hairline px-3 py-1 text-ink-soft"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                  <ul className="mt-6 flex flex-wrap gap-1.5" aria-label={t('projects.tools')}>
+                    {exp.tech.map((tech) => (
+                      <li key={tech} className="tag">
+                        {tech}
+                      </li>
+                    ))}
+                  </ul>
 
-                    {/* what shipped — delayed hover / instant focus, last bullet */}
-                    <DelayedHover
-                      delay={250}
-                      className="mt-6"
-                      trigger={
-                        <button
-                          type="button"
-                          className="sys text-ink-soft transition-colors duration-200 hover:text-ink"
-                        >
-                          + {t('experience.shipped')}
-                        </button>
-                      }
-                      panel={
-                        <p className="text-sm leading-relaxed text-ink text-pretty">
-                          {lastBullet}
-                        </p>
-                      }
-                      panelClassName="glass absolute left-0 top-full z-20 mt-2 w-full max-w-xl rounded-[14px] p-4"
-                    />
-                  </div>
+                  {link && (
+                    <a href={link.href} className="mt-6 inline-flex min-h-[44px] items-center gap-1.5 font-semibold text-accent hover:underline hover:underline-offset-4">
+                      {link.label}
+                      <span className="sr-only"> : {exp.company}</span>
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                  )}
                 </div>
               </Reveal>
             )

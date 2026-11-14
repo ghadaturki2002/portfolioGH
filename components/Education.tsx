@@ -1,97 +1,54 @@
 'use client'
 
 /**
- * 07 · THE SHELF — Education as archive boxes on a bench.
- * Degrees are horizontal spines resting on shelf hairlines; a delayed
- * pull-out slides each spine 8px right, revealing a channel-colored
- * left edge. Associations sit below as quiet cards.
- * Deliberately calm — the breath before Contact. No glow, no glass.
+ * 06 · FORMATION — les trois diplômes du CV, avec leurs distinctions
+ * (ESPRIT : 2e de la classe sur tout le cursus ; ISTIC : meilleure note de PFE, 19/20).
  */
-import { useReducedMotion } from 'framer-motion'
-import { GraduationCap, Download } from 'lucide-react'
+import { GraduationCap } from 'lucide-react'
 import { useLanguage } from './LanguageProvider'
-import { education, associations } from '@/lib/content'
-import type { Channel } from '@/lib/channels'
-import { SectionHeader, Reveal, BORDER_CH } from './ui/primitives'
+import { education } from '@/lib/content'
+import { Reveal, SectionHeader } from './ui/kit'
 
-const SPINE_CYCLE: Channel[] = ['mech', 'elec', 'soft']
+/** « 2e de ma classe » → 2 + e en exposant (idem 2nd en anglais) */
+function Ordinal({ text }: { text: string }) {
+  const m = text.match(/^(\d+)(e|er|re|st|nd|rd|th)(\s[\s\S]*)$/)
+  if (!m) return <span>{text}</span>
+  return (
+    <span>
+      {m[1]}
+      <sup className="text-[0.7em]">{m[2]}</sup>
+      {m[3]}
+    </span>
+  )
+}
 
 export default function Education() {
   const { language, t } = useLanguage()
-  const reduce = useReducedMotion()
-
   return (
-    <section id="education" className="section">
-      <div className="container-px">
-        <SectionHeader index="07" kicker={t('education.kicker')} title={t('education.title')} />
-
-        {/* ---------- degree spines on shelf lines ---------- */}
-        <ol className="mt-12">
-          {education.map((item, i) => {
-            const ch = SPINE_CYCLE[i % SPINE_CYCLE.length]
-            return (
-              <Reveal as="li" key={item.degree.en} delay={i * 0.07} className="border-b border-hairline">
-                <div className="relative mb-4">
-                  {/* channel edge, hidden under the spine until pull-out */}
-                  <span
-                    aria-hidden="true"
-                    className={`absolute inset-y-2 left-0 border-l-[1.5px] ${BORDER_CH[ch]}`}
-                  />
-                  {/* decorative pull-out flourish — not interactive (no focus stop) */}
-                  <div
-                    className={[
-                      'relative grid items-center gap-3 rounded-[10px] border border-hairline bg-surface px-5 py-4 sm:grid-cols-12 sm:px-6',
-                      reduce ? '' : 'transition-transform duration-200 delay-300 hover:translate-x-2',
-                    ]
-                      .filter(Boolean)
-                      .join(' ')}
-                  >
-                    <p className="sys text-ink-soft sm:col-span-3">
-                      {item.period}
-                      {item.current ? ` – ${t('education.present')}` : ''}
-                    </p>
-                    <div className="sm:col-span-9">
-                      <h3 className="font-display text-lg font-semibold text-ink sm:text-xl">
-                        {item.degree[language]}
-                      </h3>
-                      <p className="mt-1 text-sm text-ink-soft">{item.school[language]}</p>
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            )
-          })}
-        </ol>
-
-        {/* ---------- associations & volunteering ---------- */}
-        <Reveal className="mt-14">
-          <h3 className="sys flex items-center gap-2.5 text-ink-soft">
-            <GraduationCap className="h-3.5 w-3.5" aria-hidden="true" />
-            {t('education.associations')}
-          </h3>
-        </Reveal>
-        <ul className="mt-5 grid gap-5 sm:grid-cols-2">
-          {associations.map((a, i) => (
-            <Reveal as="li" key={a.title.en} delay={0.06 + i * 0.07} className="h-full">
-              <article className="h-full rounded-[14px] border border-hairline bg-surface p-5">
-                <h4 className="font-display font-semibold text-ink">{a.title[language]}</h4>
-                {a.period && <p className="sys mt-1.5 text-ink-soft">{a.period}</p>}
-                <p className="mt-2.5 text-sm leading-relaxed text-ink-soft">{a.description[language]}</p>
-                {a.file && (
-                  <a
-                    href={a.file}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="link-underline sys mt-4 inline-flex items-center gap-2 text-ink-soft transition-colors hover:text-ink"
-                  >
-                    <Download className="h-3.5 w-3.5" aria-hidden="true" />
-                    {t('education.certificate')}
-                  </a>
-                )}
-              </article>
+    <section id="education" aria-labelledby="education-title" className="section border-t">
+      <div className="container-x">
+        <SectionHeader index={6} kicker={t('education.kicker')} title={t('education.title')} titleId="education-title" />
+        <ol className="mt-14 grid gap-5 lg:grid-cols-3">
+          {education.map((e, i) => (
+            <Reveal as="li" key={e.schoolShort} delay={i * 70} className="card flex flex-col p-6">
+              <div className="flex items-center justify-between gap-3">
+                <p className="mono tabular text-[0.875rem] text-ink-soft">{e.period}</p>
+                <GraduationCap className="h-5 w-5 text-ink-faint" aria-hidden="true" />
+              </div>
+              <h3 className="heading mt-5 text-[1.18rem] text-ink">{e.degree[language]}</h3>
+              <p className="mt-3 text-[0.95rem] text-ink-soft">
+                <span className="font-semibold text-ink">{e.schoolShort}</span>, {e.school[language]}
+              </p>
+              {e.distinction && (
+                <p className="mt-auto pt-6">
+                  <span className="inline-flex items-center gap-2 rounded border border-accent/50 bg-accent-fill/10 px-3 py-1.5 text-[0.875rem] font-medium text-accent">
+                    <Ordinal text={e.distinction[language]} />
+                  </span>
+                </p>
+              )}
             </Reveal>
           ))}
-        </ul>
+        </ol>
       </div>
     </section>
   )

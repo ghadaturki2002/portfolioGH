@@ -1,141 +1,127 @@
 'use client'
 
 /**
- * ABOUT — "01 · THE SPEC SHEET".
- * Sticky portrait + identity rows on the left; the narrative, the
- * three-worlds legend (teaches the channel system), the tri-axis
- * instrument bars (TRUE per-channel project counts) and the real
- * stats on the right. All facts from lib/content.ts — none invented.
+ * 01 · PROFIL — texte d'après le profil du CV, fiche d'identité en cartouche,
+ * compteurs CALCULÉS depuis lib/content.ts et répartition par discipline
+ * (chaque barre filtre l'index des réalisations).
  */
-import { motion, useReducedMotion } from 'framer-motion'
 import { useLanguage } from './LanguageProvider'
-import { identity, about, worlds, projects } from '@/lib/content'
-import { channelCounts } from '@/lib/channels'
-import { Chip, ProofTag, Reveal, SectionHeader, CHIP_BG, EASE } from './ui/primitives'
+import { about, disciplines, education, engagements, experiences, identity, projects } from '@/lib/content'
+import { countByChannel } from '@/lib/channels'
+import { CH_BG, ChannelChip, Reveal, SectionHeader } from './ui/kit'
+import { selectFilter } from './Hero'
 
-/* derived once from content.ts — deterministic, never invented */
-const counts = channelCounts()
-const totalProjects = projects.length
+const counts = countByChannel()
 
 export default function About() {
   const { language, t } = useLanguage()
-  const reduce = useReducedMotion()
+
+  const stats = [
+    { value: experiences.length, label: t('about.stat.experiences') },
+    { value: projects.length, label: t('about.stat.works') },
+    { value: education.length, label: t('about.stat.degrees') },
+    { value: engagements.filter((e) => e.international).length, label: t('about.stat.international') },
+  ]
 
   return (
-    <section id="about" className="section">
-      <div className="container-px">
-        <SectionHeader index="01" kicker={t('about.kicker')} title={t('about.title')} channel={null} />
+    <section id="about" aria-labelledby="about-title" className="section">
+      <div className="container-x">
+        <SectionHeader index={1} kicker={t('about.kicker')} title={t('about.title')} titleId="about-title" />
 
-        <div className="mt-12 grid gap-12 lg:mt-16 lg:grid-cols-12 lg:gap-14">
-          {/* LEFT — portrait + identity rows (sticky spec card) */}
-          <div className="self-start lg:sticky lg:top-24 lg:col-span-5">
-            <Reveal>
-              <img
-                src={identity.photo}
-                alt={identity.name}
-                loading="lazy"
-                className="aspect-[4/5] w-full max-w-[280px] rounded-[24px] border border-hairline object-cover"
-                style={{ filter: 'contrast(1.02) saturate(1.04)' }}
-              />
+        <div className="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <div className="max-w-prose space-y-6">
+              {about.paragraphs[language].map((para, i) => (
+                <Reveal key={i} delay={i * 60}>
+                  <p className={i === 0 ? 'text-[1.25rem] leading-relaxed text-ink' : 'text-lg leading-relaxed text-ink-soft'}>{para}</p>
+                </Reveal>
+              ))}
+            </div>
+
+            <Reveal as="ul" className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-md border bg-hairline sm:grid-cols-4">
+              {stats.map((s) => (
+                <li key={s.label} className="bg-bg p-5">
+                  <p className="display tabular text-4xl text-ink">{s.value}</p>
+                  <p className="mt-2 text-[0.875rem] leading-snug text-ink-soft">{s.label}</p>
+                </li>
+              ))}
             </Reveal>
+          </div>
 
-            <Reveal delay={0.08}>
-              <dl className="mt-8 max-w-[440px]">
-                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-hairline py-3.5">
-                  <dt className="sys text-ink-soft">{t('about.location')}</dt>
-                  <dd className="sys text-ink">{identity.location[language]}</dd>
-                </div>
-                <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1.5 border-t border-hairline py-3.5">
-                  <dt className="sys text-ink-soft">{t('about.availability')}</dt>
-                  <dd>
-                    <ProofTag channel="elec">09.2026</ProofTag>
+          <aside className="space-y-10 lg:col-span-5" aria-label={t('about.facts')}>
+            <Reveal className="card overflow-hidden">
+              <p className="label flex items-center justify-between border-b bg-surface-2/60 px-5 py-3 text-ink-faint">
+                <span>{t('about.facts')}</span>
+                <span aria-hidden="true">GT · 2026</span>
+              </p>
+              <dl className="divide-y">
+                {about.facts.map((f) => (
+                  <div key={f.label.en} className="grid grid-cols-[7.5rem_1fr] gap-4 px-5 py-3.5">
+                    <dt className="label pt-0.5 text-ink-faint">{f.label[language]}</dt>
+                    <dd className="text-[0.95rem] text-ink">
+                      {f.label.en === 'Availability' ? (
+                        <span className="inline-flex items-center gap-2">
+                          <span aria-hidden="true" className="pulse relative h-2 w-2 rounded-full bg-elec-chip" />
+                          {f.value[language]}
+                        </span>
+                      ) : (
+                        f.value[language]
+                      )}
+                    </dd>
+                  </div>
+                ))}
+                <div className="grid grid-cols-[7.5rem_1fr] gap-4 px-5 py-3.5">
+                  <dt className="label pt-0.5 text-ink-faint">{t('about.email')}</dt>
+                  <dd className="min-w-0">
+                    <a href={`mailto:${identity.email}`} className="link mono break-all text-[0.9rem] text-ink">
+                      {identity.email}
+                    </a>
                   </dd>
                 </div>
-                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-y border-hairline py-3.5">
-                  <dt className="sys text-ink-soft">{t('contact.emailLabel')}</dt>
+                <div className="grid grid-cols-[7.5rem_1fr] gap-4 px-5 py-3.5">
+                  <dt className="label pt-0.5 text-ink-faint">{t('about.phone')}</dt>
                   <dd>
-                    <a
-                      href={`mailto:${identity.email}`}
-                      className="link-underline break-all font-mono text-[13px] tracking-[0.02em] text-ink"
-                    >
-                      {identity.email}
+                    <a href={identity.phoneHref} className="link mono tabular text-[0.9rem] text-ink">
+                      {identity.phone}
                     </a>
                   </dd>
                 </div>
               </dl>
             </Reveal>
-          </div>
 
-          {/* RIGHT — narrative, worlds legend, tri-axis profile, stats */}
-          <div className="lg:col-span-7">
-            <div className="max-w-prose space-y-5">
-              {about.paragraphs[language].map((paragraph, i) => (
-                <Reveal key={i} delay={i * 0.08}>
-                  <p className="text-lg leading-relaxed text-ink-soft text-pretty">{paragraph}</p>
-                </Reveal>
-              ))}
-            </div>
-
-            {/* the three worlds — chip legend that teaches the channel system */}
-            <Reveal delay={0.16}>
-              <ul className="mt-9 flex flex-wrap gap-x-8 gap-y-3">
-                {worlds.map((w) => (
-                  <li key={w.key} className="sys inline-flex items-baseline gap-2.5 text-ink">
-                    <Chip channel={w.key} className="self-center" />
-                    <span>{w.label[language]}</span>
-                    <span className="text-ink-soft">· {w.proof[language]}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-
-            {/* TRI-AXIS PROFILE — instrument bars, TRUE counts per channel */}
-            <Reveal delay={0.2}>
-              <div className="mt-12 border-t border-hairline pt-8">
-                <p className="sys text-ink-soft">{t('about.profile')}</p>
-                <div className="mt-6 space-y-6">
-                  {worlds.map((w, i) => {
-                    const n = counts[w.key]
-                    const pct = totalProjects > 0 ? (n / totalProjects) * 100 : 0
-                    return (
-                      <div key={w.key}>
-                        <p className="sys inline-flex items-center gap-2 text-ink">
-                          <Chip channel={w.key} className="h-2 w-2" />
-                          <span>
-                            {w.label[language]} — {n}/{totalProjects}
+            <Reveal>
+              <h3 className="label text-ink-faint">{t('about.profile')}</h3>
+              <ul className="mt-5 space-y-4">
+                {disciplines.map((d) => {
+                  const n = counts[d.key]
+                  return (
+                    <li key={d.key}>
+                      <a
+                        href="#index"
+                        onClick={() => selectFilter(d.key)}
+                        aria-label={t('about.barLabel', { label: d.label[language], n, total: counts.all })}
+                        className="group block rounded focus-visible:outline-offset-4"
+                      >
+                        <span className="flex items-baseline justify-between gap-3 text-[0.95rem]">
+                          <span className="inline-flex items-center gap-2.5 text-ink group-hover:underline group-hover:underline-offset-4">
+                            <ChannelChip ch={d.key} />
+                            {d.label[language]}
                           </span>
-                        </p>
-                        {/* 1.5px track + 6px channel fill */}
-                        <div className="relative mt-2.5 h-[6px]" aria-hidden="true">
-                          <span className="absolute inset-x-0 top-1/2 h-[1.5px] -translate-y-1/2 bg-hairline" />
-                          <motion.span
-                            className={`absolute inset-y-0 left-0 origin-left rounded-full ${CHIP_BG[w.key]}`}
-                            style={{ width: `${pct}%` }}
-                            initial={reduce ? false : { scaleX: 0 }}
-                            whileInView={reduce ? undefined : { scaleX: 1 }}
-                            viewport={{ once: true, margin: '-40px' }}
-                            transition={{ duration: 0.6, delay: i * 0.12, ease: EASE }}
-                          />
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
+                          <span className="mono tabular text-ink-soft">
+                            {n}/{counts.all}
+                          </span>
+                        </span>
+                        <span aria-hidden="true" className="relative mt-2 block h-1.5 overflow-hidden rounded-full bg-surface-2">
+                          <span className={`absolute inset-y-0 left-0 rounded-full ${CH_BG[d.key]}`} style={{ width: `${(n / counts.all) * 100}%` }} />
+                        </span>
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+              <p className="mt-4 text-[0.875rem] text-ink-faint">{t('about.profileNote')}</p>
             </Reveal>
-
-            {/* real stats from content.ts */}
-            <Reveal delay={0.24}>
-              <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-hairline pt-8 sm:grid-cols-4">
-                {about.stats.map((stat) => (
-                  <div key={stat.label.en}>
-                    <p className="display text-3xl text-ink md:text-4xl">{stat.value}</p>
-                    <p className="sys mt-1.5 text-ink-soft">{stat.label[language]}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
+          </aside>
         </div>
       </div>
     </section>

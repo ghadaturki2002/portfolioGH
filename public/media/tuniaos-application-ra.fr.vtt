@@ -1,0 +1,178 @@
+WEBVTT
+
+1
+00:00:00.200 --> 00:00:03.225 line:85%
+Voici notre application mobile en réalité
+augmentée,
+
+2
+00:00:03.225 --> 00:00:07.180 line:85%
+conçue pour comprendre le fonctionnement
+d'une machine d'ionisation.
+
+3
+00:00:07.630 --> 00:00:09.756 line:85%
+Commençons par la première fonctionnalité.
+
+4
+00:00:09.756 --> 00:00:14.060 line:85%
+Nous dirigeons la caméra vers le marqueur
+et le modèle apparaît en réalité
+augmentée.
+
+5
+00:00:14.510 --> 00:00:17.812 line:85%
+Appuyons maintenant sur Play pour lancer
+l'animation.
+
+6
+00:00:17.812 --> 00:00:22.610 line:85%
+Nous pouvons suivre, étape par étape, le
+fonctionnement normal de la machine.
+
+7
+00:00:23.300 --> 00:00:27.370 line:85%
+Lors du chargement, le bras de transfert
+dépose la plaquette sur le plateau.
+
+8
+00:00:28.200 --> 00:00:28.978 line:85%
+À chaque étape,
+
+9
+00:00:28.978 --> 00:00:35.720 line:85%
+une description s'affiche à l'écran pour
+expliquer le déroulement des opérations et
+le rôle des différents éléments de la
+machine.
+
+10
+00:00:36.170 --> 00:00:39.909 line:85%
+L'animation se poursuit jusqu'à la fin du
+cycle de fonctionnement.
+
+11
+00:00:39.909 --> 00:00:43.477 line:85%
+Lors du déchargement, le bras de transfert
+retire la plaquette,
+
+12
+00:00:43.477 --> 00:00:44.950 line:85%
+puis le couvercle s'ouvre.
+
+13
+00:00:45.400 --> 00:00:48.781 line:85%
+Une fois le cycle terminé, nous pouvons
+parcourir les étapes,
+
+14
+00:00:48.781 --> 00:00:51.940 line:85%
+mettre l'animation en pause ou la relancer
+à tout moment.
+
+15
+00:00:52.400 --> 00:00:54.783 line:85%
+Passons à la deuxième fonctionnalité :
+
+16
+00:00:54.783 --> 00:00:58.420 line:85%
+la supervision en temps réel grâce à la
+réalité augmentée.
+
+17
+00:00:58.870 --> 00:01:00.085 line:85%
+Pour cette démonstration,
+
+18
+00:01:00.085 --> 00:01:03.680 line:85%
+nous utilisons un émulateur qui reproduit
+le fonctionnement de la machine.
+
+19
+00:01:04.120 --> 00:01:06.191 line:85%
+Les données sont transmises via MQTT,
+
+20
+00:01:06.191 --> 00:01:09.940 line:85%
+ce qui actualise l'état du jumeau
+numérique dans notre application.
+
+21
+00:01:10.390 --> 00:01:15.188 line:85%
+Comme vous pouvez le voir, nous commençons
+par observer le fonctionnement normal de
+la machine,
+
+22
+00:01:15.188 --> 00:01:16.400 line:85%
+sans aucune défaillance.
+
+23
+00:01:17.200 --> 00:01:21.684 line:85%
+Ensuite, nous simulons l'apparition de
+trois pannes du circuit de
+refroidissement.
+
+24
+00:01:21.684 --> 00:01:23.980 line:85%
+La première, c'est une baisse de pression.
+
+25
+00:01:24.800 --> 00:01:29.220 line:85%
+Nous la sélectionnons sur le boîtier de
+commande et lançons le scénario en
+accéléré.
+
+26
+00:01:29.900 --> 00:01:34.303 line:85%
+Grâce aux modèles d'intelligence
+artificielle, le système surveille les
+mesures,
+
+27
+00:01:34.303 --> 00:01:37.440 line:85%
+détecte les anomalies et prédit le risque
+de défaillance.
+
+28
+00:01:37.890 --> 00:01:42.526 line:85%
+L'application indique également le délai
+estimé avant que la machine ne tombe en
+panne,
+
+29
+00:01:42.526 --> 00:01:45.670 line:85%
+ce qui permet d'anticiper les
+interventions de maintenance.
+
+30
+00:01:46.120 --> 00:01:49.610 line:85%
+Nous passons au deuxième type de panne,
+une pression élevée.
+
+31
+00:01:50.060 --> 00:01:52.405 line:85%
+Comme vous pouvez le constater sur le
+modèle,
+
+32
+00:01:52.405 --> 00:01:57.250 line:85%
+l'aiguille du manomètre se déplace vers la
+droite, indiquant une augmentation de la
+pression.
+
+33
+00:01:57.700 --> 00:02:02.340 line:85%
+Pour terminer, nous passons au troisième
+scénario, une fuite dans le circuit.
+
+34
+00:02:03.200 --> 00:02:09.554 line:85%
+Comme pour les anomalies précédentes, le
+système analyse les données en continu et
+estime la durée de vie restante,
+
+35
+00:02:09.554 --> 00:02:12.040 line:85%
+affichée directement sur le jumeau
+numérique.

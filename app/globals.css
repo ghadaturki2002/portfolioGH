@@ -2,58 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================================
-   TRICHROME DESIGN SYSTEM — "the three-channel engineer"
-   Three disciplined channel hues on a warm bone/bitumen base:
-     --mech  gentian blue   (machine-tool paint)  = mechanics
-     --elec  phosphor amber (instrument displays) = electronics
-     --soft  process magenta (print/data channel) = software & AI
-   .dark = "warm workshop at night" (DEFAULT) ; :root = paper lab.
-   Rules: ≥90% of any viewport neutral · one dominant hue per view
-   · hues only as chips/rails/glow/tints · ZERO color gradients
-   (transparency masks only) · max ONE glow per viewport.
-   Tokens are RGB triplets consumed as rgb(var(--token) / <alpha>).
-   ============================================================ */
+/* ==================================================================
+   « PLAN D'INGÉNIEUR NOCTURNE »
+   Nuit d'observatoire (défaut, .dark) / Calque (clair, :root).
+   Tokens en triplets RGB, consommés en rgb(var(--x) / alpha).
+   Contrastes vérifiés : voir design-system/ghada-turki-portfolio/MASTER.md
+   ================================================================== */
 @layer base {
   :root {
-    /* LIGHT — "paper-and-daylight lab" */
-    --bg: 246 241 232;          /* #F6F1E8 bone paper */
-    --surface: 255 255 255;     /* #FFFFFF card */
-    --surface-2: 236 229 216;   /* #ECE5D8 recessed band */
-    --ink: 33 27 20;            /* #211B14 espresso (AAA on bg) */
-    --ink-soft: 110 100 87;     /* #6E6457 secondary (AA) */
-    --hairline: 220 210 194;    /* #DCD2C2 */
-
-    /* channel accents — text-safe (AA on --bg) */
-    --mech: 42 85 201;          /* #2A55C9 gentian text */
-    --elec: 138 90 0;           /* #8A5A00 amber text */
-    --soft: 182 48 127;         /* #B6307F magenta text */
-    /* channel accents — chip/fill only (never set type in these) */
-    --mech-chip: 42 85 201;
-    --elec-chip: 232 155 45;    /* #E89B2D — light-mode amber chips always
-                                   carry a 1px ink/20 border (see .chip-sq) */
-    --soft-chip: 182 48 127;
-
-    --shadow-card: 0 1px 2px rgb(33 27 20 / 0.06), 0 4px 16px rgb(33 27 20 / 0.05);
+    --bg: 245 244 239;
+    --bg-2: 239 237 230;
+    --surface: 255 255 255;
+    --surface-2: 236 234 227;
+    --ink: 13 21 38;
+    --ink-soft: 70 83 107;
+    --ink-faint: 86 98 122;
+    --hairline: 217 214 204;
+    --hairline-strong: 188 184 172;
+    --accent: 138 93 18;
+    --accent-fill: 217 164 74;
+    --accent-ink: 13 21 38;
+    --mech: 43 85 196;
+    --elec: 8 107 85;
+    --soft: 106 71 214;
+    --mech-chip: 64 110 230;
+    --elec-chip: 22 160 128;
+    --soft-chip: 128 96 235;
+    --grid: 43 85 196;
+    --grid-minor: 0.055;
+    --grid-major: 0.1;
+    --star: 13 21 38;
+    --shadow: 0 1px 2px rgb(13 21 38 / 0.05), 0 12px 32px -18px rgb(13 21 38 / 0.25);
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    color-scheme: light;
   }
 
   .dark {
-    /* DARK — "warm workshop at night" (DEFAULT) */
-    --bg: 22 19 15;             /* #16130F warm bitumen — NOT blue-graphite */
-    --surface: 31 27 21;        /* #1F1B15 */
-    --surface-2: 42 36 28;      /* #2A241C raised: modals, inputs */
-    --ink: 244 239 230;         /* #F4EFE6 bone (AAA) */
-    --ink-soft: 173 163 149;    /* #ADA395 (AA+) */
-    --hairline: 59 52 42;       /* #3B342A */
-
-    --mech: 94 142 247;         /* #5E8EF7 gentian */
-    --elec: 242 163 60;         /* #F2A33C phosphor amber */
-    --soft: 226 86 158;         /* #E2569E process magenta */
-    --mech-chip: 94 142 247;
-    --elec-chip: 242 163 60;
-    --soft-chip: 226 86 158;
-
-    --shadow-card: none;        /* dark relies on surface steps + hairlines */
+    --bg: 7 11 20;
+    --bg-2: 10 16 32;
+    --surface: 14 21 38;
+    --surface-2: 20 29 51;
+    --ink: 238 242 248;
+    --ink-soft: 167 179 199;
+    --ink-faint: 131 145 170;
+    --hairline: 31 42 66;
+    --hairline-strong: 50 64 96;
+    --accent: 232 184 100;
+    --accent-fill: 232 184 100;
+    --accent-ink: 10 15 28;
+    --mech: 140 180 255;
+    --elec: 94 214 180;
+    --soft: 185 162 255;
+    --mech-chip: 140 180 255;
+    --elec-chip: 94 214 180;
+    --soft-chip: 185 162 255;
+    --grid: 120 160 255;
+    --grid-minor: 0.04;
+    --grid-major: 0.075;
+    --star: 226 234 248;
+    --shadow: 0 0 0 1px rgb(255 255 255 / 0.02), 0 24px 48px -28px rgb(0 0 0 / 0.75);
+    color-scheme: dark;
   }
 
   * {
@@ -62,115 +70,236 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
   }
 
   body {
     background-color: rgb(var(--bg));
     color: rgb(var(--ink));
     font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: clip;
   }
 
   ::selection {
-    background: rgb(var(--ink));
-    color: rgb(var(--bg));
+    background: rgb(var(--accent-fill));
+    color: rgb(var(--accent-ink));
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--mech));
+    outline: 2px solid rgb(var(--accent));
     outline-offset: 3px;
-    border-radius: 3px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  figcaption,
+  dd {
+    text-wrap: pretty;
+  }
+  img,
+  video {
+    max-width: 100%;
   }
 }
 
 @layer components {
-  .container-px {
+  .container-x {
     @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-12;
   }
   .section {
-    @apply relative scroll-mt-24 py-20 md:py-28 lg:py-32;
+    @apply relative py-24 md:py-32;
   }
 
-  /* registry voice — 13px mono floor, uppercase, indexed */
-  .sys {
-    @apply font-mono text-[13px] font-medium uppercase tracking-[0.08em];
-  }
+  /* --- typographie ------------------------------------------------ */
   .display {
-    @apply font-display font-extrabold leading-[0.98] tracking-[-0.02em];
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-variation-settings: 'wdth' 112;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+  .heading {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-variation-settings: 'wdth' 104;
+    font-weight: 650;
+    letter-spacing: -0.012em;
+    line-height: 1.15;
+  }
+  /* libellés techniques : mono, capitales, ≥ 12 px */
+  .label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .mono {
+    font-family: var(--font-mono), ui-monospace, monospace;
   }
 
-  /* THE CHIP — 10px oscilloscope channel marker. Light-mode amber chips
-     always get a 1px ink border (color never the sole carrier). */
-  .chip-sq {
-    @apply inline-block h-2.5 w-2.5 shrink-0 rounded-[3px];
-  }
-
-  /* PROOF TAG — hairline mono pill reserved for verifiable facts */
-  .proof-tag {
-    @apply inline-flex items-center gap-2 rounded-full border border-hairline bg-surface px-3 py-1 font-mono text-[13px] uppercase tracking-[0.06em] text-ink;
-  }
-
-  /* GLASS — accent technique only (buttons, pills, tooltips, nav, contact) */
-  .glass {
-    background-color: rgb(var(--surface) / 0.65);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgb(var(--ink) / 0.12);
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6);
-  }
-  .dark .glass {
-    background-color: rgb(var(--surface) / 0.55);
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18);
-  }
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .glass {
-      background-color: rgb(var(--surface) / 0.95);
-    }
-  }
-
+  /* --- boutons ----------------------------------------------------- */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200;
+    @apply inline-flex min-h-[44px] select-none items-center justify-center gap-2 rounded-md px-5 py-2.5 text-[0.9375rem] font-semibold leading-none;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms var(--ease-out),
+      box-shadow 180ms ease;
   }
-  /* primary CTA: ink-filled, channel glow on hover */
-  .btn-ink {
-    @apply btn bg-ink text-bg active:scale-[0.98];
-    transition: box-shadow 220ms ease-out, transform 150ms ease-out;
+  .btn:active {
+    transform: translateY(1px);
   }
-  .btn-glass {
-    @apply btn glass rounded-full text-ink;
-    transition: box-shadow 220ms ease-out, border-color 220ms ease-out,
-      transform 150ms ease-out;
+  .btn-primary {
+    @apply btn;
+    background-color: rgb(var(--accent-fill));
+    color: rgb(var(--accent-ink));
+    box-shadow: 0 0 0 1px rgb(var(--accent-fill)), 0 10px 30px -12px rgb(var(--accent-fill) / 0.55);
   }
-  .btn-glass:hover {
-    transform: translateY(-1px);
+  .btn-primary:hover {
+    background-color: rgb(var(--accent-fill) / 0.88);
+  }
+  .btn-secondary {
+    @apply btn border;
+    border-color: rgb(var(--hairline-strong));
+    background-color: rgb(var(--surface) / 0.6);
+    color: rgb(var(--ink));
+  }
+  .btn-secondary:hover {
+    border-color: rgb(var(--ink-soft));
+    background-color: rgb(var(--surface));
+  }
+  .btn-quiet {
+    @apply btn px-3;
+    color: rgb(var(--ink-soft));
+  }
+  .btn-quiet:hover {
+    color: rgb(var(--ink));
   }
 
-  /* channel glow — attach on interaction only, max ONE per viewport */
-  .glow-mech:hover,
-  .glow-mech:focus-visible {
-    box-shadow: 0 0 0 1px rgb(var(--mech) / 0.35), 0 0 24px rgb(var(--mech) / 0.25);
+  /* --- surfaces ---------------------------------------------------- */
+  .card {
+    @apply rounded-md border bg-surface;
+    box-shadow: var(--shadow);
   }
-  .glow-elec:hover,
-  .glow-elec:focus-visible {
-    box-shadow: 0 0 0 1px rgb(var(--elec) / 0.35), 0 0 24px rgb(var(--elec) / 0.25);
+  .tag {
+    @apply inline-flex items-center gap-1.5 rounded border px-2 py-1 text-[0.8125rem] leading-none;
+    border-color: rgb(var(--hairline));
+    color: rgb(var(--ink-soft));
+    background-color: rgb(var(--surface-2) / 0.5);
   }
-  .glow-soft:hover,
-  .glow-soft:focus-visible {
-    box-shadow: 0 0 0 1px rgb(var(--soft) / 0.35), 0 0 24px rgb(var(--soft) / 0.25);
+  .link {
+    @apply underline decoration-1 underline-offset-[5px];
+    text-decoration-color: rgb(var(--ink-faint) / 0.6);
+    transition: text-decoration-color 160ms ease, color 160ms ease;
+  }
+  .link:hover {
+    text-decoration-color: currentColor;
   }
 
-  .link-underline {
-    @apply relative inline-block;
+  /* --- univers « plan » ------------------------------------------- */
+  /* grille blueprint : carreaux de 24 px, traits forts tous les 120 px */
+  .bp-grid {
+    background-image:
+      linear-gradient(rgb(var(--grid) / var(--grid-major)) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--grid) / var(--grid-major)) 1px, transparent 1px),
+      linear-gradient(rgb(var(--grid) / var(--grid-minor)) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--grid) / var(--grid-minor)) 1px, transparent 1px);
+    background-size:
+      120px 120px,
+      120px 120px,
+      24px 24px,
+      24px 24px;
+    background-position: -1px -1px;
   }
-  .link-underline::after {
+  .fade-edges {
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 35%, transparent 100%);
+    mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 35%, transparent 100%);
+  }
+
+  /* repères de coupe aux quatre coins d'un visuel */
+  .marks {
+    position: relative;
+  }
+  .marks::after {
     content: '';
-    @apply absolute -bottom-0.5 left-0 h-px w-0 bg-ink transition-all duration-300;
+    position: absolute;
+    inset: -7px;
+    pointer-events: none;
+    --m: rgb(var(--ink-faint) / 0.75);
+    background:
+      linear-gradient(var(--m), var(--m)) top left / 12px 1px no-repeat,
+      linear-gradient(var(--m), var(--m)) top left / 1px 12px no-repeat,
+      linear-gradient(var(--m), var(--m)) top right / 12px 1px no-repeat,
+      linear-gradient(var(--m), var(--m)) top right / 1px 12px no-repeat,
+      linear-gradient(var(--m), var(--m)) bottom left / 12px 1px no-repeat,
+      linear-gradient(var(--m), var(--m)) bottom left / 1px 12px no-repeat,
+      linear-gradient(var(--m), var(--m)) bottom right / 12px 1px no-repeat,
+      linear-gradient(var(--m), var(--m)) bottom right / 1px 12px no-repeat;
   }
-  .link-underline:hover::after {
-    @apply w-full;
+
+  /* cartouche : tableau de cases à filets fins */
+  .cartouche {
+    @apply grid border-l border-t text-left;
+    border-color: rgb(var(--hairline-strong));
+  }
+  .cartouche > * {
+    @apply border-b border-r px-3 py-2;
+    border-color: rgb(var(--hairline-strong));
+  }
+
+  /* ligne de cote : |◄──── libellé ────►| */
+  .cote {
+    @apply flex items-center gap-2;
+    color: rgb(var(--ink-faint));
+  }
+  .cote-line {
+    @apply relative h-px flex-1;
+    background: currentColor;
+    opacity: 0.7;
+  }
+  .cote-line.start::before,
+  .cote-line.end::after {
+    content: '';
+    position: absolute;
+    top: -3.5px;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 4px 0 4px 0;
+  }
+  .cote-line.start::before {
+    left: 0;
+    border-right: 7px solid currentColor;
+    border-left-width: 0;
+  }
+  .cote-line.end::after {
+    right: 0;
+    border-left: 7px solid currentColor;
+  }
+  .cote-tick {
+    @apply h-3 w-px;
+    background: currentColor;
+    opacity: 0.7;
+  }
+
+  /* pastille de discipline */
+  .chip-sq {
+    @apply inline-block h-2.5 w-2.5 shrink-0 rounded-[2px];
   }
 }
 
@@ -181,95 +310,220 @@
   .text-pretty {
     text-wrap: pretty;
   }
-  .card-lift {
-    box-shadow: var(--shadow-card);
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }
 
-/* ------------------------------------------------------------
-   DELAYED HOVER — one site-wide mechanism. Enter is delayed via
-   --dh-delay (default 350ms); exit is ALWAYS instant; keyboard
-   focus reveals instantly. Touch uses data-open (tap-toggle).
-   ------------------------------------------------------------ */
-.dh {
-  position: relative;
-}
-.dh-panel {
+/* ------------------------------------------------------------------
+   APPARITIONS AU DÉFILEMENT — seulement si JS actif (classe .js posée
+   dans <head>) ; sans JS, tout est visible.
+   ------------------------------------------------------------------ */
+.js [data-reveal] {
   opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-  transition: opacity 220ms ease-out, transform 220ms ease-out;
-  transition-delay: 0ms; /* exit instant */
+  transform: translateY(14px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
 }
-.dh:hover > .dh-panel,
-.dh[data-open='true'] > .dh-panel {
+.js [data-reveal][data-shown] {
   opacity: 1;
   transform: none;
-  pointer-events: auto;
-  transition-delay: var(--dh-delay, 350ms); /* enter delayed */
-}
-.dh:focus-visible > .dh-panel,
-.dh:focus-within > .dh-panel {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-  transition-delay: 0ms; /* keyboard instant */
 }
 
-/* ------------------------------------------------------------
-   THE CONVEYOR — mathematically seamless CSS-only belt.
-   Track = items rendered EXACTLY TWICE, no flex gap (each item
-   carries its own margin-right, including the last), so both
-   halves are pixel-identical and the -50% wrap is invisible.
-   Pause = play-state (seam-safe). Never change duration mid-flight.
-   ------------------------------------------------------------ */
-@keyframes belt {
+/* ------------------------------------------------------------------
+   HERO — entrée en CSS (aucun JS requis). Décalée pendant l'intro.
+   ------------------------------------------------------------------ */
+html {
+  --intro-delay: 0ms;
+}
+html[data-intro='on'] {
+  --intro-delay: 3400ms;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
   to {
-    transform: translate3d(-50%, 0, 0);
+    opacity: 1;
+    transform: none;
   }
 }
-.belt-track {
-  display: flex;
-  width: max-content;
-  animation: belt var(--belt-duration, 40s) linear infinite;
-  will-change: transform;
-}
-.belt:hover .belt-track,
-.belt:focus-within .belt-track,
-.belt[data-paused='true'] .belt-track {
-  animation-play-state: paused;
-}
-
-/* availability dot pulse — pseudo-element transform/opacity (paint-cheap) */
-@keyframes dot-pulse {
-  0%,
-  100% {
-    transform: scale(1);
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
   }
-  50% {
-    transform: scale(1.6);
-    opacity: 0.35;
-  }
 }
-.pulse-dot::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: inherit;
-  animation: dot-pulse 2s ease-in-out infinite;
+.hero-in {
+  animation: rise 900ms var(--ease-out) both;
+  animation-delay: calc(var(--intro-delay) + var(--d, 0ms));
+}
+.hero-fade {
+  animation: fade 1400ms ease both;
+  animation-delay: calc(var(--intro-delay) * 0.6 + var(--d, 0ms));
 }
 
-/* no-JS safety: the intro overlay always clears */
+/* ------------------------------------------------------------------
+   INTRO — constellation « GT », environ 4 s au total, une seule fois par
+   visiteur. Entièrement en CSS : elle se retire seule, même sans JS.
+   ------------------------------------------------------------------ */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgb(7 11 20);
+  color: rgb(238 242 248);
+  animation: intro-out 600ms ease 3600ms forwards;
+}
+html[data-intro='off'] .intro {
+  display: none;
+}
+.intro.is-leaving {
+  animation: intro-out 260ms ease forwards;
+}
 @keyframes intro-out {
   to {
     opacity: 0;
     visibility: hidden;
   }
 }
+.intro-star {
+  opacity: 0;
+  animation: star-in 1000ms ease forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes star-in {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: var(--o, 0.7);
+  }
+}
+.intro-node {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-in 460ms var(--ease-out) forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes node-in {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.intro-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 700ms ease-out forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.intro-text {
+  opacity: 0;
+  animation: rise 700ms var(--ease-out) forwards;
+  animation-delay: var(--d, 0ms);
+}
+.intro-cote {
+  opacity: 0;
+  animation: fade 300ms ease 2700ms forwards;
+}
+.intro-cote-line {
+  transform: scaleX(0);
+  animation: grow 850ms var(--ease-out) 2750ms forwards;
+}
+@keyframes grow {
+  to {
+    transform: scaleX(1);
+  }
+}
 
-/* themed scrollbar */
+
+/* fiche projet (<dialog>) et cartes filtrées */
+@keyframes fiche-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+dialog.fiche[open] {
+  animation: fiche-in 280ms var(--ease-out);
+}
+dialog.fiche[open]::backdrop {
+  animation: fade 280ms ease;
+}
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.card-in {
+  animation: card-in 440ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* point de disponibilité */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+.pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: inherit;
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+
+/* lien d'évitement */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 0.75rem;
+  z-index: 120;
+  transform: translateY(-160%);
+  transition: transform 160ms ease;
+}
+.skip-link:focus {
+  transform: none;
+}
+
+/* barre de défilement */
 ::-webkit-scrollbar {
   width: 11px;
 }
@@ -277,34 +531,75 @@
   background: rgb(var(--bg));
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--hairline));
+  background: rgb(var(--hairline-strong));
   border-radius: 9999px;
   border: 3px solid rgb(var(--bg));
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--ink-soft));
+
+/* sous-titres des vidéos */
+video::cue {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.95em;
+  background: rgb(7 11 20 / 0.8);
+  color: #fff;
 }
 
-/* Reduced motion: collapse animations + smooth scroll */
+/* ------------------------------------------------------------------
+   MOUVEMENT RÉDUIT : pas d'intro, pas d'entrée, pas d'apparition.
+   ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
   html {
     scroll-behavior: auto;
   }
-  .belt-track {
+  .intro {
+    display: none;
+  }
+  .hero-in,
+  .hero-fade,
+  .intro-text,
+  .intro-cote,
+  .intro-cote-line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .pulse::after {
     animation: none;
   }
-  .belt {
-    overflow-x: auto;
+  *,
+  ::before,
+  ::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
-  .dh-panel {
-    transition-delay: 0ms;
+}
+
+/* ------------------------------------------------------------------
+   IMPRESSION : une page propre pour un recruteur qui imprime
+   ------------------------------------------------------------------ */
+@media print {
+  .intro,
+  .no-print,
+  header[data-site-header],
+  canvas {
+    display: none !important;
+  }
+  .js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  a[href^='mailto:']::after,
+  a[href^='tel:']::after {
+    content: '';
   }
 }

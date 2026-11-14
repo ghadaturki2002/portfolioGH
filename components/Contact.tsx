@@ -1,358 +1,122 @@
 'use client'
 
 /**
- * 08 · THE HANDOFF — contact as a calibration surface.
- * No form (intentional): one mono email button (click = copy, the site's
- * single strongest glow), glass action row, .sys fact rows, availability
- * proof tag. Background: a cursor-reactive calibration dot-grid canvas —
- * dots near the pointer tint toward the channel of their vertical third
- * (mech | elec | soft) and ease back over ~300ms.
+ * 08 · CONTACT — disponibilité, e-mail (copie en un clic), téléphone, LinkedIn,
+ * CV FR/EN. La constellation « GT » de l'intro revient en filigrane : le site
+ * s'ouvre et se ferme sur le même ciel.
  */
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useReducedMotion } from 'framer-motion'
-import { Linkedin, Download, Mail } from 'lucide-react'
+import { Check, Copy, Download, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
 import { useLanguage } from './LanguageProvider'
 import { identity } from '@/lib/content'
-import { ChipTriplet, DelayedHover, ProofTag, Reveal, GLOW_CH } from './ui/primitives'
-
-type RGB = [number, number, number]
-
-const GAP = 24 // px between dots
-const DOT = 2 // dot size
-const RADIUS = 140 // cursor influence radius
-const DECAY_MS = 300 // tint ease-back duration
+import { Constellation } from './fx/Constellation'
+import { Reveal } from './ui/kit'
 
 export default function Contact() {
   const { language, t } = useLanguage()
-  const reduce = useReducedMotion()
-
-  const sectionRef = useRef<HTMLElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
   const [copied, setCopied] = useState(false)
-  const copyTimer = useRef<number | null>(null)
+  const timer = useRef<number | null>(null)
 
-  /* ---------- email copy (clipboard → mailto fallback) ---------- */
-  const copyEmail = useCallback(() => {
-    const fallback = () => {
+  const copy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(identity.email)
+      setCopied(true)
+      if (timer.current) window.clearTimeout(timer.current)
+      timer.current = window.setTimeout(() => setCopied(false), 2200)
+    } catch {
       window.location.href = `mailto:${identity.email}`
     }
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard
-          .writeText(identity.email)
-          .then(() => {
-            setCopied(true)
-            if (copyTimer.current !== null) window.clearTimeout(copyTimer.current)
-            copyTimer.current = window.setTimeout(() => setCopied(false), 1500)
-          })
-          .catch(fallback)
-      } else {
-        fallback()
-      }
-    } catch {
-      fallback()
-    }
+  }, [])
+  useEffect(() => () => {
+    if (timer.current) window.clearTimeout(timer.current)
   }, [])
 
-  useEffect(() => {
-    return () => {
-      if (copyTimer.current !== null) window.clearTimeout(copyTimer.current)
-    }
-  }, [])
-
-  /* ---------- calibration dot-grid canvas ---------- */
-  useEffect(() => {
-    const host = sectionRef.current
-    const canvas = canvasRef.current
-    if (!host || !canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const coarse =
-      typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches
-    const isStatic = !!reduce || coarse
-
-    let width = 0
-    let height = 0
-    let dpr = 1
-    let cols = 0
-    let rows = 0
-    let intensity = new Float32Array(0)
-    let raf = 0
-    let running = false
-    let visible = true
-    let last = 0
-    const mouse = { x: -1e4, y: -1e4, active: false }
-
-    const tokens: { ink: RGB; ch: RGB[] } = {
-      ink: [0, 0, 0],
-      ch: [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-      ],
-    }
-    const readToken = (name: string): RGB => {
-      const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim()
-      const p = raw.split(/\s+/).map(Number)
-      return [p[0] || 0, p[1] || 0, p[2] || 0]
-    }
-    const readTokens = () => {
-      tokens.ink = readToken('--ink')
-      tokens.ch = [readToken('--mech'), readToken('--elec'), readToken('--soft')]
-    }
-
-    // base grid pre-rendered offscreen; redrawn on resize / theme change
-    const base = document.createElement('canvas')
-
-    const drawBase = () => {
-      const bctx = base.getContext('2d')
-      if (!bctx) return
-      bctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      bctx.clearRect(0, 0, width, height)
-      const [r, g, b] = tokens.ink
-      bctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.1)`
-      for (let row = 0; row < rows; row++) {
-        const y = row * GAP + GAP / 2
-        for (let col = 0; col < cols; col++) {
-          bctx.fillRect(col * GAP + GAP / 2 - DOT / 2, y - DOT / 2, DOT, DOT)
-        }
-      }
-    }
-
-    const paintBase = () => {
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      ctx.clearRect(0, 0, width, height)
-      ctx.drawImage(base, 0, 0, width, height)
-    }
-
-    const frame = (now: number) => {
-      raf = 0
-      const dt = Math.min(64, last === 0 ? 16 : now - last)
-      last = now
-      paintBase()
-
-      const decay = dt / DECAY_MS
-      const r2 = RADIUS * RADIUS
-      const [ir, ig, ib] = tokens.ink
-      let anyActive = false
-
-      for (let row = 0; row < rows; row++) {
-        const y = row * GAP + GAP / 2
-        for (let col = 0; col < cols; col++) {
-          const i = row * cols + col
-          let v = intensity[i] > 0 ? Math.max(0, intensity[i] - decay) : 0
-          const x = col * GAP + GAP / 2
-          if (mouse.active) {
-            const dx = x - mouse.x
-            const dy = y - mouse.y
-            const d2 = dx * dx + dy * dy
-            if (d2 < r2) {
-              const target = 1 - Math.sqrt(d2) / RADIUS
-              if (target > v) v = target
-            }
-          }
-          intensity[i] = v
-          if (v > 0.02) {
-            anyActive = true
-            const third = x < width / 3 ? 0 : x < (2 * width) / 3 ? 1 : 2
-            const hue = tokens.ch[third]
-            const mr = Math.round(ir + (hue[0] - ir) * v)
-            const mg = Math.round(ig + (hue[1] - ig) * v)
-            const mb = Math.round(ib + (hue[2] - ib) * v)
-            ctx.fillStyle = `rgba(${mr}, ${mg}, ${mb}, ${(0.1 + 0.6 * v).toFixed(3)})`
-            ctx.fillRect(x - DOT / 2, y - DOT / 2, DOT, DOT)
-          }
-        }
-      }
-
-      if (visible && (mouse.active || anyActive)) {
-        raf = requestAnimationFrame(frame)
-      } else {
-        running = false
-        last = 0
-      }
-    }
-
-    const start = () => {
-      if (isStatic || running || !visible) return
-      running = true
-      last = 0
-      raf = requestAnimationFrame(frame)
-    }
-
-    const stop = () => {
-      if (raf) cancelAnimationFrame(raf)
-      raf = 0
-      running = false
-      last = 0
-    }
-
-    const resize = () => {
-      const rect = host.getBoundingClientRect()
-      width = Math.max(1, Math.round(rect.width))
-      height = Math.max(1, Math.round(rect.height))
-      dpr = Math.min(window.devicePixelRatio || 1, 2)
-      canvas.width = width * dpr
-      canvas.height = height * dpr
-      base.width = width * dpr
-      base.height = height * dpr
-      cols = Math.ceil(width / GAP)
-      rows = Math.ceil(height / GAP)
-      intensity = new Float32Array(cols * rows)
-      drawBase()
-      paintBase() // static frame; the rAF loop overwrites it when active
-    }
-
-    readTokens()
-    resize()
-
-    // theme switch (light/dark class on <html>) → re-read tokens, repaint
-    const mo = new MutationObserver(() => {
-      readTokens()
-      drawBase()
-      paintBase()
-      start()
-    })
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
-
-    let ro: ResizeObserver | null = null
-    const onWindowResize = () => resize()
-    if (typeof ResizeObserver !== 'undefined') {
-      ro = new ResizeObserver(() => resize())
-      ro.observe(host)
-    } else {
-      window.addEventListener('resize', onWindowResize)
-    }
-
-    let io: IntersectionObserver | null = null
-    const onPointerMove = (e: PointerEvent) => {
-      const rect = host.getBoundingClientRect()
-      mouse.x = e.clientX - rect.left
-      mouse.y = e.clientY - rect.top
-      mouse.active = true
-      start()
-    }
-    const onPointerLeave = () => {
-      mouse.active = false
-      start() // let the tint decay out
-    }
-
-    if (!isStatic) {
-      io = new IntersectionObserver((entries) => {
-        visible = entries[0]?.isIntersecting ?? false
-        if (!visible) stop()
-        else start()
-      })
-      io.observe(host)
-      host.addEventListener('pointermove', onPointerMove)
-      host.addEventListener('pointerleave', onPointerLeave)
-    }
-
-    return () => {
-      stop()
-      mo.disconnect()
-      if (ro) ro.disconnect()
-      else window.removeEventListener('resize', onWindowResize)
-      if (io) io.disconnect()
-      host.removeEventListener('pointermove', onPointerMove)
-      host.removeEventListener('pointerleave', onPointerLeave)
-    }
-  }, [reduce])
-
-  const telHref = `tel:+${identity.phone.replace(/[^0-9]/g, '')}`
+  const row = 'flex items-center justify-between gap-4 border-t px-6 py-4'
 
   return (
-    <section
-      id="contact"
-      ref={sectionRef}
-      className="section flex min-h-[80svh] items-center"
-    >
-      {/* calibration dot-grid — the only cursor-reactive ambient surface */}
-      <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 -z-10 h-full w-full" />
+    <section id="contact" aria-labelledby="contact-title" className="section relative isolate overflow-hidden border-t">
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <div className="bp-grid fade-edges absolute inset-0 opacity-70" />
+      </div>
 
-      <div className="container-px w-full">
-        {/* custom header — kicker row + giant headline */}
-        <Reveal>
-          <p className="sys flex items-center gap-2.5 text-ink-soft">
-            <ChipTriplet size="sm" />
-            <span>08 · {t('contact.kicker')}</span>
+      <div className="container-x grid gap-14 lg:grid-cols-12 lg:items-center">
+        <Reveal className="lg:col-span-6">
+          <p className="label flex items-center gap-3 text-accent">
+            <span className="tabular">08</span>
+            <span aria-hidden="true" className="h-px w-8 bg-current opacity-60" />
+            <span>{t('contact.kicker')}</span>
           </p>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2 className="display mt-4 text-[clamp(56px,10vw,120px)] text-ink">
+          <h2 id="contact-title" className="display mt-5 text-[clamp(2.4rem,5.6vw,4.4rem)] text-ink">
             {t('contact.title')}
           </h2>
-        </Reveal>
-        <Reveal delay={0.12}>
-          <p className="mt-5 max-w-xl text-lg text-ink-soft text-pretty">{t('contact.intro')}</p>
+          <p className="mt-6 max-w-lg text-lg text-ink-soft">{t('contact.intro')}</p>
+          <p className="mt-7 inline-flex items-center gap-2.5 rounded-full border bg-surface/60 px-3.5 py-1.5 text-[0.9rem]">
+            <span aria-hidden="true" className="pulse relative h-2 w-2 rounded-full bg-elec-chip" />
+            <strong className="font-semibold">{identity.availability[language]}</strong>
+            <span className="text-ink-soft">· {identity.location[language]}</span>
+          </p>
+          <Constellation className="mt-14 hidden w-56 text-ink-faint/60 lg:block" nodeClassName="fill-accent" />
         </Reveal>
 
-        {/* centerpiece glass card */}
-        <Reveal delay={0.18}>
-          <div className="glass card-lift mt-10 max-w-2xl rounded-[24px] p-6 sm:p-8">
-            {/* email copy — carries the viewport's ONE glow (hover/focus only) */}
-            <DelayedHover
-              delay={350}
-              panelClassName="absolute bottom-full left-0 z-10 mb-3"
-              trigger={
-                <button
-                  type="button"
-                  onClick={copyEmail}
-                  aria-label={`${identity.email} — ${t('contact.copy')}`}
-                  className={`-mx-2 break-all rounded-xl px-2 py-1.5 text-left font-mono text-lg text-ink transition-shadow duration-200 sm:text-2xl ${GLOW_CH['elec']}`}
-                >
-                  {identity.email}
-                </button>
-              }
-              panel={
-                <span className="glass sys inline-flex whitespace-nowrap rounded-full px-3 py-1.5 text-ink" role="status">
+        <Reveal delay={80} className="lg:col-span-6">
+          <div className="card overflow-hidden">
+            <div className="px-6 pb-5 pt-6">
+              <p className="label text-ink-faint">{t('contact.email')}</p>
+              <p className="mono mt-2 break-all text-[clamp(1.05rem,2.2vw,1.35rem)] text-ink">{identity.email}</p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <a href={`mailto:${identity.email}`} className="btn-primary">
+                  <Mail className="h-4 w-4" aria-hidden="true" />
+                  {t('contact.write')}
+                </a>
+                <button type="button" onClick={copy} className="btn-secondary">
+                  {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
                   {copied ? t('contact.copied') : t('contact.copy')}
+                </button>
+                <span className="sr-only" aria-live="polite">
+                  {copied ? t('contact.copied') : ''}
                 </span>
-              }
-            />
-
-            {/* glass action row */}
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <a
-                href={identity.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-glass"
-              >
-                <Linkedin className="h-4 w-4" aria-hidden="true" />
-                LinkedIn
-              </a>
-              <a href={identity.cv[language]} download className="btn-glass">
-                <Download className="h-4 w-4" aria-hidden="true" />
-                {t('hero.downloadCV')}
-              </a>
-              <a href={`mailto:${identity.email}`} className="btn-glass">
-                <Mail className="h-4 w-4" aria-hidden="true" />
-                {t('contact.emailLabel')}
-              </a>
+              </div>
             </div>
-
-            {/* fact rows behind hairline dividers */}
-            <dl className="mt-6">
-              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-t border-hairline py-3">
-                <dt className="sys text-ink-soft">{t('contact.phoneLabel')}</dt>
+            <dl>
+              <div className={row}>
+                <dt className="label inline-flex items-center gap-2 text-ink-faint">
+                  <Phone className="h-4 w-4" aria-hidden="true" />
+                  {t('contact.phone')}
+                </dt>
                 <dd>
-                  <a href={telHref} className="sys link-underline text-ink">
+                  <a href={identity.phoneHref} className="link mono tabular text-ink">
                     {identity.phone}
                   </a>
                 </dd>
               </div>
-              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-t border-hairline py-3">
-                <dt className="sys text-ink-soft">{t('contact.locationLabel')}</dt>
-                <dd className="sys text-ink">{identity.location[language]}</dd>
+              <div className={row}>
+                <dt className="label inline-flex items-center gap-2 text-ink-faint">
+                  <Linkedin className="h-4 w-4" aria-hidden="true" />
+                  {t('contact.linkedin')}
+                </dt>
+                <dd className="min-w-0">
+                  <a href={identity.linkedin} target="_blank" rel="noopener noreferrer" className="link block truncate text-ink">
+                    {identity.linkedinLabel}
+                  </a>
+                </dd>
+              </div>
+              <div className={row}>
+                <dt className="label inline-flex items-center gap-2 text-ink-faint">
+                  <MapPin className="h-4 w-4" aria-hidden="true" />
+                  {t('contact.location')}
+                </dt>
+                <dd className="text-ink">{identity.location[language]}</dd>
               </div>
             </dl>
-
-            {/* availability — verifiable fact, elec channel */}
-            <div className="border-t border-hairline pt-5">
-              <ProofTag channel="elec">{identity.availability[language]}</ProofTag>
+            <div className="flex flex-wrap gap-3 border-t bg-surface-2/50 px-6 py-5">
+              <a href={identity.cv.fr} download className="btn-secondary text-sm" hrefLang="fr">
+                <Download className="h-4 w-4" aria-hidden="true" />
+                {t('contact.cvFr')}
+              </a>
+              <a href={identity.cv.en} download className="btn-secondary text-sm" hrefLang="en">
+                <Download className="h-4 w-4" aria-hidden="true" />
+                {t('contact.cvEn')}
+              </a>
             </div>
           </div>
         </Reveal>

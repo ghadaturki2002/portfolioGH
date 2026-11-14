@@ -1,3 +1,7 @@
+> **Note du 14/11/2026** : ce fichier décrit l'ANCIENNE version du site (identité « TRICHROME »). Il est conservé
+> tel quel pour mémoire, mais plusieurs informations y sont dépassées (résultats TUNIAOS retirés, sections renumérotées,
+> nouveaux compteurs). La version actuelle et la liste de ce qu'il reste à vérifier sont dans **RAPPORT.md**.
+
 # TODO — Portfolio Ghada Turki
 
 > Le portfolio est **terminé et fonctionnel** (build OK, testé en local, déployé sur Vercel). Il ne te reste qu'à compléter les éléments ci-dessous, puis à désactiver la protection Vercel pour le rendre public.

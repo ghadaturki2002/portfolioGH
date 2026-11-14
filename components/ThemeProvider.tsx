@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 type Theme = 'dark' | 'light'
 
@@ -17,29 +17,31 @@ export function useTheme() {
   return context
 }
 
+/**
+ * Thème « nuit » par défaut (le ciel étoilé est l'identité du site) ; le thème clair
+ * « calque » reste disponible et mémorisé. La classe .dark est posée AVANT l'affichage
+ * par le script inline de app/layout.tsx : aucun flash au chargement.
+ */
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Dark (graphite) leads the electronics theme; light + system still respected.
   const [theme, setTheme] = useState<Theme>('dark')
-  const [mounted, setMounted] = useState(false)
 
+  // aligne l'état React sur la classe déjà posée par le script inline
   useEffect(() => {
-    setMounted(true)
-    const saved = localStorage.getItem('theme') as Theme | null
-    if (saved === 'light' || saved === 'dark') {
-      setTheme(saved)
-    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      setTheme('light')
-    }
+    setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light')
   }, [])
 
-  useEffect(() => {
-    if (mounted) {
-      document.documentElement.classList.toggle('dark', theme === 'dark')
-      localStorage.setItem('theme', theme)
+  const toggleTheme = useCallback(() => {
+    const root = document.documentElement
+    const next: Theme = root.classList.contains('dark') ? 'light' : 'dark'
+    root.classList.toggle('dark', next === 'dark')
+    root.style.colorScheme = next
+    try {
+      window.localStorage.setItem('theme', next)
+    } catch {
+      /* ignore */
     }
-  }, [theme, mounted])
-
-  const toggleTheme = () => setTheme((p) => (p === 'dark' ? 'light' : 'dark'))
+    setTheme(next)
+  }, [])
 
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
 }

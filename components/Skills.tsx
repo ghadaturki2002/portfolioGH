@@ -1,143 +1,72 @@
 'use client'
 
 /**
- * SKILLS — "04 · THE BENCH" (data-as-typography).
- * Three channel columns (mech · elec · soft). Each tool's TYPE WEIGHT is its
- * TRUE usage count across content.ts (usageCount → usageWeight) — heavier = used
- * more. Weights animate up from 300 on view; reduced motion renders them static.
- * Delayed hover reveals the real project count; cross-channel tools (in >1 of the
- * original skillGroups) also show the chip triplet. No invented facts.
+ * 04 · COMPÉTENCES — les six familles du CV, mot pour mot.
+ * Le petit chiffre accolé à une compétence = nombre de réalisations de ce
+ * portfolio qui la mobilisent (calculé par skillUsage) ; il n'apparaît que s'il
+ * est supérieur à zéro. Les langues ferment la section.
  */
-import { useRef } from 'react'
-import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useLanguage } from './LanguageProvider'
-import { skillGroups, worlds } from '@/lib/content'
-import { usageCount, usageWeight, type Channel } from '@/lib/channels'
-import { Chip, ChipTriplet, DelayedHover, Reveal, SectionHeader, CHIP_BG } from './ui/primitives'
-
-/* ---- derive the three columns from skillGroups (matched by title.en) ---- */
-function itemsOf(titleEn: string): string[] {
-  return skillGroups.find((g) => g.title.en === titleEn)?.items ?? []
-}
-const COLUMNS: Record<Channel, string[]> = {
-  mech: itemsOf('Mechanical design & CAD'),
-  elec: itemsOf('Automation & electronics'),
-  // soft = Software development + AI/ML/AR + Industrial management, deduped
-  soft: Array.from(
-    new Set([
-      ...itemsOf('Software development'),
-      ...itemsOf('AI, Machine Learning & AR'),
-      ...itemsOf('Industrial management'),
-    ]),
-  ),
-}
-
-/** How many of the ORIGINAL skillGroups list this tool (>1 ⇒ cross-channel). */
-function groupMembership(tool: string): number {
-  return skillGroups.filter((g) => g.items.includes(tool)).length
-}
-
-/** Type-size tier so hierarchy survives even if the variable axis fails. */
-const SIZE_BY_WEIGHT: Record<number, string> = {
-  700: 'text-2xl',
-  550: 'text-xl',
-  420: 'text-lg',
-}
-
-function ToolItem({ tool, index }: { tool: string; index: number }) {
-  const { t } = useLanguage()
-  const reduce = useReducedMotion()
-  const ref = useRef<HTMLSpanElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
-
-  const n = usageCount(tool)
-  const weight = usageWeight(n)
-  const sizeClass = SIZE_BY_WEIGHT[weight] ?? 'text-lg'
-  const crossChannel = groupMembership(tool) > 1
-
-  const target = reduce ? weight : inView ? weight : 300
-
-  return (
-    <DelayedHover
-      as="li"
-      delay={400}
-      className="w-fit"
-      panelClassName="left-0 top-full mt-2 w-max max-w-[280px]"
-      trigger={
-        <motion.span
-          ref={ref}
-          tabIndex={0}
-          role="button"
-          aria-label={`${tool} — ${t('skills.usedOn')} ${n} ${t('skills.projects')}`}
-          className={`font-display ${sizeClass} cursor-default rounded-[3px] leading-tight text-ink`}
-          initial={false}
-          animate={{ fontVariationSettings: `'wght' ${target}` }}
-          transition={reduce ? { duration: 0 } : { duration: 0.6, delay: index * 0.03 }}
-          style={{ fontVariationSettings: `'wght' ${target}`, fontWeight: target }}
-        >
-          {tool}
-        </motion.span>
-      }
-      panel={
-        <div className="glass space-y-1.5 rounded-[14px] px-3.5 py-2.5">
-          <p className="sys text-ink">
-            {tool} — {t('skills.usedOn')} {n} {t('skills.projects')}
-          </p>
-          {crossChannel && (
-            <div className="flex items-center gap-2">
-              <ChipTriplet size="sm" />
-              <span className="sys text-ink-soft">{t('skills.crossChannel')}</span>
-            </div>
-          )}
-        </div>
-      }
-    />
-  )
-}
+import { languages, skillGroups } from '@/lib/content'
+import { skillUsage } from '@/lib/channels'
+import { DisciplineTags, Reveal, SectionHeader } from './ui/kit'
 
 export default function Skills() {
   const { language, t } = useLanguage()
-  const order: Channel[] = ['mech', 'elec', 'soft']
 
   return (
-    <section id="skills" className="section relative overflow-hidden">
-      {/* ghosted backdrop numeral — kept behind content */}
-      <span
-        aria-hidden="true"
-        className="display pointer-events-none absolute -top-6 right-0 -z-0 select-none text-[14vw] leading-none text-ink/5"
-      >
-        04
-      </span>
+    <section id="skills" aria-labelledby="skills-title" className="section border-t">
+      <div className="container-x">
+        <SectionHeader index={4} kicker={t('skills.kicker')} title={t('skills.title')} intro={t('skills.legend')} titleId="skills-title" />
 
-      <div className="container-px relative z-10">
-        <SectionHeader index="04" kicker={t('skills.kicker')} title={t('skills.title')} channel={null} />
+        <ul className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {skillGroups.map((g, gi) => (
+            <Reveal as="li" key={g.id} delay={(gi % 3) * 60} className="card flex flex-col p-6">
+              <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 border-b pb-4">
+                <h3 className="heading text-[1.12rem] text-ink">{g.title[language]}</h3>
+                {g.disciplines.length ? (
+                  <DisciplineTags list={g.disciplines} short />
+                ) : (
+                  <span className="text-[0.8125rem] text-ink-soft">{t('skills.transverse')}</span>
+                )}
+              </div>
+              <ul className="mt-5 flex flex-wrap gap-2">
+                {g.items.map((item) => {
+                  const used = skillUsage(item)
+                  const n = used.length
+                  const label = item.label[language]
+                  return (
+                    <li
+                      key={item.label.en}
+                      className="tag text-[0.875rem] text-ink"
+                      title={n ? used.map((p) => p.code).join(' · ') : undefined}
+                    >
+                      {label}
+                      {n > 0 && (
+                        <>
+                          <span aria-hidden="true" className="mono tabular ml-0.5 rounded-sm bg-accent-fill/15 px-1 text-[0.75rem] font-medium text-accent">
+                            {n}
+                          </span>
+                          <span className="sr-only">, {t(n > 1 ? 'skills.usedIn' : 'skills.usedInOne', { n })}</span>
+                        </>
+                      )}
+                    </li>
+                  )
+                })}
+              </ul>
+            </Reveal>
+          ))}
+        </ul>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          {order.map((channel, col) => {
-            const world = worlds.find((w) => w.key === channel)
-            return (
-              <Reveal key={channel} delay={col * 0.12}>
-                <div>
-                  {/* column header — big chip + channel label + full-strength underline */}
-                  <div className="flex items-center gap-2.5">
-                    <Chip channel={channel} className="h-3.5 w-3.5" />
-                    <span className="font-display text-xl font-semibold text-ink">
-                      {world?.label[language]}
-                    </span>
-                  </div>
-                  <span aria-hidden="true" className={`mt-2 block h-[1.5px] w-12 ${CHIP_BG[channel]}`} />
-
-                  {/* tool list — type weight = true usage */}
-                  <ul className="mt-6 flex flex-col gap-2.5">
-                    {COLUMNS[channel].map((tool, i) => (
-                      <ToolItem key={tool} tool={tool} index={i} />
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            )
-          })}
-        </div>
+        <Reveal className="mt-5 grid gap-px overflow-hidden rounded-md border bg-hairline sm:grid-cols-[auto_1fr_1fr_1fr]">
+          <h3 className="label flex items-center bg-surface px-6 py-4 text-ink-faint">{t('skills.languages')}</h3>
+          {languages.map((l) => (
+            <p key={l.name.en} className="bg-surface px-6 py-4">
+              <span className="heading block text-[1.05rem] text-ink">{l.name[language]}</span>
+              <span className="text-[0.9rem] text-ink-soft">{l.level[language]}</span>
+            </p>
+          ))}
+        </Reveal>
       </div>
     </section>
   )
